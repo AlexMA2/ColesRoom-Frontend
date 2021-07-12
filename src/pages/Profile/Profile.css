@@ -1,19 +1,67 @@
 .titulo{
     font-family: fantasy; 
-    vertical-align: middle;
-    text-decoration: underline;  
+    vertical-align: middle;  
     text-align: center;
+    /*background: rgb(118, 224, 171);*/
+    
 
 }
+
+.fondo h1 {
+    margin-top: -250px;
+    font-size: 60px;
+	color: #fff;
+	position: relative; 
+}
+
 .datos{
-    text-align: center;
+    text-align: left ;
     font-family: 'Times New Roman', Times, serif;
     font-size:xx-large;
+    display: inline-flex;
+    /*background: rgb(187, 122, 58);*/
+    width: 100%;
+    margin-top: 10px;
+    
 }
 
 .button {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 20px;
+    border-left-color: thistle;
+
+    
 }
 
+.contenedor-p {
+ 
+   text-align: center;
+   justify-content: center;
+   width: 100%; 
+   position: relative 
+}
 
+.contenedor-principal {
+    background-color: yellow;
+    
+}
+.fondo {
+    background-image: url(https://img.freepik.com/vector-gratis/aula-vectores-aprendizaje-quimica_107791-1569.jpg?size=626&ext=jpg);
+    padding: 360px 50px; /*para modificar  */
+	background-size:cover;
+	background-repeat: no-repeat;
+	position: relative;
+    width: 100%; /*Ancho del 100% de la pantalla*/
+    height: 100vh; /*Alto del 100% del dispositivo móvil*/
+ 
+}
+
+.fondo:before {
+    content:'';
+	position: absolute;
+    top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(23, 13, 43, 0.8);
+}

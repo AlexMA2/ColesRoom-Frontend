@@ -7,26 +7,29 @@ const Profile = () => {
     const [users, setUsers] = useState([])
     // const usuario_id = sessionStorage.getItem("key_user");
 
-    
+
     useEffect(() => {
-    
+
     }, [])
 
 
 
     return (
-        <div>
+        <div className="contenedor-principal fondo">
             <h1 className="titulo"> Datos </h1>
-            <div>
+            <div className="contenedor-p">
                 {
                     users
-                        // .filter((us) => us.user_id === usuario_id)
+                        //.filter((us) => us.user_id === usuario_id)
                         .map((us) => (
                             <div className="datos">
-                                Nombre: {us.name}<br></br>
-                                Correo: {us.email}<br></br>
-                                Edad: {us.age}<br></br>
-                                Telefono: {us.phone}
+                                <form>
+                                    Nombre: {us.name}<br></br>
+                                    Correo: {us.email}<br></br>
+                                    Edad: {us.age}<br></br>
+                                    Telefono: {us.phone}
+                                </form>
+
                             </div>
                         ))
                 }
@@ -39,7 +42,6 @@ const Profile = () => {
                             </Button>
                         </div>
                     </a>
-
                 </div>
 
 

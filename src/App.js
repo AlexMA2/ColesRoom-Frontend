@@ -26,7 +26,13 @@ const App = () => {
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/crear">          
+        <Route exact path="/editprofile">
+          <EditProfile />
+        </Route>
+        <Route exact path="/profile">
+          <Profile />
+        </Route>
+        <Route exact path="/crear">
           <CreateCourse user={user} />
         </Route>
         <Route exact path="/login">
@@ -43,12 +49,6 @@ const App = () => {
         </Route>
         <Route exact path="/mycourses">
           <MyCourses />
-        </Route>
-        <Route exact path="/profile">
-          <Profile/>
-        </Route>
-        <Route exact path="/editprofile">
-          <EditProfile/>
         </Route>
         <Route exact path="/">
           {user === undefined ? <Home /> : <Main user={user} />}

@@ -9,6 +9,7 @@ import { Button } from "@material-ui/core"
 import imgFakePerfil from '../../imgs/fakePerfil.png'
 import "../../utils.css"
 
+
 const CoursePage = () => {
   let { topic } = useParams()
 
@@ -56,7 +57,7 @@ const CoursePage = () => {
       />
       <div style={{"marginBottom":"15px"}}>
         <Button variant="contained" color="primary" onClick={handleClick}>
-          Crear Curso
+          Crear Tarea
         </Button>
       </div>
       <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil}/>

@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
@@ -16,6 +17,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from 'redux/index.js'
+
 import "./Header.css";
 
 
