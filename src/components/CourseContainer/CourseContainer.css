@@ -1,0 +1,10 @@
+.grid-courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fill , minmax(18rem, 1fr));
+    grid-gap: 1rem;
+}
+
+.center-block {
+    margin: 40vh 50vw;
+    position: absolute;
+}

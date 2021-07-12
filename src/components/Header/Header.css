@@ -1,0 +1,83 @@
+.title {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 23px;
+    letter-spacing: 0px;
+    word-spacing: 2px;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: italic;
+    font-variant: small-caps;
+    text-transform: none;
+}
+
+.div-title {
+    width: 75%;
+    float: left;
+    padding: 15px;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 25rem;    
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700 !important;
+    color: #3F51B5;
+    text-align: center;
+    transition: all 0.2s;
+    background-color: #fff;
+    width: 16rem;
+    height: 2rem;
+    
+    text-decoration: none !important;
+    box-shadow: 2px 2px 5px #262626;
+}
+
+.btn-link:hover {
+    background-color: rgb(23, 35, 207);
+    color: #fff !important;
+    border: none;
+}
+
+.toolbar {
+    padding: 0;
+}
+
+.toolbar__caja {
+    display: flex;    
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+}
+
+.toolbar__title {
+    font-size: 2.5rem;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.toolbar__title:hover {
+    color: #fff;
+}
+
+.color1 {
+    color: #ffffff;
+}
+
+.div-header{
+    display: flex;
+    flex-direction: row;
+}

@@ -1,0 +1,15 @@
+.register{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-box{
+    margin-top: 100px;
+    width: 400px;
+    text-align: center;
+}
+
+.groups{
+    text-align: left;
+}
