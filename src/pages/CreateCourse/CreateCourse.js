@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import "../../utils.css";
+import "./CreateCourse.css";
 const CreateCourse = (props) => {
   let history = useHistory();
   const registrarCurso = (e) => {
@@ -17,7 +17,7 @@ const CreateCourse = (props) => {
 
   return (
     <div>
-      <form onSubmit={registrarCurso}>
+      <form className="form_Curso" onSubmit={registrarCurso}>
         <h1>CREAR CURSO</h1>
         <div>
           <div className="form__item">

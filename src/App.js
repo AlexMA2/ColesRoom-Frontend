@@ -1,30 +1,45 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from "./pages/Home/Home";
-import Main from "./pages/Main/Main";
-import Login from "./pages/Login/Login.js";
-import Register from "./pages/Register/Register.js";
-import Header from "./components/Header/Header";
-import CreateCourse from "./pages/CreateCourse/CreateCourse";
-import CoursePage from "./pages/CoursePage/CoursePage.js";
+import Home from "./pages/Home/Home.js"
+import Main from "./pages/Main/Main.js"
+import Login from "./pages/Login/Login.js"
+import Register from "./pages/Register/Register.js"
+import Header from "./components/Header/Header.js"
+import CreateCourse from "./pages/CreateCourse/CreateCourse.js"
+import CoursePage from "./pages/CoursePage/CoursePage.js"
 import Profile from "./pages/Profile/Profile.js"
 import EditProfile from "./pages/EditProfile/EditProfile.js"
 import MyCourses from "./pages/MyCourses/MyCourses.js"
-import CreateTask from "./pages/CreateTask/CreateTask";
+import CreateTask from "./pages/CreateTask/CreateTask.js"
+
+import firebase from "./config/firebase";
+import "firebase/auth";
 
 
 const App = () => {
   const [user, setuser] = useState({});
 
+  const authListener = () => {
+    //Compruebo si el usuario ha iniciado sesión    
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        //El usuario inicio sesión
+        setuser(user);
+      } else {
+        //El usuario NO inicio sesión
+        setuser(undefined);
+      }
+    });
+  };
   useEffect(() => {
-    
-  }, [])
+    authListener();
+  }, []);
 
   return (
     <Router>
-      <Header />
+      <Header user={user} />
       <Switch>
         <Route exact path="/editprofile">
           <EditProfile />

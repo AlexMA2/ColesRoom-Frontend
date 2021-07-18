@@ -61,7 +61,7 @@ const Home = ({ filterSearch}) => {
       {
         loading
         ? <CircularProgress size={100} className="center-block"/>                   
-        : <CourseContainer filterSearch={filterSearch} coursesList={courses}></CourseContainer>
+        : <CourseContainer coursesList={courses}></CourseContainer>
       }
       <Button variant="contained" size="medium" color="secondary" onClick={showMore} className={classes.margin} endIcon={<AddIcon/> }>
           Ver más cursos 

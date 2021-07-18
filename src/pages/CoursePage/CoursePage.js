@@ -41,30 +41,30 @@ const CoursePage = () => {
     }
 
 
-  return (
-    
-    <div className="container3" >
-      {
-                click &&
-                <Redirect to={irTopic}/>  
-            }
-      <CourseTitle name={course.nombre}
-        description="descripcion"
-        date="fecha"
-        photo="foto"
-        backgroundImage="imagen"
-        teacher="profesor"
-      />
-      <div style={{"marginBottom":"15px"}}>
-        <Button variant="contained" color="primary" onClick={handleClick}>
-          Crear Tarea
-        </Button>
+    return (
+ 
+      <div className="container3" >
+        {
+                  click &&
+                  <Redirect to={irTopic}/>  
+              }
+        <CourseTitle name={course.nombre}
+          description="descripcion"
+          date="fecha"
+          photo="foto"
+          backgroundImage="imagen"
+          teacher={course.user_id}
+        />
+        <div style={{"marginBottom":"15px"}}>
+          <Button variant="contained" color="primary" onClick={handleClick}>
+            Crear Tarea
+          </Button>
+        </div>
+        <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
+  
+        <PublicationContainer publications={publicaciones} />
       </div>
-      <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil}/>
-
-      <PublicationContainer publications={publicaciones} />
-    </div>
-  )
-}
+    );
+  };
 
 export default CoursePage

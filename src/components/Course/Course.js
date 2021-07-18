@@ -66,7 +66,7 @@ const Course = ({ id, curso_id, name, category, teacher_id }) => {
     const [click, setClick] = useState(false);
 
     const history = useHistory();
-    const irTopic = `/mycourses/${id}`;
+    const irTopic = `${id}`;
 
     const handleClick = (ev) => {
         history.push(irTopic);
