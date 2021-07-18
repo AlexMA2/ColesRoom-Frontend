@@ -14,29 +14,11 @@ import EditProfile from "./pages/EditProfile/EditProfile.js"
 import MyCourses from "./pages/MyCourses/MyCourses.js"
 import CreateTask from "./pages/CreateTask/CreateTask.js"
 
-import firebase from "./config/firebase";
-import "firebase/auth";
-
 
 const App = () => {
   const [user, setuser] = useState({});
 
-  const authListener = () => {
-    //Compruebo si el usuario ha iniciado sesión    
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        //El usuario inicio sesión
-        setuser(user);
-      } else {
-        //El usuario NO inicio sesión
-        setuser(undefined);
-      }
-    });
-  };
-  useEffect(() => {
-    authListener();
-  }, []);
-
+  
   return (
     <Router>
       <Header user={user} />

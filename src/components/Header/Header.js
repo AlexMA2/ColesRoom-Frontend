@@ -20,7 +20,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { actionCreators } from 'redux/index.js'
+import { actionCreators } from '../../redux/index.js'
 
 import "./Header.css";
 
