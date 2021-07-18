@@ -8,24 +8,24 @@ const EditProfile = () => {
     const [users, setUsers] = useState([])
     const usuario_id = sessionStorage.getItem("key_user");
 
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            sessionStorage.setItem("key_user", user.uid)
-        }
-    })
+    // firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
+    //         sessionStorage.setItem("key_user", user.uid)
+    //     }
+    // })
 
-    useEffect(() => {
-        const ref = firebase.database().ref('Usuarios');
-        ref.on('value', (snapshot) => {
-            const users = snapshot.val();
-            const usersFromBD = []
-            for (let id in users) {
-                usersFromBD.push({ id, ...users[id] });
-            }
-            setUsers(usersFromBD);
-        });
+    // useEffect(() => {
+    //     const ref = firebase.database().ref('Usuarios');
+    //     ref.on('value', (snapshot) => {
+    //         const users = snapshot.val();
+    //         const usersFromBD = []
+    //         for (let id in users) {
+    //             usersFromBD.push({ id, ...users[id] });
+    //         }
+    //         setUsers(usersFromBD);
+    //     });
 
-    }, [])
+    // }, [])
 
     const Actualizar = e => {
         const form = e.target
@@ -38,13 +38,13 @@ const EditProfile = () => {
             .filter((us) => us.user_id === usuario_id)
             .map((us) => (
                 <div>
-                    {
+                    {/* {
                         firebase.database().ref("Usuarios/" + us.id).update({
                             name: data.nombre,
                             phone: data.telefono,
                             age: data.edad
                         })
-                    }
+                    } */}
                 </div>
             ))
         setEditado(true)

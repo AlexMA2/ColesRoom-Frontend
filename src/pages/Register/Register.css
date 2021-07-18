@@ -1,15 +1,119 @@
-.register{
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e8f5ff;
+}
+
+.ax-form__form {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.register-box{
-    margin-top: 100px;
-    width: 400px;
-    text-align: center;
+.ax-form__form>input {
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 1rem;
+    outline: none;
+    border: 1px solid #0070c0;
+    color: #0070c0;
+    background-color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 1rem 0;
+    letter-spacing: 2px;
 }
 
-.groups{
-    text-align: left;
+.ax-form__form>input:hover {
+    background-color: #0070c0;
+    color: #fff;
+    box-shadow: 0 0 0.4rem #2196f3;
+    font-weight: 600;
+}
+
+.ax-form__input {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.ax-form__input p {
+    font-size: 1.5rem;
+}
+
+.ax-form__input input {
+    border-radius: 0.8rem;
+    outline: none;
+    padding: 0.3rem 0.75rem;
+    font-size: 1rem;
+    color: #595959;
+    border: 2px solid #2196f3;
+    box-shadow: inset 0 0 0.25rem #e8f5ff;
+    font-style: italic;
+    min-height: 2rem;   
+}
+
+.ax-form__input input:focus {
+    font-style: normal;    
+}
+
+.ax-form__title {
+    color: #2196f3;
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    border-bottom: 3px solid #e8f5ff;
+    border-radius: 0.5rem;
+}
+
+.ax-form-style1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 1.5rem 2.5rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 1rem #cfcfcf;
+}
+
+.ax-form__utils {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 30rem;
+    min-height: 2.1rem;
+}
+
+.ax-form__utils a {
+    font-size: 1rem;
+    color: #0070c0;
+    text-decoration: none;
+    
+}
+
+.ax-form__utils a:hover {
+    font-size: 1.1rem;
+}
+
+.ax-form__circle {
+    z-index: 9;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.5rem solid #e8f5ff;
+    position: relative;
+    right: 272px;
+    bottom: 27px;
+    box-shadow: 0 0 0.5rem #cfcfcf;
 }

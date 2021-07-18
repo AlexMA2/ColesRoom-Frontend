@@ -71,54 +71,54 @@ const Course = ({ id, curso_id, name, category, teacher_id }) => {
     const handleClick = (ev) => {
         history.push(irTopic);
         setClick(true);
-        inscribirseCurso();
-        buscarCurso()
+        //inscribirseCurso();
+        //buscarCurso()
     };
-    function buscar() {
-        let idUser = 1;
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                idUser = user.uid;
-            } else {
-                alert("no hay usuario registrado")
-                history.push("/login");
-            }
-        });
+    // function buscar() {
+    //     let idUser = 1;
+    //     firebase.auth().onAuthStateChanged((user) => {
+    //         if (user) {
+    //             idUser = user.uid;
+    //         } else {
+    //             alert("no hay usuario registrado")
+    //             history.push("/login");
+    //         }
+    //     });
         
-    }
-    function buscarCurso() {
+    // }
+    // function buscarCurso() {
 
-        var ref = firebase.database().ref("Alumno-Curso")
-        ref.once("value").then(function (snapshot) {
+    //     var ref = firebase.database().ref("Alumno-Curso")
+    //     ref.once("value").then(function (snapshot) {
 
-            var aula = snapshot.child().val(); // {Asignatura:"lenguaje",Curso:"8A"} Esta linea me devuelve un objeto con todos los valores de ese child
-            var asignatura = snapshot.child().val(); // "Lenguaje"
-            //var curso = snapshot.child(codigo).child("Curso").val(); // "8A"
-            console.log(aula)
-            console.log(asignatura)
+    //         var aula = snapshot.child().val(); // {Asignatura:"lenguaje",Curso:"8A"} Esta linea me devuelve un objeto con todos los valores de ese child
+    //         var asignatura = snapshot.child().val(); // "Lenguaje"
+    //         //var curso = snapshot.child(codigo).child("Curso").val(); // "8A"
+    //         console.log(aula)
+    //         console.log(asignatura)
 
-        });
-    }
-    function inscribirseCurso() {
-        const info = {
-            user_id: "",
-            curso_id: id,
-            nota: 0,
-        }
-        let nombre_val = "-MdriIuPvM2RKZePnY6F";
-        alert(nombre_val);
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                info.user_id = user.uid;
-                firebase.database().ref(`Alumno-Curso/${nombre_val}`).push(info);
-                alert("reistrado");
-            } else {
-                //alert("no hay usuario registrado")
-                history.push("/login");
-            }
-        });
-        buscarCurso()
-    }
+    //     });
+    // }
+    // function inscribirseCurso() {
+    //     const info = {
+    //         user_id: "",
+    //         curso_id: id,
+    //         nota: 0,
+    //     }
+    //     let nombre_val = "-MdriIuPvM2RKZePnY6F";
+    //     alert(nombre_val);
+    //     firebase.auth().onAuthStateChanged((user) => {
+    //         if (user) {
+    //             info.user_id = user.uid;
+    //             firebase.database().ref(`Alumno-Curso/${nombre_val}`).push(info);
+    //             alert("reistrado");
+    //         } else {
+    //             //alert("no hay usuario registrado")
+    //             history.push("/login");
+    //         }
+    //     });
+    //     buscarCurso()
+    // }
 
     return (
         <Card className={classes.root}>

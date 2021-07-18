@@ -45,41 +45,32 @@ const Register = () => {
 
 
   return (
-    <div className="ed-grid margen">
-      {
-        logeado &&
-        <Redirect to="/" />
-      }
-      <div className="register-box">
-        <h1 className='register-title'>Registrate</h1>
-        <Form onSubmit = {registration}>
-          <div className="groups">
-            <Form.Group controlId="register-name">
-              <Form.Label>Nombre Completo</Form.Label>
-                <Form.Control name="fullname" type="name" placeholder="Ingrese Nombre Completo" required></Form.Control>
-            </Form.Group>
-            <Form.Group controlId ="register-email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control name="email" type = "email" placeholder="Ingrese su Email" required></Form.Control>
-            </Form.Group>
-            <Form.Group controlId = "register-password">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control name="password" type = "password" placeholder = "Ingrese su Contraseña" required></Form.Control>
-            </Form.Group>
-          </div>
-          <Button variant = "dark" type="submit">
-            Registrarse
-          </Button>
-          <Form.Text className="text-muted">
-            ¿Ya tienes cuenta de usuario?
-            <Link to="/login"> Iniciar Sesion </Link>
-          </Form.Text>
-          <div>
-            <p> {errorRegister}</p>
-          </div>
-        </Form>
-      </div>
-    </div>
+    <div class="ax-form-style1">
+     {
+       logeado &&
+       <Redirect to="/" />
+     }
+     <h2 class="ax-form__title"> Registrate </h2>
+     <form class="ax-form__form" id="form">
+       <div class="ax-form__input">
+         <p> Nombre Completo: </p>
+         <input name="fullname" type="name" placeholder="Ingrese Nombre Completo" required/>
+       </div>
+       <div class="ax-form__input">
+         <p> Correo Electr&oacute;nico: </p>
+         <input name="email" type = "email" placeholder="Introduce tu correo electrónico aquí..." required/>
+       </div>
+       <div class="ax-form__input">
+         <p> Contraseña: </p>
+         <input name="password" type = "password" placeholder = "Ingrese su Contraseña" required/>
+       </div>
+       <input type="submit" value="Ingresar" />
+     </form>
+     <div class="ax-form__utils">
+       <Link to="#"> ¿Necesitas ayuda? </Link>
+       <Link to="#"> ¿Ya tienes una cuenta? </Link>
+     </div>
+   </div>
   )
 }
 
