@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
@@ -24,8 +23,7 @@ import { actionCreators } from '../../redux/index.js'
 
 import "./Header.css";
 
-
-const Header = ({ user, handleSearch }) => {
+const Header = ({ user }) => {
 
     const [word, setword] = useState("");
 
@@ -34,17 +32,19 @@ const Header = ({ user, handleSearch }) => {
         setword(toSearch)
     }
 
-    const handlePressEnter = (e) => {
+    const dispatch = useDispatch()
 
+    const { typeWord } = bindActionCreators(actionCreators, dispatch)
+
+    const handlePressEnter = (e) => {        
         if (e.keyCode === 13) {
-            handleSearch(word)
-            console.log("buscar")
+               
+            typeWord(word) 
         }
     }
 
     let history = useHistory();
     const logout = () => {
-        
         sessionStorage.clear();
         history.push("/");
     }
@@ -52,15 +52,15 @@ const Header = ({ user, handleSearch }) => {
     const useStyles = makeStyles((theme) => ({
         grow: {
             flexGrow: 1,
-
+            
         },
         menuButton: {
             marginRight: theme.spacing(2),
         },
         title: {
-            alignItems:'center',
+            display: 'none',
             [theme.breakpoints.up('sm')]: {
-                display: 'flex',
+                display: 'block',
             },
         },
         search: {
@@ -96,7 +96,7 @@ const Header = ({ user, handleSearch }) => {
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
             width: '100%',
-
+            
         },
         sectionDesktop: {
             display: 'none',
@@ -222,31 +222,23 @@ const Header = ({ user, handleSearch }) => {
     );
 
     return (
-        <div className={classes.grow} style={{ marginBottom: "4.5rem" }}>
+        <div className={classes.grow} style={{marginBottom: "4.5rem"}}>
             <AppBar position="fixed">
                 <Toolbar>
-                     {
-                        user !== undefined ?
-                            <div className='div-header'>
-                                <IconButton
-                                    edge="start"
-                                    className={classes.menuButton}
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    aria-controls={menuIdBurger}
-                                    aria-haspopup="true"
-                                    onClick={handleProfileMenuBurgerOpen}
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                                <Typography className={classes.title} variant="h6" noWrap>
-                                    ColesRoom
-                                </Typography>
-                            </div>
-                            : <Typography className={classes.title} variant="h6" noWrap>
-                                ColesRoom
-                            </Typography>
-                    }
+                    <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="open drawer"
+                        aria-controls={menuIdBurger}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuBurgerOpen}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        ColesRoom
+                    </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -265,50 +257,51 @@ const Header = ({ user, handleSearch }) => {
                     </div>
                     <div className={classes.grow} />
                     {
-                        // user !== undefined
-                        //     ? (
-                        //         <div>
-                        //             <div className={classes.sectionDesktop}>
-                        //                 <IconButton aria-label="show 4 new mails" color="inherit">
-                        //                     <Badge badgeContent={0} color="secondary">
-                        //                         <MailIcon />
-                        //                     </Badge>
-                        //                 </IconButton>
-                        //                 <IconButton aria-label="show 17 new notifications" color="inherit">
-                        //                     <Badge badgeContent={0} color="secondary">
-                        //                         <NotificationsIcon />
-                        //                     </Badge>
-                        //                 </IconButton>
-                        //                 <IconButton
-                        //                     edge="end"
-                        //                     aria-label="account of current user"
-                        //                     aria-controls={menuId}
-                        //                     aria-haspopup="true"
-                        //                     onClick={handleProfileMenuOpen}
-                        //                     color="inherit"
-                        //                 >
-                        //                     <AccountCircle />
-                        //                 </IconButton>
-                        //             </div>
-                        //             <div className={classes.sectionMobile}>
-                        //                 <IconButton
-                        //                     aria-label="show more"
-                        //                     aria-controls={mobileMenuId}
-                        //                     aria-haspopup="true"
-                        //                     onClick={handleMobileMenuOpen}
-                        //                     color="inherit"
-                        //                 >
-                        //                     <MoreIcon />
-                        //                 </IconButton>
-                        //             </div>
-                        //         </div>
-                        //     )
-                            // : (
+                        user !== undefined
+                            ? (
+                                <div>
+                                    <div className={classes.sectionDesktop}>
+                                        <IconButton aria-label="show 4 new mails" color="inherit">
+                                            <Badge badgeContent={0} color="secondary">
+                                                <MailIcon />
+                                            </Badge>
+                                        </IconButton>
+                                        <IconButton aria-label="show 17 new notifications" color="inherit">
+                                            <Badge badgeContent={0} color="secondary">
+                                                <NotificationsIcon />
+                                            </Badge>
+                                        </IconButton>
+                                        <IconButton
+                                            edge="end"
+                                            aria-label="account of current user"
+                                            aria-controls={menuId}
+                                            aria-haspopup="true"
+                                            onClick={handleProfileMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <AccountCircle />
+                                        </IconButton>
+                                    </div>
+                                    <div className={classes.sectionMobile}>
+                                        <IconButton
+                                            aria-label="show more"
+                                            aria-controls={mobileMenuId}
+                                            aria-haspopup="true"
+                                            onClick={handleMobileMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <MoreIcon />
+                                        </IconButton>
+                                    </div>
+                                </div>
+                            )
+                            : (
                                 <div className="auth-buttons">
                                     <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>
                                     <Link to="/register" className="btn-link"> Registrarte </Link>
                                 </div>
-                            // )
+
+                            )
                     }
                 </Toolbar>
             </AppBar>
