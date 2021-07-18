@@ -312,4 +312,5 @@ const Header = ({ user }) => {
     );
 };
 
+Header.defaultPropt ={user: undefined}
 export default Header;

@@ -21,7 +21,7 @@ const App = () => {
   
   return (
     <Router>
-      <Header user={user} />
+      <Header />
       <Switch>
         <Route exact path="/editprofile">
           <EditProfile />
