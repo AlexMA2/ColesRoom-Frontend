@@ -46,7 +46,8 @@ const Header = ({ user }) => {
     let history = useHistory();
     const logout = () => {
         sessionStorage.clear();
-        history.push("/");
+        history.push("/");       
+        window.location.reload();
     }
 
     const useStyles = makeStyles((theme) => ({

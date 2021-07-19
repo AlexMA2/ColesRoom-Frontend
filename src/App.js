@@ -18,10 +18,23 @@ import CreateTask from "./pages/CreateTask/CreateTask.js"
 const App = () => {
   const [user, setuser] = useState({});
 
-  
+  useEffect(() => {
+
+    console.log(sessionStorage.getItem("user"))
+    if (sessionStorage.getItem("user") !== null) {
+      // Restaura el contenido al campo de texto
+      console.log(sessionStorage.getItem("user"))
+      
+    }
+    else {
+      setuser(undefined)
+    }
+
+  }, []);
+    
   return (
     <Router>
-      <Header />
+      <Header user={user}/>
       <Switch>
         <Route exact path="/editprofile">
           <EditProfile />

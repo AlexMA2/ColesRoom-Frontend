@@ -5,8 +5,6 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import Icon from '@material-ui/core/Icon';
 
-
-
 import './Publication.css'
 
 const AddPublication = ({ handleSubmit , imgPerfil}) => {
