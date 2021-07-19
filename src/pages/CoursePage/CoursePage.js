@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from "react-router"
 import { Redirect } from "react-router"
@@ -15,6 +15,7 @@ const CoursePage = () => {
 
   const [publicaciones, setPublicaciones] = useState([])
   const [render, setrender] = useState(false)
+  const [render2, setrender2] = useState(false)
   const [course, setCourse] = useState({})
 
   //Falta testear
@@ -22,8 +23,8 @@ const CoursePage = () => {
     value.course_id = topic    
     
     setrender(true)    
-
-    fetch('api/publications', {
+    
+    fetch('/api/publications', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -31,26 +32,25 @@ const CoursePage = () => {
       },
       body: JSON.stringify(value)
     })
-      .then(response => {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server")
-        }
+      .then(response => {        
         return response.json()
       } )
       .then(json => {
         let publis = publicaciones;
+        
         publis.push(value)
         setPublicaciones(publis)
-        setrender(true)
+        setrender2(true)
       })
       .catch(error => {
-        setrender(true)
+        setrender2(true)
         console.log(error)
       })   
 
   }
 
   useEffect(() => {
+    //Coger publicaciones de un curso
     fetch(`api/publications/${topic}`, {
       method: 'GET',
       headers: {
@@ -58,22 +58,22 @@ const CoursePage = () => {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server")
-        }
+      .then(response => {        
         return response.json()
       }
     )
       .then(json => {
         setPublicaciones(json.publications)
+        setrender(true)
+        
       }
     )
       .catch(error => {
         console.log(error)
       }
     )
-  }, [])
+
+  }, [render2])
 
   const [click, setClick] = useState(false)
   const history = useHistory()
@@ -105,7 +105,7 @@ const CoursePage = () => {
           </Button>
         </div>
         <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
-  
+        {console.log(publicaciones)}
         <PublicationContainer publications={publicaciones} />
       </div>
     );

@@ -6,7 +6,8 @@ const PublicationContainer = ({publications}) => {
         <div>
             <ul style={{
                 display: "flex",
-                flexDirection: "column-reverse"
+                flexDirection: "column-reverse",
+                padding: '0'
             }}>
                 {
                     publications.map((publi, index) => (<Publication key={index} p={publi}/>))

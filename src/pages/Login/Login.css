@@ -1,4 +1,4 @@
-body {
+.container-form {
     margin: 0;
     padding: 0;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -6,10 +6,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #e8f5ff;
+    background-color: #e8f5ff !important;    
+    min-height: 92vh;
 }
-
 .ax-form__form {
     display: flex;
     flex-direction: column;
@@ -84,6 +83,7 @@ body {
     padding: 1.5rem 2.5rem;
     border-radius: 0.8rem;
     box-shadow: 0 0 1rem #cfcfcf;
+    min-width: 100vh;
 }
 
 .ax-form__utils {

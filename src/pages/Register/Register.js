@@ -56,7 +56,8 @@ const Register = () => {
 
 
   return (
-    <div className="ax-form-style1">
+    <div className="container-form">
+      <div className="ax-form-style1">
      {
        logeado &&
        <Redirect to="/" />
@@ -87,6 +88,8 @@ const Register = () => {
        <Link to="#"> ¿Ya tienes una cuenta? </Link>
      </div>
    </div>
+    </div>   
+    
   )
 }
 

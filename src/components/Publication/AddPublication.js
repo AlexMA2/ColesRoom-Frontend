@@ -21,10 +21,9 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
         }
         else if (value.length <= 1){
             setDisabledBtn(true)
-        }
-        console.log(value.length)
-        
+        }                
     }    
+    
        
     const handleClick = (event) => {
         setValue('')

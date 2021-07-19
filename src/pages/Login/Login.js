@@ -53,29 +53,32 @@ const Login = () => {
   }
 
   return (
-    <div className="ax-form-style1">
-      
-      {
-        logeado &&
-        <Redirect to="/" />
-      }
-      <h2 className="ax-form__title"> Inicia Sesi&oacute;n</h2>
-      <form className="ax-form__form" onSubmit={authentication}>
-        <div className="ax-form__input">
-          <p> Correo Electr&oacute;nico: </p>
-          <input type="text" name="email" placeholder="Introduce tu correo electrónico aquí..." />
+    <div className="container-form">
+      <div className="ax-form-style1">
+
+        {
+          logeado &&
+          <Redirect to="/" />
+        }
+        <h2 className="ax-form__title"> Inicia Sesi&oacute;n</h2>
+        <form className="ax-form__form" onSubmit={authentication}>
+          <div className="ax-form__input">
+            <p> Correo Electr&oacute;nico: </p>
+            <input type="text" name="email" placeholder="Introduce tu correo electrónico aquí..." />
+          </div>
+          <div className="ax-form__input">
+            <p> Contraseña: </p>
+            <input type="password" name="password" placeholder="Introduce tu contraseña aquí..." />
+          </div>
+          <input type="submit" value="Ingresar" />
+        </form>
+        <div className="ax-form__utils">
+          <Link to="#"> ¿Olvidaste tu contraseña? </Link>
+          <Link to="#"> ¿No tienes una cuenta? </Link>
         </div>
-        <div className="ax-form__input">
-          <p> Contraseña: </p>
-          <input type="password" name="password" placeholder="Introduce tu contraseña aquí..." />
-        </div>
-        <input type="submit" value="Ingresar" />
-      </form>
-      <div className="ax-form__utils">
-        <Link to="#"> ¿Olvidaste tu contraseña? </Link>
-        <Link to="#"> ¿No tienes una cuenta? </Link>
       </div>
     </div>
+
 
   )
 }

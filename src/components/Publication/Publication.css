@@ -24,6 +24,33 @@
     padding: 1rem;
 }
 
-.addpubli_create > div {
-    margin-right: 1rem ;
+.addpubli_create>div {
+    margin-right: 1rem;
+}
+
+.publication {
+    width: 60rem;
+    height: auto;
+    border-radius: 1rem;
+    border: 1px solid #ddd;
+    margin: 0.75rem 1rem;
+    box-shadow: 0 0 1rem #ddd;
+    padding: 1rem;
+    text-align: left;
+}
+
+.publication__content {
+    width: 100%;
+    height: auto;
+    letter-spacing: 1px;
+    white-space: pre-wrap;
+    /* CSS3 */
+    white-space: -moz-pre-wrap;
+    /* Firefox */
+    white-space: -pre-wrap;
+    /* Opera <7 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 */
+    word-wrap: break-word;
+    /* IE */
 }
