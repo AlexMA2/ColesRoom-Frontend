@@ -5,9 +5,17 @@ import {Redirect} from "react-router-dom";
 import '../../utils.css'
 import { Form, Button } from 'react-bootstrap';
 import "./Register.css"
+
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../redux/index.js'
+
 const Register = () => {
   const [logeado, setlogeado] = useState(false)
   const [errorRegister, seterrorRegister] = useState("")
+
+  const dispatch = useDispatch()
+  const { setUser } = bindActionCreators(actionCreators, dispatch)
   
   const errores = {
     "auth/email-already-exists" : "Otro usuario ya está utilizando el correo electrónico proporcionado. Cada usuario debe tener un correo electrónico único. ",
@@ -38,10 +46,9 @@ const Register = () => {
     })
       .then(res => res.json())
       .then(d => {        
-        setlogeado(true);    
-        console.log(d)
+        setlogeado(true);          
         sessionStorage.setItem("user", d.id)  
-        
+        setUser(d.id)        
       })
       .catch(err => seterrorRegister(errores[err.error] || 'Hubo un problema'));
 

@@ -4,12 +4,20 @@ import { Link } from 'react-router-dom'
 import {
   Redirect
 } from "react-router-dom";
-import { Form, Button } from 'react-bootstrap'
+
 import "./Login.css"
+
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../redux/index.js'
+
 const Login = () => {
 
   const [logeado, setlogeado] = useState(false)
   const [errorLogin, seterrorLogin] = useState('')
+
+  const dispatch = useDispatch()
+  const { setUser } = bindActionCreators(actionCreators, dispatch)
 
   const errores = {
     "auth/wrong-password": "La contraseña introducida es incorrecta",
@@ -38,6 +46,7 @@ const Login = () => {
       .then(d => {
         setlogeado(true);
         sessionStorage.setItem("user", d.id)
+        setUser(d.id)
       })
       .catch(err => seterrorLogin(errores[err.error] || 'Hubo un problema'));
 
@@ -45,9 +54,7 @@ const Login = () => {
 
   return (
     <div className="ax-form-style1">
-      {
-        console.log(errorLogin, logeado, sessionStorage.getItem("user"))
-      }
+      
       {
         logeado &&
         <Redirect to="/" />
@@ -60,7 +67,7 @@ const Login = () => {
         </div>
         <div className="ax-form__input">
           <p> Contraseña: </p>
-          <input type="text" name="password" placeholder="Introduce tu contraseña aquí..." />
+          <input type="password" name="password" placeholder="Introduce tu contraseña aquí..." />
         </div>
         <input type="submit" value="Ingresar" />
       </form>

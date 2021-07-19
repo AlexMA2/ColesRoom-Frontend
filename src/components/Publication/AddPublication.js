@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-
+import {useHistory, useParams} from 'react-router-dom'
 import { Avatar, Button, ButtonGroup, TextField, makeStyles } from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
 import Icon from '@material-ui/core/Icon';
 
 import './Publication.css'
@@ -11,6 +10,8 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
 
     const [click, setclick] = useState(false)
     const [value, setValue] = useState('');
+    const [files, setFiles] = useState([]);
+    
     const [disabledBtn, setDisabledBtn] = useState(true)
 
     const handleChange = (event) => {
@@ -23,14 +24,19 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
         }
         console.log(value.length)
         
-    }
-
-    
+    }    
+       
     const handleClick = (event) => {
         setValue('')
         setDisabledBtn(true)
         let cl = !click
         setclick(cl)
+    }
+
+    const handleSend = (ev) => {
+        ev.preventDefault();      
+        //make a function to Upload
+               
     }
 
     const useStyles = makeStyles((theme) => ({
@@ -68,6 +74,7 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
                                 color="default"
                                 className={classes.button}
                                 startIcon={<CloudUploadIcon />}
+                                onClick={handleSend}
                             >
                                 Subir
                             </Button>
@@ -84,7 +91,7 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
                                 color="primary"
                                 className={classes.button}
                                 disabled={disabledBtn}
-                                onClick={() => {handleSubmit(value); handleClick()}}
+                                onClick={() => {handleSubmit({content: value, type: 1, route: files}); handleClick()}}
                             >
                                 Enviar
                             </Button>

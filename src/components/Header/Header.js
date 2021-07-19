@@ -258,7 +258,7 @@ const Header = ({ user }) => {
                     </div>
                     <div className={classes.grow} />
                     {
-                        user !== undefined
+                        user !== ''
                             ? (
                                 <div>
                                     <div className={classes.sectionDesktop}>

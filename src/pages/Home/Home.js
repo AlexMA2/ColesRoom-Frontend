@@ -31,7 +31,7 @@ const Home = ({ filterSearch}) => {
   }
 
   useEffect(() => {
-           
+    setLoading(false)       
   }, [limitCourses])
 
   const useStyles = makeStyles((theme) => ({

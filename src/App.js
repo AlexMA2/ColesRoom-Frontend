@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 import Home from "./pages/Home/Home.js"
 import Main from "./pages/Main/Main.js"
@@ -14,23 +14,26 @@ import EditProfile from "./pages/EditProfile/EditProfile.js"
 import MyCourses from "./pages/MyCourses/MyCourses.js"
 import CreateTask from "./pages/CreateTask/CreateTask.js"
 
+import { useSelector } from 'react-redux'
+import { setUser } from "./redux/actionCreators/AC";
 
 const App = () => {
-  const [user, setuser] = useState({});
+  const [user, setuser] = useState('');
+  const userredux = useSelector(state => state.user)
 
-  useEffect(() => {
-
-    console.log(sessionStorage.getItem("user"))
+  useEffect(() => {       
+    console.log(user)
     if (sessionStorage.getItem("user") !== null) {
       // Restaura el contenido al campo de texto
-      console.log(sessionStorage.getItem("user"))
-      
-    }
+      console.log(sessionStorage.getItem("user"))      
+      setuser(sessionStorage.getItem("user"))
+      console.log(user)
+    }    
     else {
-      setuser(undefined)
+      setuser('')
     }
 
-  }, []);
+  }, [userredux]);
     
   return (
     <Router>
@@ -61,7 +64,7 @@ const App = () => {
           <MyCourses />
         </Route>
         <Route exact path="/">
-          {user === undefined ? <Home /> : <Main user={user} />}
+          {user === '' ? <Home /> : <Main user={user} />}
         </Route>
       </Switch>
     </Router>

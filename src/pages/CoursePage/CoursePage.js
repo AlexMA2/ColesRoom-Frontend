@@ -17,18 +17,62 @@ const CoursePage = () => {
   const [render, setrender] = useState(false)
   const [course, setCourse] = useState({})
 
+  //Falta testear
   const handleSubmit = (value) => {       
-    let pub = publicaciones
-    pub.push(value)
-    setPublicaciones(pub)
-    setrender(render + 1)    
+    value.course_id = topic    
+    
+    setrender(true)    
+
+    fetch('api/publications', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(value)
+    })
+      .then(response => {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server")
+        }
+        return response.json()
+      } )
+      .then(json => {
+        let publis = publicaciones;
+        publis.push(value)
+        setPublicaciones(publis)
+        setrender(true)
+      })
+      .catch(error => {
+        setrender(true)
+        console.log(error)
+      })   
+
   }
 
-  const data = {};
-
-
   useEffect(() => {
-
+    fetch(`api/publications/${topic}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server")
+        }
+        return response.json()
+      }
+    )
+      .then(json => {
+        setPublicaciones(json.publications)
+      }
+    )
+      .catch(error => {
+        console.log(error)
+      }
+    )
   }, [])
 
   const [click, setClick] = useState(false)

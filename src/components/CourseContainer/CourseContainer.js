@@ -1,6 +1,7 @@
 import Course from "../Course/Course.js"
 import './CourseContainer.css'
 import '../../utils.css'
+import React from 'react'
 
 import { useSelector } from 'react-redux'
 
