@@ -35,32 +35,36 @@ const Login = () => {
       }
     })
       .then(res => res.json())
-      .then(data => {
+      .then(d => {
         setlogeado(true);
+        sessionStorage.setItem("user", d.id)
       })
       .catch(err => seterrorLogin(errores[err.error] || 'Hubo un problema'));
 
   }
 
   return (
-    <div class="ax-form-style1">
+    <div className="ax-form-style1">
+      {
+        console.log(errorLogin, logeado, sessionStorage.getItem("user"))
+      }
       {
         logeado &&
         <Redirect to="/" />
       }
-      <h2 class="ax-form__title"> Inicia Sesi&oacute;n</h2>
-      <form class="ax-form__form" id="form">
-        <div class="ax-form__input">
+      <h2 className="ax-form__title"> Inicia Sesi&oacute;n</h2>
+      <form className="ax-form__form" onSubmit={authentication}>
+        <div className="ax-form__input">
           <p> Correo Electr&oacute;nico: </p>
-          <input type="text" placeholder="Introduce tu correo electrónico aquí..." />
+          <input type="text" name="email" placeholder="Introduce tu correo electrónico aquí..." />
         </div>
-        <div class="ax-form__input">
+        <div className="ax-form__input">
           <p> Contraseña: </p>
-          <input type="text" placeholder="Introduce tu contraseña aquí..." />
+          <input type="text" name="password" placeholder="Introduce tu contraseña aquí..." />
         </div>
         <input type="submit" value="Ingresar" />
       </form>
-      <div class="ax-form__utils">
+      <div className="ax-form__utils">
         <Link to="#"> ¿Olvidaste tu contraseña? </Link>
         <Link to="#"> ¿No tienes una cuenta? </Link>
       </div>
