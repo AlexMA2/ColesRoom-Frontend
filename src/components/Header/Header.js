@@ -36,24 +36,24 @@ const Header = ({ user }) => {
 
     const { typeWord } = bindActionCreators(actionCreators, dispatch)
 
-    const handlePressEnter = (e) => {        
+    const handlePressEnter = (e) => {
         if (e.keyCode === 13) {
-               
-            typeWord(word) 
+
+            typeWord(word)
         }
     }
 
     let history = useHistory();
     const logout = () => {
         sessionStorage.clear();
-        history.push("/");       
+        history.push("/");
         window.location.reload();
     }
 
     const useStyles = makeStyles((theme) => ({
         grow: {
             flexGrow: 1,
-            
+
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -97,7 +97,7 @@ const Header = ({ user }) => {
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
             width: '100%',
-            
+
         },
         sectionDesktop: {
             display: 'none',
@@ -116,13 +116,10 @@ const Header = ({ user }) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
-    const [anchorElBurger, setAnchorElBurger] = useState(null);
+   
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const isMenuOpenBurger = Boolean(anchorElBurger);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -137,20 +134,11 @@ const Header = ({ user }) => {
         handleMobileMenuClose();
     };
 
-    const handleMenuBurgerClose = () => {
-        setAnchorElBurger(null);
-    };
-
-    const handleProfileMenuBurgerOpen = (event) => {
-        setAnchorElBurger(event.currentTarget);
-    };
-
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
-    const menuId = 'primary-search-account-menu'
-    const menuIdBurger = 'primary-search-account-menu-burger'
+    const menuId = 'primary-search-account-menu'   
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -164,25 +152,29 @@ const Header = ({ user }) => {
             <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
             <MenuItem onClick={logout}>Cerrar Sesión</MenuItem>
         </Menu>
-    );
+    ); 
 
-    const renderMenuBurger = (
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenuPublic = (
         <Menu
-            anchorEl={anchorElBurger}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            id={menuIdBurger}
-            getContentAnchorEl={null}
-            transformOrigin={{ vertical: 'top', horizontal: 'center', }}
-            open={isMenuOpenBurger}
-            onClose={handleMenuBurgerClose}
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><Link to="/mycourses"> Mis cursos </Link></MenuItem>
-            <MenuItem onClick={logout}>Cursos que enseño</MenuItem>
+            <MenuItem>
+                <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>                                       
+            </MenuItem>
+            <MenuItem>
+                <Link to="/register" className="btn-link"> Registrarte </Link>
+            </MenuItem>            
         </Menu>
     );
 
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
+    const renderMobileMenuPrivate = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -194,7 +186,7 @@ const Header = ({ user }) => {
         >
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
+                    <Badge badgeContent={0} color="secondary">
                         <MailIcon />
                     </Badge>
                 </IconButton>
@@ -202,7 +194,7 @@ const Header = ({ user }) => {
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
+                    <Badge badgeContent={0} color="secondary">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
@@ -223,20 +215,9 @@ const Header = ({ user }) => {
     );
 
     return (
-        <div className={classes.grow} style={{marginBottom: "4.5rem"}}>
+        <div className={classes.grow} style={{ marginBottom: "4.5rem" }}>
             <AppBar position="fixed">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                        aria-controls={menuIdBurger}
-                        aria-haspopup="true"
-                        onClick={handleProfileMenuBurgerOpen}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                <Toolbar>                    
                     <Typography className={classes.title} variant="h6" noWrap>
                         ColesRoom
                     </Typography>
@@ -261,6 +242,7 @@ const Header = ({ user }) => {
                         user !== ''
                             ? (
                                 <div>
+                                    {renderMobileMenuPrivate}
                                     <div className={classes.sectionDesktop}>
                                         <IconButton aria-label="show 4 new mails" color="inherit">
                                             <Badge badgeContent={0} color="secondary">
@@ -296,22 +278,35 @@ const Header = ({ user }) => {
                                     </div>
                                 </div>
                             )
-                            : (
+                            : (                                
                                 <div className="auth-buttons">
-                                    <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>
-                                    <Link to="/register" className="btn-link"> Registrarte </Link>
+                                    {renderMobileMenuPublic}
+                                    <div className={classes.sectionDesktop}>
+                                        <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>
+                                        <Link to="/register" className="btn-link"> Registrarte </Link>
+                                    </div>
+                                    <div className={classes.sectionMobile}>
+                                        <IconButton
+                                            aria-label="show more"
+                                            aria-controls={mobileMenuId}
+                                            aria-haspopup="true"
+                                            onClick={handleMobileMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <MoreIcon />
+                                        </IconButton>
+                                    </div>
                                 </div>
 
                             )
                     }
                 </Toolbar>
-            </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-            {renderMenuBurger}
+            </AppBar>           
+            
+            {renderMenu}            
         </div>
     );
 };
 
-Header.defaultPropt ={user: undefined}
+Header.defaultPropt = { user: ''}
 export default Header;
