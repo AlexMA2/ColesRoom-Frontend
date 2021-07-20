@@ -1,102 +1,23 @@
 import React, { useState } from 'react'
-import {useHistory, useParams} from 'react-router-dom'
-import { Avatar, Button, ButtonGroup, TextField, makeStyles } from '@material-ui/core'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import Icon from '@material-ui/core/Icon';
+import { Avatar, Button } from '@material-ui/core'
 
 import './Publication.css'
+import PublicationInput from './PublicationInput';
 
 const AddPublication = ({ handleSubmit , imgPerfil}) => {
 
-    const [click, setclick] = useState(false)
-    const [value, setValue] = useState('');
-    const [files, setFiles] = useState([]);
-    
-    const [disabledBtn, setDisabledBtn] = useState(true)
-
-    const handleChange = (event) => {
-        setValue(event.target.value);
-        if(value.length > 0 && disabledBtn){
-            setDisabledBtn(false)
-        }
-        else if (value.length <= 1){
-            setDisabledBtn(true)
-        }                
-    }    
-    
+    const [click, setclick] = useState(false)    
        
-    const handleClick = (event) => {
-        setValue('')
-        setDisabledBtn(true)
+    const handleClick = (event) => {        
         let cl = !click
         setclick(cl)
-    }
-
-    const handleSend = (ev) => {
-        ev.preventDefault();      
-        //make a function to Upload
-               
-    }
-
-    const useStyles = makeStyles((theme) => ({
-        button: {
-            margin: theme.spacing(2),
-        },
-        avatar: {
-            marginRight: theme.spacing(2),
-        }
-        
-    }));
-
-    const classes = useStyles();
+    }    
 
     return (
         <div className="addpubli">
             {
                 click
-                    ? <div className="addpubli_input">
-                        <TextField
-                            id="filled-multiline-flexible"
-                            label="Haz una publicación"
-                            multiline
-                            rowsMax={10}
-                            value={value}
-                            onChange={handleChange}
-                            variant="filled"
-                            rows={6}
-                            fullWidth
-                        />
-                        <ButtonGroup >
-
-                            <Button
-                                variant="contained"
-                                color="default"
-                                className={classes.button}
-                                startIcon={<CloudUploadIcon />}
-                                onClick={handleSend}
-                            >
-                                Subir
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={handleClick}
-                            >
-                                Cancelar
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                disabled={disabledBtn}
-                                onClick={() => {handleSubmit({content: value, type: 1, route: files}); handleClick()}}
-                            >
-                                Enviar
-                            </Button>
-
-                        </ButtonGroup>
-                    </div>
+                    ? <PublicationInput handleCancel={handleClick} handleSubmit={handleSubmit} />
                     :
                     <div className="addpubli_create" onClick={handleClick}>
                         <Avatar alt="Remy Sharp" src={imgPerfil} />
@@ -108,6 +29,10 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
 
         </div>
     )
+}
+
+AddPublication.defaultProps = {
+    imgPerfil : 'https://cdn.pixabay.com/photo/2017/04/26/09/00/avatar-5270037_960_720.png'
 }
 
 export default AddPublication
