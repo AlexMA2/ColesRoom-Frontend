@@ -8,8 +8,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import 'draft-js/dist/Draft.css';
-
 const Publication = ({ p }) => {
 
     const [openEdit, setOpenEdit] = useState(false);
@@ -70,18 +68,14 @@ const Publication = ({ p }) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        ¿Est&aacute;s seguro de querer eliminar esta publicaci&oacute;n?
-                    </DialogContentText>
-                </DialogContent>
+                <DialogTitle id="alert-dialog-title">{"¿Est&aacute;s seguro de querer eliminar esta publicaci&oacute;n?"}</DialogTitle>
+                
                 <DialogActions>
                     <Button onClick={handleCloseDelete} color="primary">
-                        No, no lo elimines.
+                        No, no quiero eliminarlo.
                     </Button>
                     <Button onClick={handleCloseDelete} color="primary" autoFocus>
-                        Sí, elim&iacute;nalo.
+                        Sí, quiero elim&iacute;narlo.
                     </Button>
                 </DialogActions>
             </Dialog>
