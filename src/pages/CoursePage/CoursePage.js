@@ -14,11 +14,7 @@ const CoursePage = () => {
   let { topic } = useParams()
 
   const [publicaciones, setPublicaciones] = useState([])
-  const [render, setrender] = useState(false)
-  const [render2, setrender2] = useState(false)
   const [course, setCourse] = useState({})
-
-  //Falta testear
 
   useEffect(() => {
     
@@ -46,7 +42,7 @@ const CoursePage = () => {
         return response.json()
       } )
       .then(json => {        
-        setPublicaciones([...publicaciones, value])        
+        setPublicaciones([...publicaciones, json])        
       })
       .catch(error => {       
         console.log(error)
@@ -92,7 +88,10 @@ const CoursePage = () => {
         </div>
         <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
         
-        <PublicationContainer publications={publicaciones} />
+        {
+          publicaciones.length > 0 &&
+          <PublicationContainer publications={publicaciones} />
+        }
         
       </div>
     );

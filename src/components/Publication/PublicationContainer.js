@@ -5,8 +5,10 @@ const PublicationContainer = ({publications}) => {
 
     const [publis, setPublis] = useState(publications)
 
-    const onDelete = (idPublication) => {
+    const onDelete = (idPublication) => {        
+        console.log("=", idPublication)
         setPublis(publis.filter((p) => p._id !== idPublication))
+        
     }
 
     useEffect(() => {
@@ -15,14 +17,14 @@ const PublicationContainer = ({publications}) => {
 
     return (
         <div>          
-            
+            {publis.map((publi, index) => (console.log(publi)))}
             <div style={{
                 display: "flex",
                 flexDirection: "column-reverse",
                 padding: '0'
             }}>
                 {
-                    publis.map((publi, index) => (<Publication key={index} p={publi} onDelete={onDelete}/>))
+                    publis.map((publi) => (<Publication key={publi._id} p={publi} onDelete={onDelete}/>))
                 }
             </div>
 

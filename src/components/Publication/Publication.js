@@ -63,7 +63,7 @@ const Publication = ({ p, onDelete }) => {
             .then(res => res.json())
             .then(json => {
                 setOpenEdit(false);
-                setOpenDelete(false);
+                setOpenDelete(false);                
                 onDelete(publication._id)
             })
             .catch(err => {
@@ -112,7 +112,7 @@ const Publication = ({ p, onDelete }) => {
                 </Button>
             </div>
             <div className="publication__date">
-                {/* {p.datePublicated} */}
+                {/* {p.datePublished} */}
                 Creado hace 2 dias - 18/02/2019 07:00:05
             </div>
             <div className="publication__content">
