@@ -8,10 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import PublicationInput from './PublicationInput'
 
-const Publication = ({ p }) => {
+const Publication = ({ p, onDelete }) => {
 
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
+    const [publication, setPublication] = useState(p);
+    const [publicationContent, setPublicationContent] = useState(p.content)
 
     const handleClickOpenEdit = () => {
         setOpenEdit(true);
@@ -29,56 +31,60 @@ const Publication = ({ p }) => {
         setOpenDelete(false);
     };
 
-    const handleEdit = (e) => {
-        e.preventDefault();
-        fetch(`/api/publications/${p.id}`, {
+    const handleEdit = (newValue) => {
+        
+        fetch(`/api/publications/${publication._id}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                title: e.target.value
+                content: newValue.content,
+                files: newValue.route
             })
         })
-        .then(res => res.json())
-        .then(json => {
-            if (json.success) {
-                setOpenEdit(false);
-                setOpenDelete(false);
-                window.location.reload();
-            }
-        });
+            .then(res => res.json())
+            .then(json => {
+                setPublication(json)
+                setOpenEdit(false)
+                setOpenDelete(false)              
+                setPublicationContent(newValue.content)                
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
-    const handleDelete = (e) => {
-        e.preventDefault();
-        fetch(`/api/publications/${p.id}`, {
+    const handleDelete = () => {        
+        fetch(`/api/publications/${publication._id}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(json => {
-            if (json.success) {
+            .then(res => res.json())
+            .then(json => {
                 setOpenEdit(false);
                 setOpenDelete(false);
-                window.location.reload();
-            }
-        });
+                onDelete(publication._id)
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
 
 
     return (
         <div className="publication">
+            
             <Dialog open={openEdit} onClose={handleCloseEdit} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title"> Editar publicación </DialogTitle>
                 <DialogContent>
-                    <PublicationInput handleCancel={handleCloseEdit} 
-                                      handleSubmit={handleEdit} 
-                                      filesDefault={p.route} 
-                                      valueDefault={p.content}
+                    <PublicationInput handleCancel={handleCloseEdit}
+                        handleSubmit={handleEdit}
+                        filesDefault={publication.route}
+                        valueDefault={publicationContent}
                     />
-                </DialogContent>                
+                </DialogContent>
             </Dialog>
             <Dialog
                 open={openDelete}
@@ -92,7 +98,7 @@ const Publication = ({ p }) => {
                     <Button onClick={handleCloseDelete} color="primary">
                         No, d&eacute;jalo.
                     </Button>
-                    <Button onClick={() => {handleCloseDelete(); handleDelete()}} color="primary" autoFocus>
+                    <Button onClick={() => { handleCloseDelete(); handleDelete() }} color="primary" autoFocus>
                         Sí, elim&iacute;nalo
                     </Button>
                 </DialogActions>
@@ -110,10 +116,10 @@ const Publication = ({ p }) => {
                 Creado hace 2 dias - 18/02/2019 07:00:05
             </div>
             <div className="publication__content">
-                {p.content}
+                {publicationContent}
             </div>
             <div className="publication__files">
-                {p.route.map((path, index) =>
+                {publication.route.map((path, index) =>
                     <div className="publication__file" key={index}>
                         <a href={path} target="_blank" rel="noreferrer">{<DescriptionIcon fontSize="large" />}</a>
                     </div>
