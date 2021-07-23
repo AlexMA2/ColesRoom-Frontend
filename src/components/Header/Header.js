@@ -21,6 +21,10 @@ import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../redux/index.js'
 
+import MenuProfile from "./MenuProfile.js";
+import MobileMenuPrivate from "./MobileMenuPrivate.js";
+import MobileMenuPublic from "./MobileMenuPublic.js";
+
 import "./Header.css";
 
 const Header = ({ user }) => {
@@ -36,33 +40,33 @@ const Header = ({ user }) => {
 
     const { typeWord } = bindActionCreators(actionCreators, dispatch)
 
-    const handlePressEnter = (e) => {        
+    const handlePressEnter = (e) => {
         if (e.keyCode === 13) {
-               
-            typeWord(word) 
+
+            typeWord(word)
         }
     }
 
     let history = useHistory();
+
     const logout = () => {
         sessionStorage.clear();
-        history.push("/");       
+        history.push("/");
         window.location.reload();
     }
 
     const useStyles = makeStyles((theme) => ({
         grow: {
             flexGrow: 1,
-            
+
         },
         menuButton: {
             marginRight: theme.spacing(2),
         },
         title: {
-            display: 'none',
-            [theme.breakpoints.up('sm')]: {
-                display: 'block',
-            },
+            display: 'block',
+            minWidth: '110px'
+            
         },
         search: {
             position: 'relative',
@@ -97,7 +101,7 @@ const Header = ({ user }) => {
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
             width: '100%',
-            
+
         },
         sectionDesktop: {
             display: 'none',
@@ -113,23 +117,19 @@ const Header = ({ user }) => {
         },
     }));
 
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
-    const [anchorElBurger, setAnchorElBurger] = useState(null);
+    const classes = useStyles();      
+   
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);    
+    const [anchorEl, setAnchorEl] = useState(null);   
 
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const isMenuOpenBurger = Boolean(anchorElBurger);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
-    };
+    };       
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
+    const handleMobileMenuOpen = (event) => {
+        setMobileMoreAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
@@ -137,106 +137,19 @@ const Header = ({ user }) => {
         handleMobileMenuClose();
     };
 
-    const handleMenuBurgerClose = () => {
-        setAnchorElBurger(null);
-    };
-
-    const handleProfileMenuBurgerOpen = (event) => {
-        setAnchorElBurger(event.currentTarget);
-    };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
+    const handleMobileMenuClose = () => {
+        setMobileMoreAnchorEl(null);
+    };    
+    
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const menuId = 'primary-search-account-menu'
-    const menuIdBurger = 'primary-search-account-menu-burger'
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            id={menuId}
-            getContentAnchorEl={null}
-            transformOrigin={{ vertical: 'top', horizontal: 'center', }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
-            <MenuItem onClick={logout}>Cerrar Sesión</MenuItem>
-        </Menu>
-    );
-
-    const renderMenuBurger = (
-        <Menu
-            anchorEl={anchorElBurger}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            id={menuIdBurger}
-            getContentAnchorEl={null}
-            transformOrigin={{ vertical: 'top', horizontal: 'center', }}
-            open={isMenuOpenBurger}
-            onClose={handleMenuBurgerClose}
-        >
-            <MenuItem onClick={handleMenuClose}><Link to="/mycourses"> Mis cursos </Link></MenuItem>
-            <MenuItem onClick={logout}>Cursos que enseño</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-        </Menu>
-    );
+    const mobileMenuId = 'primary-search-account-menu-mobile'; 
 
     return (
-        <div className={classes.grow} style={{marginBottom: "4.5rem"}}>
+        <div className={classes.grow} style={{ marginBottom: "4.5rem" }}>
             <AppBar position="fixed">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                        aria-controls={menuIdBurger}
-                        aria-haspopup="true"
-                        onClick={handleProfileMenuBurgerOpen}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                <Toolbar>                    
                     <Typography className={classes.title} variant="h6" noWrap>
                         ColesRoom
                     </Typography>
@@ -258,9 +171,14 @@ const Header = ({ user }) => {
                     </div>
                     <div className={classes.grow} />
                     {
-                        user !== undefined
+                        user !== ''
                             ? (
                                 <div>
+                                    {<MobileMenuPrivate mobileMoreAnchorEl={mobileMoreAnchorEl} i
+                                                        sMobileMenuOpen={isMobileMenuOpen} 
+                                                        mobileMenuId={mobileMenuId} 
+                                                        handleMobileMenuClose={handleMobileMenuClose} 
+                                                        handleProfileMenuOpen={handleProfileMenuOpen}/>}
                                     <div className={classes.sectionDesktop}>
                                         <IconButton aria-label="show 4 new mails" color="inherit">
                                             <Badge badgeContent={0} color="secondary">
@@ -296,22 +214,38 @@ const Header = ({ user }) => {
                                     </div>
                                 </div>
                             )
-                            : (
+                            : (                                
                                 <div className="auth-buttons">
-                                    <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>
-                                    <Link to="/register" className="btn-link"> Registrarte </Link>
+                                    {<MobileMenuPublic  mobileMoreAnchorEl={mobileMoreAnchorEl} 
+                                                        isMobileMenuOpen={isMobileMenuOpen} 
+                                                        mobileMenuId={mobileMenuId} 
+                                                        handleMobileMenuClose={handleMobileMenuClose}/>}
+                                    <div className={classes.sectionDesktop}>
+                                        <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>
+                                        <Link to="/register" className="btn-link"> Registrarte </Link>
+                                    </div>
+                                    <div className={classes.sectionMobile}>
+                                        <IconButton
+                                            aria-label="show more"
+                                            aria-controls={mobileMenuId}
+                                            aria-haspopup="true"
+                                            onClick={handleMobileMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <MoreIcon />
+                                        </IconButton>
+                                    </div>
                                 </div>
 
                             )
                     }
                 </Toolbar>
-            </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-            {renderMenuBurger}
+            </AppBar>           
+            
+            {<MenuProfile logout={logout} anchorEl={anchorEl} isMenuOpen={isMenuOpen} menuId={menuId} handleMenuClose={handleMenuClose}/>}            
         </div>
     );
 };
 
-Header.defaultPropt ={user: undefined}
+Header.defaultPropt = { user: ''}
 export default Header;

@@ -6,3 +6,12 @@ export const typeWord = (word) => {
         })
     }
 }
+
+export const setUser = (user) => {
+    return (dispatch) => {
+        dispatch({
+            type: '@user/auth',
+            payload: user
+        })
+    }
+}

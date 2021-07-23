@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from "react-router"
 import { Redirect } from "react-router"
@@ -14,22 +14,48 @@ const CoursePage = () => {
   let { topic } = useParams()
 
   const [publicaciones, setPublicaciones] = useState([])
-  const [render, setrender] = useState(false)
   const [course, setCourse] = useState({})
 
-  const handleSubmit = (value) => {       
-    let pub = publicaciones
-    pub.push(value)
-    setPublicaciones(pub)
-    setrender(render + 1)    
-  }
-
-  const data = {};
-
-
   useEffect(() => {
+    
+    const getPublications = async () => {
+      const p = await fetchPublications()      
+      setPublicaciones(p)      
+    }
+
+    getPublications()
 
   }, [])
+
+  const handleSubmit = (value) => {       
+    value.course_id = topic   
+    
+    fetch('/api/publications', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(value)
+    })
+      .then(response => {        
+        return response.json()
+      } )
+      .then(json => {        
+        setPublicaciones([...publicaciones, json])        
+      })
+      .catch(error => {       
+        console.log(error)
+      })   
+
+  }  
+
+  const fetchPublications = async () => {
+    const res = await fetch(`api/publications/${topic}`)
+    const data = await res.json()
+ 
+    return data
+  }
 
   const [click, setClick] = useState(false)
   const history = useHistory()
@@ -61,8 +87,12 @@ const CoursePage = () => {
           </Button>
         </div>
         <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
-  
-        <PublicationContainer publications={publicaciones} />
+        
+        {
+          publicaciones.length > 0 &&
+          <PublicationContainer publications={publicaciones} />
+        }
+        
       </div>
     );
   };

@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Home from "./pages/Home/Home.js"
 import Main from "./pages/Main/Main.js"
@@ -14,57 +14,111 @@ import EditProfile from "./pages/EditProfile/EditProfile.js"
 import MyCourses from "./pages/MyCourses/MyCourses.js"
 import CreateTask from "./pages/CreateTask/CreateTask.js"
 
+import { useSelector } from 'react-redux'
 
 const App = () => {
-  const [user, setuser] = useState({});
+  const [user, setuser] = useState('');
+  const userredux = useSelector(state => state.user)
+  const [render, setrender] = useState(false)
 
   useEffect(() => {
-
-    console.log(sessionStorage.getItem("user"))
     if (sessionStorage.getItem("user") !== null) {
-      // Restaura el contenido al campo de texto
-      console.log(sessionStorage.getItem("user"))
-      
+      setuser(sessionStorage.getItem("user"))
+      setrender(true)
     }
     else {
-      setuser(undefined)
+      setuser('')
+      setrender(true)
     }
+  }, [userredux]);
 
-  }, []);
-    
   return (
     <Router>
-      <Header user={user}/>
-      <Switch>
-        <Route exact path="/editprofile">
-          <EditProfile />
-        </Route>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
-        <Route exact path="/crear">
-          <CreateCourse user={user} />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-        <Route exact path="/:topic">
-          <CoursePage />
-        </Route>
-        <Route exact path="/:topic/taskcreate">
-          <CreateTask />
-        </Route>
-        <Route exact path="/mycourses">
-          <MyCourses />
-        </Route>
-        <Route exact path="/">
-          {user === undefined ? <Home /> : <Main user={user} />}
-        </Route>
-      </Switch>
-    </Router>
+      <Header user={user} />
+      {
+        !render
+          ?
+          < Switch >
+            <Route exact path="/profile">
+              <Profile />
+            </Route>
+            <Route exact path="/profile/edit">
+              <EditProfile />
+            </Route>
+            <Route exact path="/mycourses">
+              <MyCourses />
+            </Route>
+            <Route exact path="/mycourses/crear">
+              <CreateCourse user={user} />
+            </Route>
+            <Route exact path="/mycourses/:topic">
+              <CoursePage />
+            </Route>
+            <Route exact path="/mycourses/:topic/taskcreate">
+              <CreateTask />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
+            <Route exact path="/">
+              {user === '' ? <Home /> : <Main user={user} />}
+            </Route>
+            <Route path="/">
+              <Redirect to="/" />
+            </Route>
+          </Switch>
+          :
+          user === ''
+            ?
+            <Switch>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route exact path="/register">
+                <Register />
+              </Route>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+            :
+            <Switch>
+              <Route exact path="/profile">
+                <Profile />
+              </Route>
+              <Route exact path="/profile/edit">
+                <EditProfile />
+              </Route>
+              <Route exact path="/mycourses">
+                <MyCourses />
+              </Route>
+              <Route exact path="/mycourses/crear">
+                <CreateCourse user={user} />
+              </Route>
+              <Route exact path="/mycourses/:topic">
+                <CoursePage />
+              </Route>
+              <Route exact path="/mycourses/:topic/taskcreate">
+                <CreateTask />
+              </Route>
+              <Route exact path="/">
+                <Main user={user} />
+              </Route>
+              <Route path="/">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+
+      }     
+    </Router >
+
+
   );
 };
 
