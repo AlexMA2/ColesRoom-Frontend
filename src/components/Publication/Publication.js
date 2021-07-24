@@ -8,12 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import PublicationInput from './PublicationInput'
 
-const Publication = ({ p, onDelete }) => {
+const Publication = ({ p, onDelete, viewControls }) => {
 
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
     const [publication, setPublication] = useState(p);
-    const [publicationContent, setPublicationContent] = useState(p.content)
+    const [publicationContent, setPublicationContent] = useState(p.content)    
 
     const handleClickOpenEdit = () => {
         setOpenEdit(true);
@@ -32,7 +32,7 @@ const Publication = ({ p, onDelete }) => {
     };
 
     const handleEdit = (newValue) => {
-        
+
         fetch(`/api/publications/${publication._id}`, {
             method: 'PUT',
             headers: {
@@ -48,22 +48,22 @@ const Publication = ({ p, onDelete }) => {
             .then(json => {
                 setPublication(json)
                 setOpenEdit(false)
-                setOpenDelete(false)              
-                setPublicationContent(newValue.content)                
+                setOpenDelete(false)
+                setPublicationContent(newValue.content)
             })
             .catch(err => {
                 console.log(err);
             });
     };
 
-    const handleDelete = () => {        
+    const handleDelete = () => {
         fetch(`/api/publications/${publication._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
             .then(json => {
                 setOpenEdit(false);
-                setOpenDelete(false);                
+                setOpenDelete(false);
                 onDelete(publication._id)
             })
             .catch(err => {
@@ -75,42 +75,47 @@ const Publication = ({ p, onDelete }) => {
 
     return (
         <div className="publication">
-            
-            <Dialog open={openEdit} onClose={handleCloseEdit} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title"> Editar publicación </DialogTitle>
-                <DialogContent>
-                    <PublicationInput handleCancel={handleCloseEdit}
-                        handleSubmit={handleEdit}
-                        filesDefault={publication.route}
-                        valueDefault={publicationContent}
-                    />
-                </DialogContent>
-            </Dialog>
-            <Dialog
-                open={openDelete}
-                onClose={handleCloseDelete}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{"¿Estás seguro de querer eliminar esta publicación?"}</DialogTitle>
 
-                <DialogActions>
-                    <Button onClick={handleCloseDelete} color="primary">
-                        No, d&eacute;jalo.
-                    </Button>
-                    <Button onClick={() => { handleCloseDelete(); handleDelete() }} color="primary" autoFocus>
-                        Sí, elim&iacute;nalo
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <div className="publication__controls">
-                <Button variant="outlined" color="primary" onClick={handleClickOpenEdit}>
-                    Editar
-                </Button>
-                <Button variant="outlined" color="primary" onClick={handleClickOpenDelete}>
-                    Eliminar
-                </Button>
-            </div>
+            {
+                viewControls &&               
+                <div>
+                    <Dialog open={openEdit} onClose={handleCloseEdit} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title"> Editar publicación </DialogTitle>
+                        <DialogContent>
+                            <PublicationInput handleCancel={handleCloseEdit}
+                                handleSubmit={handleEdit}
+                                filesDefault={publication.route}
+                                valueDefault={publicationContent}
+                            />
+                        </DialogContent>
+                    </Dialog>
+                    <Dialog
+                        open={openDelete}
+                        onClose={handleCloseDelete}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"¿Estás seguro de querer eliminar esta publicación?"}</DialogTitle>
+
+                        <DialogActions>
+                            <Button onClick={handleCloseDelete} color="primary">
+                                No, d&eacute;jalo.
+                            </Button>
+                            <Button onClick={() => { handleCloseDelete(); handleDelete() }} color="primary" autoFocus>
+                                Sí, elim&iacute;nalo
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <div className="publication__controls">
+                        <Button variant="outlined" color="primary" onClick={handleClickOpenEdit}>
+                            Editar
+                        </Button>
+                        <Button variant="outlined" color="primary" onClick={handleClickOpenDelete}>
+                            Eliminar
+                        </Button>
+                    </div>
+                </div>
+            }
             <div className="publication__date">
                 {/* {p.datePublished} */}
                 Creado hace 2 dias - 18/02/2019 07:00:05

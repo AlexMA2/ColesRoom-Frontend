@@ -3,7 +3,7 @@ import CourseContainer from "../../components/CourseContainer/CourseContainer"
 import './Main.css'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Typography, Button, Divider , makeStyles} from '@material-ui/core'
+import { Typography, Button, makeStyles} from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 
 import Banner from "../../components/Banner/Banner.js"
@@ -12,9 +12,7 @@ import Banner from "../../components/Banner/Banner.js"
 import imgBanner from '../../imgs/banner1.jpg'
 import imgEnsenar from '../../imgs/ensenar.jpg'
 
-const Main = ({ filterSearch}) => {
-
-  const [courses, setCourses] = useState([])
+const Main = ({}) => {
   const [loading, setLoading] = useState(true)
   const [limitCourses, setLimitCourses] = useState(8)
 
@@ -63,7 +61,7 @@ const Main = ({ filterSearch}) => {
       {
         loading
         ? <CircularProgress size={100} className="center-block"/>                   
-        : <CourseContainer coursesList={courses}></CourseContainer>
+        : <CourseContainer></CourseContainer>
       }
       <Button variant="contained" size="medium" color="secondary" onClick={showMore} className={classes.margin} endIcon={<AddIcon/> }>
           Ver más cursos 
@@ -73,7 +71,7 @@ const Main = ({ filterSearch}) => {
         Enseña lo que sabes 
       </Typography>
       <Banner imgBanner={imgEnsenar} 
-              redir="/mycourses" 
+              redir="/CreateCourse" 
               textButton="Crear un curso" 
               title={["Enseña a", "mejorar", "progresar", "triunfar"]} 
               paragraph="Puedes ayudar a otras personas compartiendo tus conocimientos. Crea cursos e invita personas"               

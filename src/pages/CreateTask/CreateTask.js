@@ -5,8 +5,30 @@ import "./CreateTask.css"
 
 const CreateTask = () => {
 
-    const CrearTarea = (ev) => {
-        alert("TAREA REGISTRADA");
+    const CrearTarea = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            
+            user_id: "",
+            curso_id: form.curso_id.value,
+            nombre: form.nombre.value,
+            categoria: form.categoria.value,
+          };
+
+          fetch('/taskcreate', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          })
+            .then(res => res.json())
+            .then(d => {        
+              console.log(d)
+            })
+            .catch(err => seterrorRegister(errores[err.error] || 'Hubo un problema'));
     }
 
 
@@ -42,7 +64,7 @@ const CreateTask = () => {
             </Form>
             <br></br>
             <Button onClick={CrearTarea} className>
-                Primary
+                Crear Tarea
             </Button>
         </div>
     );

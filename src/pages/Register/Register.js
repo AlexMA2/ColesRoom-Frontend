@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import {Redirect} from "react-router-dom";
 import '../../utils.css'
-import { Form, Button } from 'react-bootstrap';
 import "./Register.css"
-
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../redux/index.js'
@@ -13,7 +11,6 @@ import { actionCreators } from '../../redux/index.js'
 const Register = () => {
   const [logeado, setlogeado] = useState(false)
   const [errorRegister, seterrorRegister] = useState("")
-
   const dispatch = useDispatch()
   const { setUser } = bindActionCreators(actionCreators, dispatch)
   
@@ -67,11 +64,11 @@ const Register = () => {
      <form className="ax-form__form" id="form" onSubmit={registration}>
        <div className="ax-form__input">
          <p> Nombres: </p>
-         <input name="name" type="name" placeholder="Ingrese Nombre Completo" required/>
+         <input name="name" type="text" placeholder="Ingrese Nombre Completo" required/>
        </div>
        <div className="ax-form__input">
          <p> Apellidos: </p>
-         <input name="surname" type="name" placeholder="Ingrese Nombre Completo" required/>
+         <input name="surname" type="text" placeholder="Ingrese Nombre Completo" required/>
        </div>
        <div className="ax-form__input">
          <p> Correo Electr&oacute;nico: </p>
@@ -84,8 +81,7 @@ const Register = () => {
        <input type="submit" value="Ingresar" />
      </form>
      <div className="ax-form__utils">
-       <Link to="#"> ¿Necesitas ayuda? </Link>
-       <Link to="#"> ¿Ya tienes una cuenta? </Link>
+       <Link to="/login"> ¿Ya tienes una cuenta? </Link>
      </div>
    </div>
     </div>   

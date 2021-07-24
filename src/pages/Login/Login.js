@@ -73,8 +73,7 @@ const Login = () => {
           <input type="submit" value="Ingresar" />
         </form>
         <div className="ax-form__utils">
-          <Link to="#"> ¿Olvidaste tu contraseña? </Link>
-          <Link to="#"> ¿No tienes una cuenta? </Link>
+          <Link to="/register"> ¿No tienes una cuenta? </Link>
         </div>
       </div>
     </div>

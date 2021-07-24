@@ -1,9 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UILink from '@material-ui/core/Link';
-
 import './CourseTitle.css'
-import fondo from '../../Fondo.jpg'
 
 const CourseTitle = ({ name, description, date, photo, backgroundImage, teacher }) => {
 
@@ -12,7 +10,7 @@ const CourseTitle = ({ name, description, date, photo, backgroundImage, teacher 
 
     const [show, setshow] = useState(0)
 
-
+    const BG = import(backgroundImage)
     
     const handleClick = (ev) => {
         if (show === 0) {
@@ -26,6 +24,7 @@ const CourseTitle = ({ name, description, date, photo, backgroundImage, teacher 
             setshow(0)
         }
     }
+
 
     return (
         <div className="course-title">
@@ -49,9 +48,9 @@ const CourseTitle = ({ name, description, date, photo, backgroundImage, teacher 
                 </div>
             </div>
             <div className="course-title__extra">
-                <div className="bgimage" ref={slideIMG}>
-
-                    <img src={fondo} alt="bg_image"></img>
+                <div className="bgimage" style={{width: "100%"}} ref={slideIMG}>
+                    {console.log(BG)}
+                    <img src={BG} alt="bg_image"></img>
                 </div>
                 <div className="descrip" ref={slideDesc}>
                     {description}

@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Publication from './Publication'
 
-const PublicationContainer = ({publications}) => {
+const PublicationContainer = ({publications, teacherId}) => {
 
     const [publis, setPublis] = useState(publications)
+    const [viewControls, setViewControls] = useState(false)
 
     const onDelete = (idPublication) => {        
         console.log("=", idPublication)
@@ -13,18 +14,25 @@ const PublicationContainer = ({publications}) => {
 
     useEffect(() => {
         setPublis(publications)
-    }, [publications])
+        const userid = sessionStorage.getItem("user")
+        if (userid === teacherId) {
+            setViewControls(true)
+        }
+        else {
+            setViewControls(false)
+        }
+    }, [publications, teacherId])
 
     return (
-        <div>          
-            {publis.map((publi, index) => (console.log(publi)))}
+        <div style={{width: '100%'}}>          
+         
             <div style={{
                 display: "flex",
                 flexDirection: "column-reverse",
                 padding: '0'
             }}>
                 {
-                    publis.map((publi) => (<Publication key={publi._id} p={publi} onDelete={onDelete}/>))
+                    publis.map((publi) => (<Publication key={publi._id} p={publi} onDelete={onDelete} viewControls={viewControls}/>))
                 }
             </div>
 

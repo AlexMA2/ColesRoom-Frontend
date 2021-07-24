@@ -17,7 +17,7 @@ import {Redirect, useHistory} from 'react-router-dom';
 
 import './Course.css'
 
-const Course = ({ id, curso_id, name, category, teacher_id }) => {
+const Course = ({ curso_id,name, category,user_id,description,image, datecreate}) => {
     const useStyles = makeStyles((theme) => ({
         root: {
             maxWidth: 345,
@@ -53,89 +53,25 @@ const Course = ({ id, curso_id, name, category, teacher_id }) => {
     }));
 
     const classes = useStyles();
-
-    const getDay = () => {
-        //obtener fecha de la BD
-        let fecha = new Date(Date.UTC(2020, 11, 20, 3, 23, 16, 738));
-        let dtf = new Intl.DateTimeFormat("es-GB", { dateStyle: "long" }).format(
-            fecha
-        );
-        return dtf;
-    };
-
     const [click, setClick] = useState(false);
-
-    const history = useHistory();
-    const irTopic = `${id}`;
+    const history = useHistory();    
 
     const handleClick = (ev) => {
-        history.push(irTopic);
+        history.push(`mycourses/${curso_id}`);
         setClick(true);
-        //inscribirseCurso();
-        //buscarCurso()
     };
-    // function buscar() {
-    //     let idUser = 1;
-    //     firebase.auth().onAuthStateChanged((user) => {
-    //         if (user) {
-    //             idUser = user.uid;
-    //         } else {
-    //             alert("no hay usuario registrado")
-    //             history.push("/login");
-    //         }
-    //     });
-        
-    // }
-    // function buscarCurso() {
-
-    //     var ref = firebase.database().ref("Alumno-Curso")
-    //     ref.once("value").then(function (snapshot) {
-
-    //         var aula = snapshot.child().val(); // {Asignatura:"lenguaje",Curso:"8A"} Esta linea me devuelve un objeto con todos los valores de ese child
-    //         var asignatura = snapshot.child().val(); // "Lenguaje"
-    //         //var curso = snapshot.child(codigo).child("Curso").val(); // "8A"
-    //         console.log(aula)
-    //         console.log(asignatura)
-
-    //     });
-    // }
-    // function inscribirseCurso() {
-    //     const info = {
-    //         user_id: "",
-    //         curso_id: id,
-    //         nota: 0,
-    //     }
-    //     let nombre_val = "-MdriIuPvM2RKZePnY6F";
-    //     alert(nombre_val);
-    //     firebase.auth().onAuthStateChanged((user) => {
-    //         if (user) {
-    //             info.user_id = user.uid;
-    //             firebase.database().ref(`Alumno-Curso/${nombre_val}`).push(info);
-    //             alert("reistrado");
-    //         } else {
-    //             //alert("no hay usuario registrado")
-    //             history.push("/login");
-    //         }
-    //     });
-    //     buscarCurso()
-    // }
-
+    //D:\Proyectos\Visual Studio\ColesRoom - Grupo 2\ColesRoom-Grupo2-Backend\photos\Fondo.jpg
     return (
         <Card className={classes.root}>
-            {click && <Redirect to={irTopic} />}
+            {click && <Redirect to={curso_id} />}
             <CardHeader
-                avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                        {name.substring(0, 1)}
-                    </Avatar>
-                }
                 action={
                     <IconButton aria-label="settings">
                         <MoreVertIcon />
                     </IconButton>
                 }
                 title={name}
-                subheader={getDay()}
+                subheader={datecreate}
             />
             <CardMedia
                 className={classes.media}
@@ -143,10 +79,8 @@ const Course = ({ id, curso_id, name, category, teacher_id }) => {
                 title="Paella dish"
             />
             <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the
-                    mussels, if you like.
+                <Typography variant="body2" color="textSecondary" component="p" className="limit-description">
+                    {description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing className="separar">

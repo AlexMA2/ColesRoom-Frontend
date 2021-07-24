@@ -5,7 +5,6 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -16,10 +15,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
+import logotipo from "../../imgs/logo.png"
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../redux/index.js'
+import { Typography } from "@material-ui/core";
 
 import MenuProfile from "./MenuProfile.js";
 import MobileMenuPrivate from "./MobileMenuPrivate.js";
@@ -27,10 +27,8 @@ import MobileMenuPublic from "./MobileMenuPublic.js";
 
 import "./Header.css";
 
-const Header = ({ user }) => {
-
+const Header = ({user}) => {
     const [word, setword] = useState("");
-
     const handleChange = (e) => {
         let toSearch = e.target.value;
         setword(toSearch)
@@ -54,6 +52,16 @@ const Header = ({ user }) => {
         history.push("/");
         window.location.reload();
     }
+    const MyCourses = () => {
+        history.push("/mycourses");
+        //handleMenuBurgerClose()
+    }
+    const CoursesCreated = () => {
+        history.push("/coursescreated");
+        //handleMenuBurgerClose()
+    }
+
+
 
     const useStyles = makeStyles((theme) => ({
         grow: {

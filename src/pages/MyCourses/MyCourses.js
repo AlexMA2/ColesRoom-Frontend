@@ -18,22 +18,15 @@ const MyCourses = () => {
         }
     }
 
+
     useEffect(() => {
-        
+
     }, [])
 
     return (
         <div style={container(75)}>
-            {
-                // usuario === null &&
-                // <Redirect to="/"/>
-            }
             <h1> Tus cursos </h1>
-            {
-                loading
-                    ? <CircularProgress size={100} className="center-block" />
-                    : <CourseContainer coursesList={courses}></CourseContainer>
-            }
+            <CourseContainer></CourseContainer>
         </div>
     )
 }

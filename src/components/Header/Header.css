@@ -81,3 +81,9 @@
     display: flex;
     flex-direction: row;
 }
+
+.imgCss{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

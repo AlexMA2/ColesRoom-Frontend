@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from "react-router"
 import { Redirect } from "react-router"
@@ -15,15 +16,32 @@ const CoursePage = () => {
 
   const [publicaciones, setPublicaciones] = useState([])
   const [course, setCourse] = useState({})
+  const [teacher, setTeacher] = useState({})
 
   useEffect(() => {
     
     const getPublications = async () => {
       const p = await fetchPublications()      
       setPublicaciones(p)      
+    }    
+
+    //Get the course user_id
+    const getTeacher = async (teacher_id) => {
+      const t = await fetchTeacher(teacher_id)
+      setTeacher(t)
+    }
+
+    const getCourse = async () => {
+      const c = await fetchCourse(topic)
+      getTeacher(c.user_id)
+      setCourse(c)
     }
 
     getPublications()
+    getCourse()
+    
+    //Get the teacher user_id
+    
 
   }, [])
 
@@ -57,6 +75,20 @@ const CoursePage = () => {
     return data
   }
 
+  const fetchCourse = async (topic) => {
+    const res = await fetch(`api/courses/${topic}`)
+    const data = await res.json()
+
+    return data
+  }
+
+  const fetchTeacher = async (topic) => {
+    const res = await fetch(`teacher/${topic}`)
+    const data = await res.json()
+    
+    return data
+  }
+
   const [click, setClick] = useState(false)
   const history = useHistory()
     const irTopic = `${topic}/taskcreate`
@@ -74,12 +106,15 @@ const CoursePage = () => {
                   click &&
                   <Redirect to={irTopic}/>  
               }
-        <CourseTitle name={course.nombre}
-          description="descripcion"
-          date="fecha"
-          photo="foto"
-          backgroundImage="imagen"
-          teacher={course.user_id}
+              {
+                console.log(course)
+              }
+        <CourseTitle name={course.name}
+          description={course.description}
+          date={course.datecreate}
+          photo={teacher.photo}
+          backgroundImage={course.image}
+          teacher={teacher.name}
         />
         <div style={{"marginBottom":"15px"}}>
           <Button variant="contained" color="primary" onClick={handleClick}>
@@ -90,7 +125,7 @@ const CoursePage = () => {
         
         {
           publicaciones.length > 0 &&
-          <PublicationContainer publications={publicaciones} />
+          <PublicationContainer publications={publicaciones} teacherId={course.user_id} />
         }
         
       </div>
