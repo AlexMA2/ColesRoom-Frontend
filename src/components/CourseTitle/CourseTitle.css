@@ -63,15 +63,16 @@
     align-items: center;
 }
 
-
+.course__subinfo>div:hover {
+    background-color: #5868c5;
+}
 
 .course__subinfo h2 {
     color: #fff;
     display: block;
     font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 44px;
+    font-size: 2.25rem;    
+    line-height: 2.75rem;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;
@@ -84,7 +85,18 @@
     font-weight: bold;
 }
 
+.course__subinfo > input:focus {
+    outline: 0;
+    border-bottom: 3px solid #1536f1 !important;
+}
+
 .descrip {
     overflow-y: scroll;
     height: 100%;
+}
+
+.course__description textarea:focus {
+    outline: 0;
+    border: none;
+    border-bottom: 3px solid #1536f1 !important;    
 }
