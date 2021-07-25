@@ -25,7 +25,7 @@ class CourseContainer extends Component {
   }
 
   fetchTasks() {
-    fetch('/courses')
+    fetch('/api/courses')
       .then(res => res.json())
       .then(data => {
         

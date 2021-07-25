@@ -71,7 +71,7 @@ const Main = ({}) => {
         Enseña lo que sabes 
       </Typography>
       <Banner imgBanner={imgEnsenar} 
-              redir="/CreateCourse" 
+              redir="/mycourses/crear" 
               textButton="Crear un curso" 
               title={["Enseña a", "mejorar", "progresar", "triunfar"]} 
               paragraph="Puedes ayudar a otras personas compartiendo tus conocimientos. Crea cursos e invita personas"               

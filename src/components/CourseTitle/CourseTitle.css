@@ -5,86 +5,86 @@
 
 .course-title {
     width: 100%;
-    box-shadow: 0 0 1rem #cacaca ;
+    box-shadow: 0 0 1rem #cacaca;
     display: flex;
-    flex-direction: row;    
-    height: 240px;
-    margin: 2rem 0 ;
-}
-
-.course-title > div {
-    margin: 1rem;    
+    flex-direction: row;
+    height: auto;
+    margin: 2rem 0;
+    max-height: 15rem;   
+    
 }
 
 .course-title__info {
-    width: 65%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem 0;
+    color:  #fff;
+    border-radius: 1rem;
 }
 
-.course-title__info > div {
-    margin: 0.2rem;
-    width: 90%;
+.course-title__info>div {    
+    width: 92%;
     text-align: left;
 }
 
-.course-title__teacher {
-    display: flex;
-    flex-direction: row;    
-    align-items: center;
+.course__description {
+    overflow-y: hidden;
+    height: 100%;
 }
 
-.course-title__teacher p {
-    margin-left: 0.75rem;
-    font-size: 1.25rem;
-    text-transform: capitalize;
-}
-
-.course-title__ver {
-    color: #3F51B5;
-    cursor: pointer;   
-}
-
-.course-title__ver:hover {
-    color: #293eb6;
-    text-shadow: 0 0 4px #cfcfcf;
-}
-
-.course-title__extra {
-    width: 35%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.course-title__extra > div {    
-    width: 0;
-    overflow: hidden;
-}
-
-.course-title__extra > div img {
-    width: 100%;
-    object-fit: fill;
-}
-
-.c-active {
-    width: 100% !important;
-}
-
-.course__subinfo h2 {
-    font-size: 3rem;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-    
-}
-
-.course__subinfo p {
+.course__description > p {	
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-style: italic;
     margin-left: 0.5rem;
+}
+
+.course__subinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.course__subinfo>div {
+    width: 40px;
+    height: 40px;
+    background-color: #3F51B5;
+    border-radius: 50%;    
+    margin-left: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.course__subinfo h2 {
+    color: #fff;
+    display: block;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 44px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.descrip {
+    overflow-y: scroll;
+    height: 100%;
 }

@@ -111,10 +111,8 @@ const CoursePage = () => {
               }
         <CourseTitle name={course.name}
           description={course.description}
-          date={course.datecreate}
-          photo={teacher.photo}
-          backgroundImage={course.image}
-          teacher={teacher.name}
+          date={course.datecreate}          
+          backgroundImage={course.image}          
         />
         <div style={{"marginBottom":"15px"}}>
           <Button variant="contained" color="primary" onClick={handleClick}>
