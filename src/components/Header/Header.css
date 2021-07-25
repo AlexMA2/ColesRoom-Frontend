@@ -87,3 +87,25 @@
     justify-content: center;
     align-items: center;
 }
+
+.ButtonP{
+    font-size: 1rem;
+    word-spacing: 2px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: capitalize;
+    box-shadow: 1px 4px 10px #000000;
+    height: 30px;
+    width: fit-content;
+}
+
+.div-divertido{
+    display: flex;
+    justify-content: center;
+}
+
+.div-divertido2{
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
