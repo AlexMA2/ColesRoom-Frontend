@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DescriptionIcon from '@material-ui/icons/Description';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,13 +7,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import PublicationInput from './PublicationInput'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const Publication = ({ p, onDelete, viewControls }) => {
 
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
     const [publication, setPublication] = useState(p);
-    const [publicationContent, setPublicationContent] = useState(p.content)    
+    const [publicationContent, setPublicationContent] = useState(p.content)
+    const [files, setFiles] = useState([])
 
     const handleClickOpenEdit = () => {
         setOpenEdit(true);
@@ -68,16 +70,97 @@ const Publication = ({ p, onDelete, viewControls }) => {
             })
             .catch(err => {
                 console.log(err);
-            });
+            });        
+
+        fetch(`/file/deleteAll`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filesIds: publication.route
+            })
+
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                else {
+                    console.log('Error: ' + response.status + ' ' + response.statusText)
+                }
+            })
+            .then(json => {
+                if (json) {
+                    console.log()
+                }
+            })
+            .catch(error => {
+                console.log('Error: ' + error)
+            })
     };
 
+    useEffect(() => {
+        // Fetch a publicacion. routes para coger los valores de esos ids.
+        setPublication(p);
+        fetch('/file', {
+            method: 'POST',
+            body: JSON.stringify({
+                files: p.route,
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("-----------------")
+                if (data) {
+                    console.log(data)
+                    setFiles(data)
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
+    }, [p])
+
+    const handleDeleteFile = (fileID) => {
+        setFiles(files.filter(file => file._id !== fileID))
+        fetch(`/file/${fileID}/delete`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                else {
+                    console.log('Error: ' + response.status + ' ' + response.statusText)
+                }
+            })
+            .then(json => {
+                if (json) {
+                    console.log()
+                }
+            })
+            .catch(error => {
+                console.log('Error: ' + error)
+            })
+    }
 
     return (
         <div className="publication">
 
             {
-                viewControls &&               
+                viewControls &&
                 <div>
                     <Dialog open={openEdit} onClose={handleCloseEdit} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title"> Editar publicación </DialogTitle>
@@ -86,6 +169,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
                                 handleSubmit={handleEdit}
                                 filesDefault={publication.route}
                                 valueDefault={publicationContent}
+                                publicationID={p._id}
                             />
                         </DialogContent>
                     </Dialog>
@@ -124,9 +208,16 @@ const Publication = ({ p, onDelete, viewControls }) => {
                 {publicationContent}
             </div>
             <div className="publication__files">
-                {publication.route.map((path, index) =>
+                {files.map((file, index) =>
                     <div className="publication__file" key={index}>
-                        <a href={path} target="_blank" rel="noreferrer">{<DescriptionIcon fontSize="large" />}</a>
+                        {
+                            viewControls &&
+                            <div style={{ display: 'flex', alignSelf: 'center' }} onClick={() => { handleDeleteFile(file._id) }}>
+                                <HighlightOffIcon />
+                            </div>
+                        }
+                        <a href={file.path} target="_blank" rel="noreferrer">{<DescriptionIcon fontSize="large" />}</a>
+                        <p> {file.filename} </p>
                     </div>
                 )}
             </div>
