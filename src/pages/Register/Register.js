@@ -61,6 +61,9 @@ const Register = () => {
       console.log(name, value);
       setcambio(value)
     }
+    if(value===""){
+      setcambio("")
+    }
   }
 
   const [cambio2, setcambio2] = useState("")
@@ -71,6 +74,9 @@ const Register = () => {
     if (regex.test(value)) {
       console.log(name, value);
       setcambio2(value)
+    }
+    if(value===""){
+      setcambio("")
     }
   }
 
