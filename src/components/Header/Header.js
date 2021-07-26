@@ -7,6 +7,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -16,14 +19,15 @@ import logotipo from "../../imgs/logo.png"
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../redux/index.js'
-import { Button } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+
 import MenuProfile from "./MenuProfile.js";
 import MobileMenuPrivate from "./MobileMenuPrivate.js";
 import MobileMenuPublic from "./MobileMenuPublic.js";
 
 import "./Header.css";
 
-const Header = ({ user }) => {
+const Header = ({user}) => {
     const [word, setword] = useState("");
     const handleChange = (e) => {
         let toSearch = e.target.value;
@@ -41,16 +45,23 @@ const Header = ({ user }) => {
         }
     }
 
-    const registrar = (e)=>{
-        history.push("/mycourses/crear")
-    }
-
     let history = useHistory();
+
     const logout = () => {
         sessionStorage.clear();
         history.push("/");
         window.location.reload();
     }
+    const MyCourses = () => {
+        history.push("/mycourses");
+        //handleMenuBurgerClose()
+    }
+    const CoursesCreated = () => {
+        history.push("/coursescreated");
+        //handleMenuBurgerClose()
+    }
+
+
 
     const useStyles = makeStyles((theme) => ({
         grow: {
@@ -63,7 +74,7 @@ const Header = ({ user }) => {
         title: {
             display: 'block',
             minWidth: '110px'
-
+            
         },
         search: {
             position: 'relative',
@@ -91,10 +102,10 @@ const Header = ({ user }) => {
         },
         inputRoot: {
             color: 'inherit',
-            display:"flex"
         },
         inputInput: {
             padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
             width: '100%',
@@ -114,16 +125,16 @@ const Header = ({ user }) => {
         },
     }));
 
-    const classes = useStyles();
-
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const classes = useStyles();      
+   
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);    
+    const [anchorEl, setAnchorEl] = useState(null);   
 
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
-    };
+    };       
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
@@ -136,20 +147,20 @@ const Header = ({ user }) => {
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
-    };
-
+    };    
+    
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const menuId = 'primary-search-account-menu'
-    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const mobileMenuId = 'primary-search-account-menu-mobile'; 
 
     return (
         <div className={classes.grow} style={{ marginBottom: "4.5rem" }}>
             <AppBar position="fixed">
-                <Toolbar>
-                    <a href="/" className="imgCss">
-                        <img src={logotipo} alt="Logotipo" style={{ width: "150px" }}></img>
-                    </a>
+                <Toolbar>                    
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        ColesRoom
+                    </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -170,19 +181,13 @@ const Header = ({ user }) => {
                     {
                         user !== ''
                             ? (
-                                <div className="div-divertido">
-                                    <div className="div-divertido2">
-                                        <Button variant="contained" color="secundary" className="ButtonP" onClick={registrar}>
-                                            Crear Curso
-                                        </Button>
-                                    </div>
+                                <div>
                                     {<MobileMenuPrivate mobileMoreAnchorEl={mobileMoreAnchorEl} i
-                                        sMobileMenuOpen={isMobileMenuOpen}
-                                        mobileMenuId={mobileMenuId}
-                                        handleMobileMenuClose={handleMobileMenuClose}
-                                        handleProfileMenuOpen={handleProfileMenuOpen} />}
+                                                        sMobileMenuOpen={isMobileMenuOpen} 
+                                                        mobileMenuId={mobileMenuId} 
+                                                        handleMobileMenuClose={handleMobileMenuClose} 
+                                                        handleProfileMenuOpen={handleProfileMenuOpen}/>}
                                     <div className={classes.sectionDesktop}>
-
                                         <IconButton aria-label="show 4 new mails" color="inherit">
                                             <Badge badgeContent={0} color="secondary">
                                                 <MailIcon />
@@ -216,14 +221,13 @@ const Header = ({ user }) => {
                                         </IconButton>
                                     </div>
                                 </div>
-
                             )
-                            : (
+                            : (                                
                                 <div className="auth-buttons">
-                                    {<MobileMenuPublic mobileMoreAnchorEl={mobileMoreAnchorEl}
-                                        isMobileMenuOpen={isMobileMenuOpen}
-                                        mobileMenuId={mobileMenuId}
-                                        handleMobileMenuClose={handleMobileMenuClose} />}
+                                    {<MobileMenuPublic  mobileMoreAnchorEl={mobileMoreAnchorEl} 
+                                                        isMobileMenuOpen={isMobileMenuOpen} 
+                                                        mobileMenuId={mobileMenuId} 
+                                                        handleMobileMenuClose={handleMobileMenuClose}/>}
                                     <div className={classes.sectionDesktop}>
                                         <Link to="/login" className="btn-link"> Iniciar Sesi&oacute;n</Link>
                                         <Link to="/register" className="btn-link"> Registrarte </Link>
@@ -244,12 +248,12 @@ const Header = ({ user }) => {
                             )
                     }
                 </Toolbar>
-            </AppBar>
-
-            {<MenuProfile logout={logout} anchorEl={anchorEl} isMenuOpen={isMenuOpen} menuId={menuId} handleMenuClose={handleMenuClose} />}
+            </AppBar>           
+            
+            {<MenuProfile logout={logout} anchorEl={anchorEl} isMenuOpen={isMenuOpen} menuId={menuId} handleMenuClose={handleMenuClose}/>}            
         </div>
     );
 };
 
-Header.defaultPropt = { user: '' }
+Header.defaultPropt = { user: ''}
 export default Header;
