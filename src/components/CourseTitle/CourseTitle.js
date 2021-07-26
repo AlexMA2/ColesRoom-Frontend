@@ -89,8 +89,8 @@ const CourseTitle = ({ name, description, date, backgroundImage }) => {
     }
 
     const handleChangeContent = (ev) => {
-        setnewContent(ev.target.value)
-        
+        setnewContent(ev.target.value)     
+           
     }
 
     return (

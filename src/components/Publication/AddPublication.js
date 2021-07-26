@@ -17,7 +17,7 @@ const AddPublication = ({ handleSubmit , imgPerfil}) => {
         <div className="addpubli">
             {
                 click
-                    ? <PublicationInput handleCancel={handleClick} handleSubmit={handleSubmit} />
+                    ? <PublicationInput handleCancel={handleClick} handleSubmit={handleSubmit}/>
                     :
                     <div className="addpubli_create" onClick={handleClick}>
                         <Avatar alt="Remy Sharp" src={imgPerfil} />

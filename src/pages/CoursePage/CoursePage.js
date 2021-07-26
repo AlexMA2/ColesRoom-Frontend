@@ -48,7 +48,7 @@ const CoursePage = () => {
 
   const handleSubmit = (value) => {
     value.course_id = topic
-
+   
     fetch('/api/publications', {
       method: 'POST',
       headers: {
