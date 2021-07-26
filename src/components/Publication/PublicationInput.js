@@ -4,7 +4,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DescriptionIcon from '@material-ui/icons/Description';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefault }) => {
+const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefault, sendFiles }) => {
 
     const [files, setFiles] = useState([]);
     const [value, setValue] = useState('');
@@ -29,7 +29,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
         let input = ev.target;
 
         if (input.files && input.files[0] && files.length <= 10) {
-
+            setDisabledBtn(false)
             const fileObj = {
                 name: input.files[0].name,
                 size: input.files[0].size,
@@ -52,8 +52,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                     }
                 })
                 .then(json => {
-                    if (json) {
-                        console.log()
+                    if (json) {                       
                         setFiles([...files, json.file])
                         setFilesID([...filesID, json.fileID])
                     }
@@ -98,7 +97,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
             })
             .then(json => {
                 if (json) {
-                    console.log()
+                   
                 }
             })
             .catch(error => {
@@ -111,10 +110,13 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
     useEffect(() => {
         setValue(valueDefault)
         setFiles(filesDefault)
+        let filesid = filesDefault.map(file => file._id)
+        setFilesID(filesid)
     }, [filesDefault, valueDefault]);
 
     return (
         <div className="addpubli_input">
+            
             <TextField
                 id="filled-multiline-flexible"
                 label="Haz una publicación"
@@ -182,11 +184,12 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                         });
                         cleanInput();
                         handleCancel();
+                        sendFiles(files);
                     }}
                 >
                     Enviar
                 </Button>
-
+                
             </ButtonGroup>
 
         </div>
@@ -195,7 +198,8 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 
 PublicationInput.defaultProps = {
     filesDefault: [],
-    valueDefault: ''
+    valueDefault: '',    
+    sendFiles: (f) => {},
 }
 
 export default PublicationInput

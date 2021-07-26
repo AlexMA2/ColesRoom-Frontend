@@ -15,7 +15,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
     const [openDelete, setOpenDelete] = useState(false);
     const [publication, setPublication] = useState(p);
     const [publicationContent, setPublicationContent] = useState(p.content)
-    const [files, setFiles] = useState([])
+    const [publicationfiles, setpublicationFiles] = useState([])
 
     const handleClickOpenEdit = () => {
         setOpenEdit(true);
@@ -34,7 +34,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
     };
 
     const handleEdit = (newValue) => {
-
+        console.log(newValue)
         fetch(`/api/publications/${publication._id}`, {
             method: 'PUT',
             headers: {
@@ -52,6 +52,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
                 setOpenEdit(false)
                 setOpenDelete(false)
                 setPublicationContent(newValue.content)
+                
             })
             .catch(err => {
                 console.log(err);
@@ -115,11 +116,9 @@ const Publication = ({ p, onDelete, viewControls }) => {
             },
         })
             .then(res => res.json())
-            .then(data => {
-                console.log("-----------------")
-                if (data) {
-                    console.log(data)
-                    setFiles(data)
+            .then(data => {                
+                if (data) {                    
+                    setpublicationFiles(data)
                 }
             })
             .catch(err => {
@@ -129,7 +128,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
     }, [p])
 
     const handleDeleteFile = (fileID) => {
-        setFiles(files.filter(file => file._id !== fileID))
+        setpublicationFiles(publicationfiles.filter(file => file._id !== fileID))
         fetch(`/file/${fileID}/delete`, {
             method: 'DELETE',
             headers: {
@@ -156,6 +155,10 @@ const Publication = ({ p, onDelete, viewControls }) => {
             })
     }
 
+    const sendFiles = (f) => {       
+        setpublicationFiles(f)
+    }
+
     return (
         <div className="publication">
 
@@ -167,9 +170,9 @@ const Publication = ({ p, onDelete, viewControls }) => {
                         <DialogContent>
                             <PublicationInput handleCancel={handleCloseEdit}
                                 handleSubmit={handleEdit}
-                                filesDefault={publication.route}
-                                valueDefault={publicationContent}
-                                publicationID={p._id}
+                                filesDefault={publicationfiles}
+                                valueDefault={publicationContent}       
+                                sendFiles={sendFiles}                         
                             />
                         </DialogContent>
                     </Dialog>
@@ -208,7 +211,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
                 {publicationContent}
             </div>
             <div className="publication__files">
-                {files.map((file, index) =>
+                {publicationfiles.map((file, index) =>
                     <div className="publication__file" key={index}>
                         {
                             viewControls &&
