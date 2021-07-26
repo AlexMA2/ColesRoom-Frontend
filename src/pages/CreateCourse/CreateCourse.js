@@ -85,3 +85,35 @@ const CreateCourse = (props) => {
 };
 
 export default CreateCourse;
+
+//  <form className="form_Curso" onSubmit={registrarCurso}>
+//         <h1>Crear Curso</h1>
+//         <div>
+//           <div className="form__item">
+//             <div>
+//               <label htmlFor="name">
+//                 Nombre
+//                 <input type="text" name="name" id="name" placeholder="Ingrese nombre del curso" required/>
+//               </label>
+//             </div>
+//             <div>
+//               <label htmlFor="descripcion">
+//                 Ingrese una descripción
+//                 <input type="text" name="description" id="descripcion" placeholder="Ingrese una descripcion" required/>
+//               </label>
+//             </div>
+//             <div>
+//               <label htmlFor="categoria">
+//                 Privacidad
+//               </label>
+//               <select name="category">
+//                 <option value="publico">Público</option>
+//                 <option value="privado">Privado</option>
+//               </select>
+//             </div>
+//           </div>
+//           <div className="form_item">
+//             <input type="submit" value="Crear" />
+//           </div>
+//         </div>
+//       </form>

@@ -52,6 +52,29 @@ const Register = () => {
   }
 
 
+  const [cambio, setcambio] = useState("")
+  const handleChangeInput = evento => {
+    const { name, value } = evento.target;
+    let regex = new RegExp("^[a-zA-Z ]+$");
+
+    if (regex.test(value)) {
+      console.log(name, value);
+      setcambio(value)
+    }
+  }
+
+  const [cambio2, setcambio2] = useState("")
+  const handleChangeInput2 = evento => {
+    const { name, value } = evento.target;
+    let regex = new RegExp("^[a-zA-Z ]+$");
+
+    if (regex.test(value)) {
+      console.log(name, value);
+      setcambio2(value)
+    }
+  }
+
+
   return (
     <div className="container-form">
       <div className="ax-form-style1">
@@ -64,11 +87,11 @@ const Register = () => {
      <form className="ax-form__form" id="form" onSubmit={registration}>
        <div className="ax-form__input">
          <p> Nombres: </p>
-         <input name="name" type="text" placeholder="Ingrese Nombre Completo" required/>
+         <input name="name" type="text" value={cambio} onChange={handleChangeInput} placeholder="Ingrese Nombre Completo" required/>
        </div>
        <div className="ax-form__input">
          <p> Apellidos: </p>
-         <input name="surname" type="text" placeholder="Ingrese Nombre Completo" required/>
+         <input name="surname" type="text" value={cambio2} onChange={handleChangeInput2} placeholder="Ingrese Nombre Completo" required/>
        </div>
        <div className="ax-form__input">
          <p> Correo Electr&oacute;nico: </p>

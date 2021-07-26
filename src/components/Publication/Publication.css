@@ -29,7 +29,6 @@
 }
 
 .publication {
-    
     height: auto;
     border-radius: 1rem;
     border: 1px solid #ddd;
@@ -53,4 +52,28 @@
     /* Opera 7 */
     word-wrap: break-word;
     /* IE */
+}
+
+.publication__files {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    grid-gap: 0.20rem;
+    width: 100%;
+}
+
+.publication__file {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+}
+
+.publication__file > div :hover {
+    cursor: pointer;
+    color: #f00d0d;
+}
+
+.publication__file p {
+    overflow: hidden;   
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
