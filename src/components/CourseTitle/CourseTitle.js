@@ -1,61 +1,127 @@
-import React, { useRef, useState, useEffect } from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import UILink from '@material-ui/core/Link';
+import React, { useState, useEffect, useRef } from 'react'
 import './CourseTitle.css'
 
-const CourseTitle = ({ name, description, date, photo, backgroundImage, teacher }) => {
+import DefaultBackground from '../../imgs/CourseBackgroundDefault.jpg'
+import CreateIcon from '@material-ui/icons/Create';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-    const slideIMG = useRef()
-    const slideDesc = useRef()
+const CourseTitle = ({ name, description, date, backgroundImage }) => {
 
-    const [show, setshow] = useState(0)
+    const [dateFormat, setdateFormat] = useState('')
+    const [editing, setediting] = useState(false)
+    const [heightTitle, setheightTitle] = useState(0)
+    const [heightContent, setheighContent] = useState(0)
 
-    const BG = import(backgroundImage)
-    
-    const handleClick = (ev) => {
-        if (show === 0) {
-            slideIMG.current.style.width = "0"
-            slideDesc.current.style.width = "100%"
-            setshow(1)
+    const [newTitle, setnewTitle] = useState('')
+    const [newContent, setnewContent] = useState('')
+
+    const titleRef = useRef();
+    const contentRef = useRef();
+
+    const backgroundCourse = {
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : `url(${DefaultBackground})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        left: 0,
+        top: 0,
+        borderRadius: '1rem'
+    }
+
+    useEffect(() => {
+        if (date) {
+            const df = new Intl.DateTimeFormat('es', { dateStyle: 'full', timeStyle: 'long' })
+            const dateToFormat = new Date(date)
+            const dateTransform = new Date(Date.UTC(
+                dateToFormat.getFullYear(),
+                dateToFormat.getMonth(),
+                dateToFormat.getDate(),
+                dateToFormat.getUTCHours(),
+                dateToFormat.getUTCMinutes(),
+                dateToFormat.getUTCSeconds()));
+
+            setdateFormat(df.format(dateTransform))
         }
-        else if (show === 1) {
-            slideDesc.current.style.width = "0"
-            slideIMG.current.style.width = "100%"
-            setshow(0)
+
+    }, [date])
+
+    const setStylesInputTitle = (newHeight) => {
+        return {
+            height: newHeight + 'px',
+            width: '100%',
+            fontSize: '2.25rem',
+            fontWeight: 'bold',
+            fontFamily: '"Google Sans", Roboto, Arial, sans-serif',
+            background: 'none',
+            color: '#fff',
+            border: 'none',
+            borderBottom: '1px solid #4f4f4f'
         }
     }
 
+    const setStylesInputContent = (newHeight) => {
+        return {
+            height: (newHeight + 10) + 'px',
+            width: '100%',
+            fontSize: '1rem',                        
+            background: 'none',
+            color: '#fff',
+            border: 'none',
+            borderBottom: '1px solid #4f4f4f',
+            paddingBottom: '0.5rem',
+        }
+    }
+
+    const handleOpenEditCourse = (ev) => {       
+        setheightTitle(titleRef.current.offsetHeight)   
+        setnewTitle(name)  
+        setheighContent(contentRef.current.offsetHeight)   
+        setnewContent(description)
+        titleRef.current.focus()
+        setediting(true)
+    }
+
+    const handleCloseEditCourse = (ev) => {
+        setediting(false)
+    }
+
+    const handleChangeTitle = (ev) => {
+        setnewTitle(ev.target.value)
+    }
+
+    const handleChangeContent = (ev) => {
+        setnewContent(ev.target.value)
+        
+    }
 
     return (
-        <div className="course-title">
+        <div className="course-title" style={backgroundCourse}>
             <div className="course-title__info">
                 <div className="course__subinfo">
-                    <h2 > {name} </h2>
-                    <p> Creado el {date} </p>
+                    {
+                        editing 
+                        ? <input type="text" value={newTitle} style={setStylesInputTitle(heightTitle)} onChange={handleChangeTitle}/>
+                        : <h2 ref={titleRef}> {name} </h2>
+                    }
+                    <div>
+                        {
+                            editing 
+                            ? <HighlightOffIcon onClick={handleCloseEditCourse} />
+                            : <CreateIcon onClick={handleOpenEditCourse}/>
+                        }
+                       
+                    </div>
                 </div>
-                <div className="course-title__teacher">
-                    <Avatar alt="profesor_photo" src={photo} />
-                    <p> {teacher} </p>
-                </div>
-                <div>
-                    <UILink
-                        component="button"
-                        variant="body2"
-                        onClick={handleClick}
-                    >
-                        Ver descripci&oacute;n del curso
-                    </UILink>
-                </div>
-            </div>
-            <div className="course-title__extra">
-                <div className="bgimage" style={{width: "100%"}} ref={slideIMG}>
-                    {console.log(BG)}
-                    <img src={BG} alt="bg_image"></img>
-                </div>
-                <div className="descrip" ref={slideDesc}>
-                    {description}
+                <div className="course__description">
+                    
+                    <p> Creado el {dateFormat} </p>
+                    {
+                        editing 
+                        ? <textarea style={setStylesInputContent(heightContent)} onChange={handleChangeContent}>{newContent}</textarea>
+                        : <span ref={contentRef}>{description}</span>
+                    }
                 </div>
             </div>
+
         </div>
     )
 }

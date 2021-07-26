@@ -35,7 +35,7 @@ const CreateCourse = (props) => {
     }
 
 
-    fetch('/CreateCourse', {
+    fetch('/api/CreateCourse', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {

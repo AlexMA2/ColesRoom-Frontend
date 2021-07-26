@@ -18,7 +18,7 @@ import CreateTask from "./pages/CreateTask/CreateTask.js"
 import { useSelector } from 'react-redux'
 
 const App = () => {
-  const [user, setuser] = useState('');
+  const [user, setuser] = useState(sessionStorage.getItem("user"));
   const userredux = useSelector(state => state.user)
   const [render, setrender] = useState(false)
 

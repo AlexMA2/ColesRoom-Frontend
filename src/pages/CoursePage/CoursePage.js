@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { useHistory } from "react-router"
 import { Redirect } from "react-router"
 import CourseTitle from "../../components/CourseTitle/CourseTitle.js"
+
 import PublicationContainer from "../../components/Publication/PublicationContainer.js"
 import AddPublication from "../../components/Publication/AddPublication.js"
 import { Button } from "@material-ui/core"
@@ -19,11 +20,11 @@ const CoursePage = () => {
   const [teacher, setTeacher] = useState({})
 
   useEffect(() => {
-    
+
     const getPublications = async () => {
-      const p = await fetchPublications()      
-      setPublicaciones(p)      
-    }    
+      const p = await fetchPublications()
+      setPublicaciones(p)
+    }
 
     //Get the course user_id
     const getTeacher = async (teacher_id) => {
@@ -39,15 +40,15 @@ const CoursePage = () => {
 
     getPublications()
     getCourse()
-    
+
     //Get the teacher user_id
-    
+
 
   }, [])
 
-  const handleSubmit = (value) => {       
-    value.course_id = topic   
-    
+  const handleSubmit = (value) => {
+    value.course_id = topic
+
     fetch('/api/publications', {
       method: 'POST',
       headers: {
@@ -56,22 +57,22 @@ const CoursePage = () => {
       },
       body: JSON.stringify(value)
     })
-      .then(response => {        
+      .then(response => {
         return response.json()
-      } )
-      .then(json => {        
-        setPublicaciones([...publicaciones, json])        
       })
-      .catch(error => {       
+      .then(json => {
+        setPublicaciones([...publicaciones, json])
+      })
+      .catch(error => {
         console.log(error)
-      })   
+      })
 
-  }  
+  }
 
   const fetchPublications = async () => {
     const res = await fetch(`api/publications/${topic}`)
     const data = await res.json()
- 
+
     return data
   }
 
@@ -85,51 +86,48 @@ const CoursePage = () => {
   const fetchTeacher = async (topic) => {
     const res = await fetch(`teacher/${topic}`)
     const data = await res.json()
-    
+
     return data
   }
 
   const [click, setClick] = useState(false)
   const history = useHistory()
-    const irTopic = `${topic}/taskcreate`
+  const irTopic = `${topic}/taskcreate`
 
-    const handleClick = (ev) => {
-        history.push(irTopic)
-        setClick(true)
-    }
+  const handleClick = (ev) => {
+    history.push(irTopic)
+    setClick(true)
+  }
 
+  return (
 
-    return (
- 
-      <div className="container3" >
-        {
-                  click &&
-                  <Redirect to={irTopic}/>  
-              }
-              {
-                console.log(course)
-              }
-        <CourseTitle name={course.name}
-          description={course.description}
-          date={course.datecreate}
-          photo={teacher.photo}
-          backgroundImage={course.image}
-          teacher={teacher.name}
-        />
-        <div style={{"marginBottom":"15px"}}>
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            Crear Tarea
-          </Button>
-        </div>
-        <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
-        
-        {
-          publicaciones.length > 0 &&
-          <PublicationContainer publications={publicaciones} teacherId={course.user_id} />
-        }
-        
+    <div className="container3" >
+      {
+        click &&
+        <Redirect to={irTopic} />
+      }
+
+      <CourseTitle name={course.name}
+        description={course.description}
+        date={course.datecreate}
+        backgroundImage={course.image}
+        onEdit={handleClick}
+      />
+
+      <div style={{ "marginBottom": "15px" }}>
+        <Button variant="contained" color="primary" onClick={handleClick}>
+          Crear Tarea
+        </Button>
       </div>
-    );
-  };
+      <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
+
+      {
+        publicaciones.length > 0 &&
+        <PublicationContainer publications={publicaciones} teacherId={course.user_id} />
+      }
+
+    </div>
+  );
+};
 
 export default CoursePage
