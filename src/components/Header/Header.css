@@ -29,18 +29,16 @@
     display: inline-block;
     padding: 0.35em 1.2em;
     border: 0.1em solid #FFFFFF;
-    margin: 0 0.3em 0.3em 0;
-    border-radius: 0.12em;
+    margin: 0 0.3em 0;
+    border-radius: 2em;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     font-weight: 700 !important;
-    color: #3F51B5;
     text-align: center;
     transition: all 0.2s;
     background-color: #fff;
-    width: 16rem;
+    width: 12rem;
     height: 2rem;
-    
     text-decoration: none !important;
     box-shadow: 2px 2px 5px #262626;
 }
@@ -86,4 +84,26 @@
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+.ButtonP{
+    font-size: 1rem;
+    word-spacing: 2px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: capitalize;
+    box-shadow: 1px 4px 10px #000000;
+    height: 30px;
+    width: fit-content;
+}
+
+.div-divertido{
+    display: flex;
+    justify-content: center;
+}
+
+.div-divertido2{
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
 }
