@@ -54,7 +54,7 @@ const CreateCourse = (props) => {
 
   return (
     <div className="container-register">
-      <h1 className="title-h2">BIENVENIDO... POR FAVOR LLENE LOS SIGUIENTES CAMPOS PARA CREAR SU CURSO</h1>
+      <h1 className="title-h2">Crear Curso</h1>
       <Form>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">

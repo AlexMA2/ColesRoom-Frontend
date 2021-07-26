@@ -29,18 +29,16 @@
     display: inline-block;
     padding: 0.35em 1.2em;
     border: 0.1em solid #FFFFFF;
-    margin: 0 0.3em 0.3em 0;
-    border-radius: 0.12em;
+    margin: 0 0.3em 0;
+    border-radius: 2em;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     font-weight: 700 !important;
-    color: #3F51B5;
     text-align: center;
     transition: all 0.2s;
     background-color: #fff;
-    width: 16rem;
+    width: 12rem;
     height: 2rem;
-    
     text-decoration: none !important;
     box-shadow: 2px 2px 5px #262626;
 }

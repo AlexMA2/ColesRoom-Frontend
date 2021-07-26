@@ -1,6 +1,10 @@
 .container-register{
-	margin: 20px;
-	margin-top: 50px;
+	margin: 131px 20% 0px;
+    background-color: #00000014;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 9px -8px rgb(0 0 0 / 99%);
+    border: 2px solid #3f51b5;
 }
 
 .title-h2{
@@ -14,4 +18,15 @@
 	font-style: italic;
 	font-variant: normal;
 	text-transform: uppercase;
+	padding: 10px 0;
+	text-align: center;
+    border-radius: 100px;
+	border: 2px solid #000000;
+	color: #2196f3;
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    border-bottom: 3px solid #e8f5ff;
+    border-radius: 0.5rem;
 }
