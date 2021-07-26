@@ -44,11 +44,15 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(d => {
-        setlogeado(true);
-        sessionStorage.setItem("user", d.id)
-        setUser(d.id)
+        if(d.id){
+          setlogeado(true);
+          sessionStorage.setItem("user", d.id)
+          setUser(d.id)
+        }else{
+          alert(errores[d.error])
+        }
       })
-      .catch(err => seterrorLogin(errores[err.error] || 'Hubo un problema'));
+      // .catch(err => seterrorLogin(errores[err.error] || 'Hubo un problema'));
 
   }
 
