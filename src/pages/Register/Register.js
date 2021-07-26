@@ -76,7 +76,7 @@ const Register = () => {
       setcambio2(value)
     }
     if(value===""){
-      setcambio("")
+      setcambio2("")
     }
   }
 
