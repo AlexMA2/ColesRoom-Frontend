@@ -21,7 +21,7 @@ const MenuProfile = ({logout, anchorEl, isMenuOpen, menuId, handleMenuClose}) =>
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link to="/profile" style={linkMyCourses}>Mi cuenta</Link></MenuItem>
             <MenuItem onClick={handleMenuClose}><Link to="/mycourses" style={linkMyCourses}>Mis Cursos</Link></MenuItem>            
             <MenuItem onClick={logout}>Cerrar Sesión</MenuItem>
         </Menu>
