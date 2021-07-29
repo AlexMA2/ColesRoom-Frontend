@@ -76,7 +76,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
     const closeMenuCourse = (isDeleted) => {
         setAnchorMenuCourse(null);
         if (isDeleted) {
-            onDelete(curso_id)
+            //onDelete(curso_id)
         }
     }
 

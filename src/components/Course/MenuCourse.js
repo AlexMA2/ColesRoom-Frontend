@@ -12,23 +12,49 @@ const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
     const [isDialogDeleteOpen, setisDialogDeleteOpen] = useState(false)
 
     const deleteCourse = () => {
-        fetch(`api/courses/${menuId}`, {
+        
+        let filesIds = []
+
+        const deletingCourses = async () => {
+            const data = await fetchDeleteCourse()
+            console.log(data)
+            data.forEach(dp => {
+                filesIds = filesIds.concat(dp.route)
+            });
+            console.log(filesIds)
+            await fetchDeleteAllPublicationsFiles(filesIds)
+        }
+
+        deletingCourses()      
+    }
+
+    const fetchDeleteCourse = async () => {
+        const res = await fetch(`api/courses/${menuId}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
-        .then(response => {
-            return response.json();
+
+        const data = await res.json()
+        return data
+    }
+
+    const fetchDeleteAllPublicationsFiles = async (filesIds) => {
+        const response = await fetch(`file/deleteAll`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filesIds: filesIds
+            })
+
         })
-        .then(json => {
-            if (json) {
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        })      
+        const data = await response.json()
+        return data
     }
 
     const openDialogDelete = () => {
