@@ -57,8 +57,7 @@ const Register = () => {
     const { name, value } = evento.target;
     let regex = new RegExp("^[a-zA-Z ]+$");
 
-    if (regex.test(value)) {
-      console.log(name, value);
+    if (regex.test(value)) {     
       setcambio(value)
     }
     if(value===""){
@@ -71,8 +70,7 @@ const Register = () => {
     const { name, value } = evento.target;
     let regex = new RegExp("^[a-zA-Z ]+$");
 
-    if (regex.test(value)) {
-      console.log(name, value);
+    if (regex.test(value)) {     
       setcambio2(value)
     }
     if(value===""){

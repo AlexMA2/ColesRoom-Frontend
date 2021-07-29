@@ -47,7 +47,10 @@ class CourseContainer extends Component {
             description={co.description}
             imagen={co.description}
             image={co.image}
-            datecreate={co.datecreate} />
+            datecreate={co.datecreate}
+           
+            viewDelete={true}
+            />
         ))
         }
         </div>
