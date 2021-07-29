@@ -18,10 +18,11 @@ import MenuCourse from './MenuCourse';
 
 import './Course.css'
 
-const Course = ({ curso_id, name, category, user_id, description, image, datecreate, onDelete, viewDelete }) => {
+const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, onDelete, viewDelete }) => {
 
     const [dateformat, setdateformat] = useState('')
     const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
+    const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
 
     const isMenuOpen = Boolean(anchorMenuCourse)
 
@@ -91,13 +92,17 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
             dateToFormat.getUTCSeconds()));
 
         setdateformat(df.format(dateTransform))
-    }, [datecreate])
+
+        setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))    
+      
+
+    }, [datecreate, teacher_id])
 
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
             {
-                viewDelete
+                viewDeleteCourse
                     ?
                     <CardHeader
                         action={
@@ -129,11 +134,16 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
                 <Button
                     variant="contained"
                     color="primary"
-                    size="small"
+                    size='small'
                     className={classes.sizeSmall}
                     onClick={handleClick}
                 >
-                    Unirse
+                    {
+                        viewDeleteCourse
+                        ? 'Ver'
+                        : 'Unirse'
+                    }
+                    
                 </Button>
                 <IconButton aria-label="share">
                     <ShareIcon />
