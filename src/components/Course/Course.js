@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -24,7 +24,6 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
     const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
 
     const isMenuOpen = Boolean(anchorMenuCourse)
-
     const useStyles = makeStyles((theme) => ({
         root: {
             maxWidth: 345,
@@ -61,11 +60,41 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
     const classes = useStyles();
     const [click, setClick] = useState(false);
+    const [desicion, setDesicion] = useState(false);
     const history = useHistory();
 
-    const handleClick = (ev) => {
+    const joinCourse = (ev) => {
+        const data = {
+            userID: sessionStorage.getItem("user"),
+            courseID: curso_id
+        }
+        fetch('/api/join', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .catch(err => 'Hubo un problema');
         history.push(`mycourses/${curso_id}`);
         setClick(true);
+    };
+
+
+    const seeCoursesJoin = async () => {
+        const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
+        const data = await res.json()
+        for (const cursoID of data) {
+            if (cursoID === curso_id) {
+                setDesicion(true)
+            }
+        }
+    }
+
+    const seeCourse = (ev) => {
+        history.push(`mycourses/${curso_id}`);
     };
 
     const openMenuCourse = (ev) => {
@@ -92,10 +121,15 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
         setdateformat(df.format(dateTransform))
 
-        setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))    
+        setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
+        
+        seeCoursesJoin()
+        console.log(desicion)
+      
       
 
     }, [datecreate, teacher_id])
+
 
     return (
         <Card className={classes.root}>
@@ -130,6 +164,45 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                 </Typography>
             </CardContent>
             <CardActions disableSpacing className="separar">
+                {
+                    user_id === sessionStorage.getItem("user")
+                        ?
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                            className={classes.sizeSmall}
+                            onClick={seeCourse}>
+                            Ver
+                        </Button>
+
+                        :
+                        <div>
+                            {
+                                desicion
+                                    ?
+                                    <Button
+                                        variant="contained"
+                                        color="default"
+                                        size="small"
+                                        className={classes.sizeSmall}
+                                        onClick={seeCourse}>
+                                        Ver
+                                    </Button>
+                                    :
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        className={classes.sizeSmall}
+                                        onClick={joinCourse}>
+                                        Unirse
+                                    </Button>
+                            }
+                        </div>
+
+                }
+
                 <Button
                     variant="contained"
                     color="primary"

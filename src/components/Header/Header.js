@@ -172,7 +172,7 @@ const Header = ({ user }) => {
                             ? (
                                 <div className="div-divertido">
                                     <div className="div-divertido2">
-                                        <Button variant="contained" color="secondary" className="ButtonP" onClick={registrar}>
+                                        <Button variant="contained" color="default" className="ButtonP" onClick={registrar}>
                                             Crear Curso
                                         </Button>
                                     </div>
