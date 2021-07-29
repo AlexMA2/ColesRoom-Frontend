@@ -10,13 +10,20 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import imageUrl from '../../imgs/CourseBackgroundDefault.jpg';
+import imageUrl from '../../imgs/CourseBackground1.jpg';
 import Button from '@material-ui/core/Button'
 import { Redirect, useHistory } from 'react-router-dom';
+import MenuCourse from './MenuCourse';
 
 import './Course.css'
 
-const Course = ({ curso_id, name, category, user_id, description, image, datecreate }) => {
+const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, onDelete, viewDelete }) => {
+
+    const [dateformat, setdateformat] = useState('')
+    const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
+    const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
+
+    const isMenuOpen = Boolean(anchorMenuCourse)
     const useStyles = makeStyles((theme) => ({
         root: {
             maxWidth: 345,
@@ -75,10 +82,6 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
         setClick(true);
     };
 
-    useEffect(() => {
-        seeCoursesJoin()
-        console.log(desicion)
-    })
 
     const seeCoursesJoin = async () => {
         const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
@@ -93,18 +96,63 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
     const seeCourse = (ev) => {
         history.push(`mycourses/${curso_id}`);
     };
+
+    const openMenuCourse = (ev) => {
+        setAnchorMenuCourse(ev.currentTarget);
+    }
+
+    const closeMenuCourse = (isDeleted) => {
+        setAnchorMenuCourse(null);
+        if (isDeleted) {
+            //onDelete(curso_id)
+        }
+    }
+
+    useEffect(() => {
+        const df = new Intl.DateTimeFormat('es', { dateStyle: 'full', timeStyle: 'long' })
+        const dateToFormat = new Date(datecreate)
+        const dateTransform = new Date(Date.UTC(
+            dateToFormat.getFullYear(),
+            dateToFormat.getMonth(),
+            dateToFormat.getDate(),
+            dateToFormat.getUTCHours(),
+            dateToFormat.getUTCMinutes(),
+            dateToFormat.getUTCSeconds()));
+
+        setdateformat(df.format(dateTransform))
+
+        setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
+        
+        seeCoursesJoin()
+        console.log(desicion)
+      
+      
+
+    }, [datecreate, teacher_id])
+
+
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
-            <CardHeader
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={name}
-                subheader={datecreate}
-            />
+            {
+                viewDeleteCourse
+                    ?
+                    <CardHeader
+                        action={
+                            <IconButton aria-label="settings" onClick={openMenuCourse}>
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={name}
+                        subheader={'Creado el ' + dateformat}
+                    />
+                    :
+                    <CardHeader
+                        title={name}
+                        subheader={'Creado el ' + dateformat}
+                    />
+            }
+
             <CardMedia
                 className={classes.media}
                 image={imageUrl}
@@ -155,12 +203,31 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
 
                 }
 
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size='small'
+                    className={classes.sizeSmall}
+                    onClick={handleClick}
+                >
+                    {
+                        viewDeleteCourse
+                        ? 'Ver'
+                        : 'Unirse'
+                    }
+                    
+                </Button>
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>
             </CardActions>
+            {<MenuCourse anchorEl={anchorMenuCourse} menuId={curso_id} isMenuOpen={isMenuOpen} handleMenuClose={closeMenuCourse} />}
         </Card>
     );
+};
+
+Course.defaultProps = {
+    viewDelete: false,
 };
 
 export default Course;

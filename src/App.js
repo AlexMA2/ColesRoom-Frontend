@@ -35,6 +35,7 @@ const App = () => {
 
   return (
     <Router>
+      {console.log(sessionStorage.getItem("user"))}
       <Header user={user} />
       {
         !render

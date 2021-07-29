@@ -18,6 +18,7 @@ const CoursePage = () => {
   const [publicaciones, setPublicaciones] = useState([])
   const [course, setCourse] = useState({})
   const [teacher, setTeacher] = useState({})
+  const [activeAddPublication, setactiveAddPublication] = useState(false)
 
   useEffect(() => {
 
@@ -41,14 +42,16 @@ const CoursePage = () => {
     getPublications()
     getCourse()
 
-    //Get the teacher user_id
+  }, [topic])
 
 
-  }, [])
+  useEffect(() => {
+    setactiveAddPublication(sessionStorage.getItem("user") === course.user_id)
+  }, [course])
 
   const handleSubmit = (value) => {
     value.course_id = topic
-   
+
     fetch('/api/publications', {
       method: 'POST',
       headers: {
@@ -111,18 +114,26 @@ const CoursePage = () => {
         date={course.datecreate}
         backgroundImage={course.image}
         onEdit={handleClick}
+        category={course.category}
+        topic={topic}
       />
 
-      <div style={{ "marginBottom": "15px" }}>
-        <Button variant="contained" color="primary" onClick={handleClick}>
-          Crear Tarea
-        </Button>
-      </div>
-      <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
-
       {
-        publicaciones.length > 0 &&
-        <PublicationContainer publications={publicaciones} teacherId={course.user_id} />
+        activeAddPublication &&
+        <div style={{ "marginBottom": "15px" }}>
+          <Button variant="contained" color="primary" onClick={handleClick}>
+            Crear Tarea
+          </Button>
+        </div>
+      }
+      {
+        activeAddPublication &&
+        <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
+      }
+      {
+        publicaciones.length > 0 ?
+          <PublicationContainer publications={publicaciones} teacherId={course.user_id} />
+          : <h2 style={{ marginTop: '1rem', fontStyle: 'italic' }}>No hay publicaciones</h2>
       }
 
     </div>
