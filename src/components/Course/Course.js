@@ -14,12 +14,16 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import imageUrl from '../../imgs/CourseBackground1.jpg';
 import Button from '@material-ui/core/Button'
 import { Redirect, useHistory } from 'react-router-dom';
+import MenuCourse from './MenuCourse';
 
 import './Course.css'
 
-const Course = ({ curso_id, name, category, user_id, description, image, datecreate }) => {
+const Course = ({ curso_id, name, category, user_id, description, image, datecreate, onDelete, viewDelete }) => {
 
     const [dateformat, setdateformat] = useState('')
+    const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
+
+    const isMenuOpen = Boolean(anchorMenuCourse)
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -64,6 +68,17 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
         setClick(true);
     };
 
+    const openMenuCourse = (ev) => {
+        setAnchorMenuCourse(ev.currentTarget);
+    }
+
+    const closeMenuCourse = (isDeleted) => {
+        setAnchorMenuCourse(null);
+        if (isDeleted) {
+            onDelete(curso_id)
+        }
+    }
+
     useEffect(() => {
         const df = new Intl.DateTimeFormat('es', { dateStyle: 'full', timeStyle: 'long' })
         const dateToFormat = new Date(datecreate)
@@ -75,21 +90,31 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
             dateToFormat.getUTCMinutes(),
             dateToFormat.getUTCSeconds()));
 
-            setdateformat(df.format(dateTransform))
+        setdateformat(df.format(dateTransform))
     }, [datecreate])
 
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
-            <CardHeader
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={name}
-                subheader={'Creado el ' + dateformat}
-            />
+            {
+                viewDelete
+                    ?
+                    <CardHeader
+                        action={
+                            <IconButton aria-label="settings" onClick={openMenuCourse}>
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={name}
+                        subheader={'Creado el ' + dateformat}
+                    />
+                    :
+                    <CardHeader
+                        title={name}
+                        subheader={'Creado el ' + dateformat}
+                    />
+            }
+
             <CardMedia
                 className={classes.media}
                 image={imageUrl}
@@ -114,8 +139,13 @@ const Course = ({ curso_id, name, category, user_id, description, image, datecre
                     <ShareIcon />
                 </IconButton>
             </CardActions>
+            {<MenuCourse anchorEl={anchorMenuCourse} menuId={curso_id} isMenuOpen={isMenuOpen} handleMenuClose={closeMenuCourse} />}
         </Card>
     );
+};
+
+Course.defaultProps = {
+    viewDelete: false,
 };
 
 export default Course;
