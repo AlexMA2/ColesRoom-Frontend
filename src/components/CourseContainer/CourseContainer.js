@@ -4,13 +4,15 @@ import '../../utils.css'
 import React, { Component } from 'react'
 
 class CourseContainer extends Component {
-
+  user=sessionStorage.getItem("user")
   constructor() {
     super();
+
     this.state = {
       coursesList: []
     };
     this.handleChange = this.handleChange.bind(this);
+
   }
 
   handleChange(e) {
@@ -25,6 +27,7 @@ class CourseContainer extends Component {
   }
 
   fetchTasks() {
+    var URLactual = window.location;
     fetch('/api/courses')
       .then(res => res.json())
       .then(data => {

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import imageUrl from '../../imgs/CourseBackground.jpg';
+import imageUrl from '../../imgs/CourseBackgroundDefault.jpg';
 import Button from '@material-ui/core/Button'
 import {Redirect, useHistory} from 'react-router-dom';
 
