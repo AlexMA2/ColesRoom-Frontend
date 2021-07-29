@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -11,13 +11,16 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import imageUrl from '../../Fondo.jpg';
+import imageUrl from '../../imgs/CourseBackground1.jpg';
 import Button from '@material-ui/core/Button'
-import {Redirect, useHistory} from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import './Course.css'
 
-const Course = ({ curso_id,name, category,user_id,description,image, datecreate}) => {
+const Course = ({ curso_id, name, category, user_id, description, image, datecreate }) => {
+
+    const [dateformat, setdateformat] = useState('')
+
     const useStyles = makeStyles((theme) => ({
         root: {
             maxWidth: 345,
@@ -54,13 +57,27 @@ const Course = ({ curso_id,name, category,user_id,description,image, datecreate}
 
     const classes = useStyles();
     const [click, setClick] = useState(false);
-    const history = useHistory();    
+    const history = useHistory();
 
     const handleClick = (ev) => {
         history.push(`mycourses/${curso_id}`);
         setClick(true);
     };
-    //D:\Proyectos\Visual Studio\ColesRoom - Grupo 2\ColesRoom-Grupo2-Backend\photos\Fondo.jpg
+
+    useEffect(() => {
+        const df = new Intl.DateTimeFormat('es', { dateStyle: 'full', timeStyle: 'long' })
+        const dateToFormat = new Date(datecreate)
+        const dateTransform = new Date(Date.UTC(
+            dateToFormat.getFullYear(),
+            dateToFormat.getMonth(),
+            dateToFormat.getDate(),
+            dateToFormat.getUTCHours(),
+            dateToFormat.getUTCMinutes(),
+            dateToFormat.getUTCSeconds()));
+
+            setdateformat(df.format(dateTransform))
+    }, [datecreate])
+
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
@@ -71,7 +88,7 @@ const Course = ({ curso_id,name, category,user_id,description,image, datecreate}
                     </IconButton>
                 }
                 title={name}
-                subheader={datecreate}
+                subheader={'Creado el ' + dateformat}
             />
             <CardMedia
                 className={classes.media}

@@ -18,6 +18,7 @@ const CoursePage = () => {
   const [publicaciones, setPublicaciones] = useState([])
   const [course, setCourse] = useState({})
   const [teacher, setTeacher] = useState({})
+  const [activeAddPublication, setactiveAddPublication] = useState(false)
 
   useEffect(() => {
 
@@ -40,7 +41,8 @@ const CoursePage = () => {
 
     getPublications()
     getCourse()
-
+    const userid = sessionStorage.getItem("user")
+    userid === course.user_id ? setactiveAddPublication(true) : setactiveAddPublication(false)
     //Get the teacher user_id
 
 
@@ -112,6 +114,8 @@ const CoursePage = () => {
         date={course.datecreate}
         backgroundImage={course.image}
         onEdit={handleClick}
+        category={course.category}
+        topic={topic}
       />
 
       <div style={{ "marginBottom": "15px" }}>
@@ -119,11 +123,14 @@ const CoursePage = () => {
           Crear Tarea
         </Button>
       </div>
-      <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
-
       {
-        publicaciones.length > 0 &&
+        activeAddPublication &&
+        <AddPublication handleSubmit={handleSubmit} imgPerfil={imgFakePerfil} />
+      }      
+      {
+        publicaciones.length > 0 ?
         <PublicationContainer publications={publicaciones} teacherId={course.user_id} />
+        : <h2><span>No hay publicaciones</span></h2>
       }
 
     </div>
