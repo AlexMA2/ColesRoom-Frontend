@@ -4,15 +4,14 @@ import '../../utils.css'
 import React, { Component } from 'react'
 
 class CourseContainer extends Component {
-  user=sessionStorage.getItem("user")
-  constructor() {
+  constructor(valor) {
     super();
-
     this.state = {
-      coursesList: []
+      coursesList: [],
+      valor:valor
     };
     this.handleChange = this.handleChange.bind(this);
-
+    
   }
 
   handleChange(e) {
@@ -23,36 +22,62 @@ class CourseContainer extends Component {
   }
 
   componentDidMount() {
-    this.fetchTasks();
+    this.fetchCourses()
+    this.fetchCourseCreated()
+    this.fetchMyCourses()
   }
 
-  fetchTasks() {
-    var URLactual = window.location;
-    fetch('/api/courses')
-      .then(res => res.json())
-      .then(data => {
-        
-        this.setState({ coursesList: data });
-      });
+
+  async fetchCourseCreated() {
+    const res = await fetch(`api/courses/created/${sessionStorage.getItem("user")}`)
+    const data = await res.json()
+    return data
+  }
+
+  async fetchMyCourses() {
+    const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
+    const data = await res.json()
+    return data
+  }
+
+  fetchCourses() {
+    var URLactual = window.location.href;
+    var desicion = URLactual.substring(23)
+    if (desicion === "/") {
+      fetch('/api/courses')
+        .then(res => res.json())
+        .then(data => {
+          this.setState({ coursesList: data });
+        });
+    } else if (desicion === "/mycourses") {
+      console.log(this.state.valor.valor)
+      if(this.state.valor.valor==="cc"){
+        this.fetchCourseCreated().then(data => {
+          this.setState({ coursesList: data })
+        })
+      }else if(this.state.valor.valor==="cu"){
+        this.fetchMyCourses().then(data => {
+          this.setState({ coursesList: data })
+        })
+      }
+    }
   }
 
   render() {
     return (
       <div className="course-container">
         <div className="grid-courses">
-        {this.state.coursesList.map(co => (
-          <Course 
-            key={co._id}
-            curso_id={co._id}
-            name={co.name}
-            category={co.category}
-            teacher_id={co.user_id}
-            description={co.description}
-            imagen={co.description}
-            image={co.image}
-            datecreate={co.datecreate} />
-        ))
-        }
+          {this.state.coursesList.map(co => (
+            <Course
+              curso_id={co._id}
+              name={co.name}
+              category={co.category}
+              user_id={co.user_id}
+              description={co.description}
+              image={co.image}
+              datecreate={co.datecreate} />
+          ))
+          }
         </div>
       </div>
     )
@@ -74,7 +99,7 @@ export default CourseContainer
 
 //     return (
 //         <div className="course-container">
-            
+
 //             <div className="grid-courses">
 //                 {
 //                     coursesList.filter(condition).length
@@ -85,7 +110,7 @@ export default CourseContainer
 //                             teacher_id={co.user_id} />))
 //                         : <h2> No hay cursos </h2>
 //                 }
-                
+
 //             </div>
 //         </div>
 

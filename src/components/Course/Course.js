@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,11 +12,11 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import imageUrl from '../../imgs/CourseBackgroundDefault.jpg';
 import Button from '@material-ui/core/Button'
-import {Redirect, useHistory} from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import './Course.css'
 
-const Course = ({ curso_id,name, category,user_id,description,image, datecreate}) => {
+const Course = ({ curso_id, name, category, user_id, description, image, datecreate }) => {
     const useStyles = makeStyles((theme) => ({
         root: {
             maxWidth: 345,
@@ -53,13 +53,46 @@ const Course = ({ curso_id,name, category,user_id,description,image, datecreate}
 
     const classes = useStyles();
     const [click, setClick] = useState(false);
-    const history = useHistory();    
+    const [desicion, setDesicion] = useState(false);
+    const history = useHistory();
 
-    const handleClick = (ev) => {
+    const joinCourse = (ev) => {
+        const data = {
+            userID: sessionStorage.getItem("user"),
+            courseID: curso_id
+        }
+        fetch('/api/join', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .catch(err => 'Hubo un problema');
         history.push(`mycourses/${curso_id}`);
         setClick(true);
     };
-    //D:\Proyectos\Visual Studio\ColesRoom - Grupo 2\ColesRoom-Grupo2-Backend\photos\Fondo.jpg
+
+    useEffect(() => {
+        seeCoursesJoin()
+        console.log(desicion)
+    })
+
+    const seeCoursesJoin = async () => {
+        const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
+        const data = await res.json()
+        for (const cursoID of data) {
+            if (cursoID === curso_id) {
+                setDesicion(true)
+            }
+        }
+    }
+
+    const seeCourse = (ev) => {
+        history.push(`mycourses/${curso_id}`);
+    };
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
@@ -83,15 +116,45 @@ const Course = ({ curso_id,name, category,user_id,description,image, datecreate}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing className="separar">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    className={classes.sizeSmall}
-                    onClick={handleClick}
-                >
-                    Unirse
-                </Button>
+                {
+                    user_id === sessionStorage.getItem("user")
+                        ?
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                            className={classes.sizeSmall}
+                            onClick={seeCourse}>
+                            Ver
+                        </Button>
+
+                        :
+                        <div>
+                            {
+                                desicion
+                                    ?
+                                    <Button
+                                        variant="contained"
+                                        color="default"
+                                        size="small"
+                                        className={classes.sizeSmall}
+                                        onClick={seeCourse}>
+                                        Ver
+                                    </Button>
+                                    :
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        className={classes.sizeSmall}
+                                        onClick={joinCourse}>
+                                        Unirse
+                                    </Button>
+                            }
+                        </div>
+
+                }
+
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>

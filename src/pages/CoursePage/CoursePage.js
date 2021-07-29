@@ -79,7 +79,6 @@ const CoursePage = () => {
   const fetchCourse = async (topic) => {
     const res = await fetch(`api/courses/${topic}`)
     const data = await res.json()
-
     return data
   }
 
