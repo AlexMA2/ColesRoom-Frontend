@@ -95,6 +95,8 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
     const seeCourse = (ev) => {
         history.push(`mycourses/${curso_id}`);
+        setClick(true);
+        
     };
 
     const openMenuCourse = (ev) => {
@@ -165,7 +167,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
             </CardContent>
             <CardActions disableSpacing className="separar">
                 {
-                    user_id === sessionStorage.getItem("user")
+                    teacher_id === sessionStorage.getItem("user")
                         ?
                         <Button
                             variant="contained"
@@ -208,7 +210,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                     color="primary"
                     size='small'
                     className={classes.sizeSmall}
-                    onClick={handleClick}
+                    onClick={seeCourse}
                 >
                     {
                         viewDeleteCourse
