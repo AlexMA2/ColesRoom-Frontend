@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import {Link} from 'react-router-dom'
@@ -21,7 +21,7 @@ const MenuProfile = ({logout, anchorEl, isMenuOpen, menuId, handleMenuClose}) =>
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link to="/profile" style={linkMyCourses}>Mi cuenta</Link></MenuItem>
             <MenuItem onClick={handleMenuClose}><Link to="/mycourses" style={linkMyCourses}>Mis Cursos</Link></MenuItem>            
             <MenuItem onClick={logout}>Cerrar Sesión</MenuItem>
         </Menu>

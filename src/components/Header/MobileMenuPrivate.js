@@ -25,7 +25,7 @@ const MobileMenuPrivate = ({mobileMoreAnchorEl, isMobileMenuOpen, mobileMenuId, 
                         <MailIcon />
                     </Badge>
                 </IconButton>
-                <p>Messages</p>
+                <p>Mensajes</p>
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -33,7 +33,7 @@ const MobileMenuPrivate = ({mobileMoreAnchorEl, isMobileMenuOpen, mobileMenuId, 
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
-                <p>Notifications</p>
+                <p>Notificaciones</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -44,7 +44,7 @@ const MobileMenuPrivate = ({mobileMoreAnchorEl, isMobileMenuOpen, mobileMenuId, 
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                <p>Mi Perfil</p>
             </MenuItem>
         </Menu>
     )
