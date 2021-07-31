@@ -122,11 +122,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setdateformat(df.format(dateTransform))
 
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
-
-        seeCoursesJoin()
-        console.log(desicion)
-
-
+        seeCoursesJoin()      
 
     }, [datecreate, teacher_id])
 
