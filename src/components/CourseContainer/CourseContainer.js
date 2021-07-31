@@ -8,10 +8,10 @@ class CourseContainer extends Component {
     super();
     this.state = {
       coursesList: [],
-      valor:valor
+      valor: valor
     };
     this.handleChange = this.handleChange.bind(this);
-    
+
   }
 
   handleChange(e) {
@@ -26,7 +26,6 @@ class CourseContainer extends Component {
     this.fetchCourseCreated()
     this.fetchMyCourses()
   }
-
 
   async fetchCourseCreated() {
     const res = await fetch(`api/courses/created/${sessionStorage.getItem("user")}`)
@@ -51,11 +50,11 @@ class CourseContainer extends Component {
         });
     } else if (desicion === "/mycourses") {
       console.log(this.state.valor.valor)
-      if(this.state.valor.valor==="cc"){
+      if (this.state.valor.valor === "cc") {
         this.fetchCourseCreated().then(data => {
           this.setState({ coursesList: data })
         })
-      }else if(this.state.valor.valor==="cu"){
+      } else if (this.state.valor.valor === "cu") {
         this.fetchMyCourses().then(data => {
           this.setState({ coursesList: data })
         })
@@ -67,22 +66,22 @@ class CourseContainer extends Component {
     return (
       <div className="course-container">
         <div className="grid-courses">
-        {this.state.coursesList.map(co => (
-          <Course 
-            key={co._id}
-            curso_id={co._id}
-            name={co.name}
-            category={co.category}
-            teacher_id={co.user_id}
-            description={co.description}
-            imagen={co.description}
-            image={co.image}
-            datecreate={co.datecreate}
-           
-            viewDelete={true}
+          {this.state.coursesList.map(co => (
+            <Course
+              key={co._id}
+              curso_id={co._id}
+              name={co.name}
+              category={co.category}
+              teacher_id={co.user_id}
+              description={co.description}
+              imagen={co.description}
+              image={co.image}
+              datecreate={co.datecreate}
+
+              viewDelete={true}
             />
-        ))
-        }
+          ))
+          }
         </div>
       </div>
     )

@@ -122,11 +122,11 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setdateformat(df.format(dateTransform))
 
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
-        
+
         seeCoursesJoin()
         console.log(desicion)
-      
-      
+
+
 
     }, [datecreate, teacher_id])
 
@@ -165,7 +165,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
             </CardContent>
             <CardActions disableSpacing className="separar">
                 {
-                    user_id === sessionStorage.getItem("user")
+                    teacher_id === sessionStorage.getItem("user")
                         ?
                         <Button
                             variant="contained"
@@ -175,7 +175,6 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                             onClick={seeCourse}>
                             Ver
                         </Button>
-
                         :
                         <div>
                             {
@@ -193,30 +192,23 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        size="small"
+                                        size='small'
                                         className={classes.sizeSmall}
-                                        onClick={joinCourse}>
-                                        Unirse
+                                        onClick={seeCourse}
+                                    >
+                                        {
+                                            viewDeleteCourse
+                                                ? 'Ver'
+                                                : 'Unirse'
+                                        }
+
                                     </Button>
+
                             }
                         </div>
 
                 }
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size='small'
-                    className={classes.sizeSmall}
-                    onClick={handleClick}
-                >
-                    {
-                        viewDeleteCourse
-                        ? 'Ver'
-                        : 'Unirse'
-                    }
-                    
-                </Button>
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>
