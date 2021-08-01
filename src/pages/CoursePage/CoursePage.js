@@ -18,7 +18,7 @@ const CoursePage = () => {
 
   const [publicaciones, setPublicaciones] = useState([])
   const [course, setCourse] = useState({})
-  const [teacher, setTeacher] = useState({})
+  const [, setTeacher] = useState({})
   const [activeAddPublication, setactiveAddPublication] = useState(false)
 
   useEffect(() => {
@@ -43,7 +43,8 @@ const CoursePage = () => {
     getPublications()
     getCourse()
 
-  }, [topic])
+  // eslint-disable-next-line no-use-before-define
+  }, [fetchPublications, topic])
 
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const CoursePage = () => {
 
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchPublications = async () => {
     const res = await fetch(`https://colesroomapp.herokuapp.com/api/publications/${topic}`)
     const data = await res.json()
