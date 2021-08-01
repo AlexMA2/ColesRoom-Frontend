@@ -1,12 +1,11 @@
 import "./Profile.css"
 import React from "react";
-import { useState, useEffect } from 'react';
+import {useEffect } from 'react';
 import { Button } from 'react-bootstrap'
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-    const [users, setUsers] = useState([])
-    // const usuario_id = sessionStorage.getItem("key_user");
+
 
     const prueba = {
         Nombre: "Prueba",
@@ -16,8 +15,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        setUsers(prueba)
-    }, [])
+    })
 
 
 
@@ -25,18 +23,13 @@ const Profile = () => {
         <div className="contenedor-principal fondo">
             <h1 className="titulo"> Datos </h1>
             <div className="contenedor-p">
-                {
-                    <div className="datos">
-                        <form>
-                            Nombre: {users.name}<br></br>
-                            Correo: {users.email}<br></br>
-                            Edad: {users.age}<br></br>
-                            Telefono: {users.phone}
-                        </form>
+                <div className="datos">
+                    <div>{prueba.Nombre}</div>
+                    <div>{prueba.Nombre}</div>
+                    <div>{prueba.Nombre}</div>
+                    <div>{prueba.Nombre}</div>
 
-                    </div>
-                }
-
+                </div>
                 <div>
                     <Link to="/profile/edit">
                         <div className="button">
@@ -46,10 +39,6 @@ const Profile = () => {
                         </div>
                     </Link>
                 </div>
-
-
-
-
             </div>
         </div>
     );

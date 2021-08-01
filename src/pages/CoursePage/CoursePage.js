@@ -23,6 +23,25 @@ const CoursePage = () => {
 
   useEffect(() => {
 
+    const fetchPublications = async () => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/api/publications/${topic}`)
+      const data = await res.json()
+      return data
+    }
+  
+    const fetchCourse = async (topic) => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`)
+      const data = await res.json()
+      return data
+    }
+  
+    const fetchTeacher = async (topic) => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${topic}`)
+      const data = await res.json()
+      return data
+    }
+
+
     const getPublications = async () => {
       const p = await fetchPublications()
       setPublicaciones(p)
@@ -32,6 +51,7 @@ const CoursePage = () => {
     const getTeacher = async (teacher_id) => {
       const t = await fetchTeacher(teacher_id)
       setTeacher(t)
+      console.log(teacher)
     }
 
     const getCourse = async () => {
@@ -41,9 +61,10 @@ const CoursePage = () => {
     }
 
     getPublications()
+    getTeacher()
     getCourse()
 
-  }, [topic])
+  }, [teacher, topic])
 
 
   useEffect(() => {
@@ -73,25 +94,7 @@ const CoursePage = () => {
 
   }
 
-  const fetchPublications = async () => {
-    const res = await fetch(`https://colesroomapp.herokuapp.com/api/publications/${topic}`)
-    const data = await res.json()
-
-    return data
-  }
-
-  const fetchCourse = async (topic) => {
-    const res = await fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`)
-    const data = await res.json()
-    return data
-  }
-
-  const fetchTeacher = async (topic) => {
-    const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${topic}`)
-    const data = await res.json()
-
-    return data
-  }
+  
 
   const [click, setClick] = useState(false)
   const history = useHistory()

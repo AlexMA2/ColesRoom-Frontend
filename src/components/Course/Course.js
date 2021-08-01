@@ -83,15 +83,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setClick(true);
     };
 
-    const seeCoursesJoin = async () => {
-        const res = await fetch(`https://colesroomapp.herokuapp.com/api/course/join/${sessionStorage.getItem("user")}`)
-        const data = await res.json()
-        for (const cursoID of data) {
-            if (cursoID === curso_id) {
-                setDesicion(true)
-            }
-        }
-    }
+    
 
     const seeCourse = (ev) => {
         history.push(`mycourses/${curso_id}`);
@@ -108,6 +100,16 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
     }
 
     useEffect(() => {
+        const seeCoursesJoin = async () => {
+            const res = await fetch(`https://colesroomapp.herokuapp.com/api/course/join/${sessionStorage.getItem("user")}`)
+            const data = await res.json()
+            for (const cursoID of data) {
+                if (cursoID === curso_id) {
+                    setDesicion(true)
+                }
+            }
+        }
+
         const df = new Intl.DateTimeFormat('es', { dateStyle: 'full', timeStyle: 'long' })
         const dateToFormat = new Date(datecreate)
         const dateTransform = new Date(Date.UTC(
@@ -123,7 +125,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
         seeCoursesJoin()      
 
-    }, [datecreate, teacher_id])
+    }, [curso_id, datecreate, teacher_id])
 
     if(image==='f2'){
         imageUrl=image2
