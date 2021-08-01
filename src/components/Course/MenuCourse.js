@@ -5,7 +5,6 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
-import { Redirect } from 'react-router-dom';
 
 
 const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
@@ -30,7 +29,7 @@ const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
     }
 
     const fetchDeleteCourse = async () => {
-        const res = await fetch('https://colesroomapp.herokuapp.com/api/courses/${menuId}', {
+        const res = await fetch(`https://colesroomapp.herokuapp.com/api/courses/${menuId}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

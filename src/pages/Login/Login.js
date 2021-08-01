@@ -14,7 +14,6 @@ import { actionCreators } from '../../redux/index.js'
 const Login = () => {
 
   const [logeado, setlogeado] = useState(false)
-  const [errorLogin, seterrorLogin] = useState('')
 
   const dispatch = useDispatch()
   const { setUser } = bindActionCreators(actionCreators, dispatch)

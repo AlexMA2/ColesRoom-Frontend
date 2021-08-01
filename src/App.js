@@ -12,7 +12,6 @@ import CoursePage from "./pages/CoursePage/CoursePage.js"
 import Profile from "./pages/Profile/Profile.js"
 import EditProfile from "./pages/EditProfile/EditProfile.js"
 import MyCourses from "./pages/MyCourses/MyCourses.js"
-import CoursesCreated from "./pages/CoursesCreated/CoursesCreated.js"
 import CreateTask from "./pages/CreateTask/CreateTask.js"
 
 import { useSelector } from 'react-redux'

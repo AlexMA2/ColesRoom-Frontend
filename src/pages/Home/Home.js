@@ -3,7 +3,7 @@ import CourseContainer from "../../components/CourseContainer/CourseContainer"
 import './Home.css'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Typography, Button, Divider, makeStyles } from '@material-ui/core'
+import { Typography, Button, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 
 import Banner from "../../components/Banner/Banner.js"

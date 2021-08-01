@@ -1,13 +1,10 @@
 import CourseContainer from '../../components/CourseContainer/CourseContainer'
 import React, { useEffect, useState } from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Redirect } from 'react-router-dom'
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button} from '@material-ui/core';
 import './MyCourses.css'
 
 const MyCourses = () => {
 
-    const [loading, setLoading] = useState(true)
     const [cambios, setcambios] = useState(false)
     const [coursesListJoined, setCoursesListJoined] = useState('')
     const [coursesListCreated, setCoursesListCreated] = useState('')

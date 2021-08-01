@@ -10,17 +10,17 @@ import { actionCreators } from '../../redux/index.js'
 
 const Register = () => {
   const [logeado, setlogeado] = useState(false)
-  const [errorRegister, seterrorRegister] = useState("")
+  // const [errorRegister, seterrorRegister] = useState("")
   const dispatch = useDispatch()
   const { setUser } = bindActionCreators(actionCreators, dispatch)
   
-  const errores = {
+  /* const errores = {
     "auth/email-already-exists" : "Otro usuario ya está utilizando el correo electrónico proporcionado. Cada usuario debe tener un correo electrónico único. ",
     "auth/internal-error" : "El servidor de Authentication encontró un error inesperado cuando se intentaba procesar la solicitud. ",
     "auth/invalid-email" : "El valor que se proporcionó para la propiedad del usuario email no es válido. ",
     "auth/invalid-password" : "El valor que se proporcionó para la propiedad del usuario password no es válido. Debe ser una string con al menos seis caracteres. ",
     "auth/name-already-in-use" : "Otro usuario ya está utilizando el nombre de usuario proporcionado. Cada usuario debe tener un correo electrónico único. "
-  }
+  } */
 
   const registration = e => {
     e.preventDefault()
@@ -46,15 +46,15 @@ const Register = () => {
         setlogeado(true);          
         sessionStorage.setItem("user", d.id)  
         setUser(d.id)        
-      })
-      .catch(err => seterrorRegister(errores[err.error] || 'Hubo un problema'));
+      }).catch(err =>  'Hubo un problema: '.err);
+      // .catch(err => seterrorRegister(errores[err.error] || 'Hubo un problema'));
 
   }
 
 
   const [cambio, setcambio] = useState("")
   const handleChangeInput = evento => {
-    const { name, value } = evento.target;
+    const { value } = evento.target;
     let regex = new RegExp("^[a-zA-Z ]+$");
 
     if (regex.test(value)) {     
@@ -67,7 +67,7 @@ const Register = () => {
 
   const [cambio2, setcambio2] = useState("")
   const handleChangeInput2 = evento => {
-    const { name, value } = evento.target;
+    const { value } = evento.target;
     let regex = new RegExp("^[a-zA-Z ]+$");
 
     if (regex.test(value)) {     
