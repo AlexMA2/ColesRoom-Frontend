@@ -83,10 +83,8 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setClick(true);
     };
 
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const seeCoursesJoin = async () => {
-        const res = await fetch(`'https://colesroomapp.herokuapp.com/api/course/join/${sessionStorage.getItem("user")}`)
+        const res = await fetch(`https://colesroomapp.herokuapp.com/api/course/join/${sessionStorage.getItem("user")}`)
         const data = await res.json()
         for (const cursoID of data) {
             if (cursoID === curso_id) {
@@ -125,7 +123,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
         seeCoursesJoin()      
 
-    }, [datecreate, seeCoursesJoin, teacher_id])
+    }, [datecreate, teacher_id])
 
     if(image==='f2'){
         imageUrl=image2
