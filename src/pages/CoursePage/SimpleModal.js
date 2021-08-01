@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-
-
+import "../../utils.css"
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -43,10 +42,12 @@ export default function SimpleModal() {
     setOpen(true);
   };
   const addStudent = (ev) => {
+    let Doc= document.getElementById("email").value;
+    console.log(Doc)
     var URLactual = window.location.href;
     desicion = URLactual.substring(34)
     const data = {
-        Email: "nestor.soto@unmsm.edu.pe",
+        Email: Doc,
         courseID: desicion
     }
     console.log(desicion)
@@ -75,7 +76,7 @@ export default function SimpleModal() {
     setOpen(false);
     const id_curso=desicion
     
-
+    ;
     console.log("este es el codigo de curso");
     console.log(id_curso);
     console.log("Registrar Alumno");
@@ -94,13 +95,13 @@ export default function SimpleModal() {
        </div>
        
      </form>
-      <button type="button" onClick={handleClose}>Inscribir</button>
+      <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary" type="button" onClick={handleClose}>Inscribir</button>
     </div>
   );
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary" type="button" onClick={handleOpen} >
         Inscribir alumno
       </button>
       <Modal
