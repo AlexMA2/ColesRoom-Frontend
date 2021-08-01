@@ -7,10 +7,10 @@ import './MyCourses.css'
 
 const MyCourses = () => {
 
-    const [courses, setCourses] = useState([])
     const [loading, setLoading] = useState(true)
     const [cambios, setcambios] = useState(false)
-
+    const [coursesListJoined, setCoursesListJoined] = useState('')
+    const [coursesListCreated, setCoursesListCreated] = useState('')
 
     const container = (maxwidth) => {
         return {
@@ -21,14 +21,41 @@ const MyCourses = () => {
         }
     }
 
+    const fetchCourseCreated = async () => {
+        const res = await fetch(`api/courses/created/${sessionStorage.getItem("user")}`)
+        const data = await res.json()
+        return data
+    }
+
+
+    const fetchCoursesJoined = async () => {
+        const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
+        const data = await res.json()
+        return data
+    }
+
 
     useEffect(() => {
 
-    })
+        const getCoursesCreated = async () => {
+            const data = await fetchCourseCreated()
+            setCoursesListCreated(data)
+        }
+
+        const getCoursesJoined = async () => {
+            const data = await fetchCoursesJoined()
+            setCoursesListJoined(data)
+        }
+
+        getCoursesCreated()
+        getCoursesJoined()
+
+    }, [])
 
     const cambio = cambiatectm => {
         if (cambiatectm === "cu") {
             setcambios(true)
+
         } else if (cambiatectm === "cc") {
             setcambios(false)
         }
@@ -47,7 +74,11 @@ const MyCourses = () => {
                                 <Button variant="contained" color="secondary" onClick={() => { cambio("cu") }}>Cursos Unidos</Button>
                             </div>
                         </div>
-                        <CourseContainer valor="cc"></CourseContainer>
+                        {
+                            coursesListCreated.length > 0 &&
+                            <CourseContainer coursesList={coursesListCreated} />
+                        }
+
                     </div>
                     :
                     <div>
@@ -58,7 +89,10 @@ const MyCourses = () => {
                                 <Button variant="contained" color="secondary" onClick={() => { cambio("cu") }}>Cursos Unidos</Button>
                             </div>
                         </div>
-                        <CourseContainer valor="cu"></CourseContainer>
+                        {
+                            coursesListJoined.length > 0 &&
+                            <CourseContainer coursesList={coursesListJoined} />
+                        }
                     </div>
             }
         </div>
