@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Profile = () => {
     const [users, setUsers] = useState([])
     // const usuario_id = sessionStorage.getItem("key_user");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     const prueba = {
         Nombre: "Prueba",
         Correo: "Prueba",
@@ -17,7 +17,7 @@ const Profile = () => {
 
 useEffect(() => {
     setUsers(prueba)
-}, [prueba])
+}, [])
 
 
 
