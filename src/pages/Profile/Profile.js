@@ -15,48 +15,44 @@ const Profile = () => {
         Telefono: "Prueba"
     }
 
-useEffect(() => {
-    setUsers(prueba)
-}, [])
+    useEffect(() => {
+        setUsers(prueba)
+    }, [])
 
 
 
-return (
-    <div className="contenedor-principal fondo">
-        <h1 className="titulo"> Datos </h1>
-        <div className="contenedor-p">
-            {
-                users
-                    //.filter((us) => us.user_id === usuario_id)
-                    .map((us) => (
-                        <div className="datos">
-                            <form>
-                                Nombre: {us.name}<br></br>
-                                Correo: {us.email}<br></br>
-                                Edad: {us.age}<br></br>
-                                Telefono: {us.phone}
-                            </form>
+    return (
+        <div className="contenedor-principal fondo">
+            <h1 className="titulo"> Datos </h1>
+            <div className="contenedor-p">
+                {
+                    <div className="datos">
+                        <form>
+                            Nombre: {users.name}<br></br>
+                            Correo: {users.email}<br></br>
+                            Edad: {users.age}<br></br>
+                            Telefono: {users.phone}
+                        </form>
 
-                        </div>
-                    ))
-            }
-
-            <div>
-                <Link to="/profile/edit">
-                    <div className="button">
-                        <Button variant="dark" type="submit">
-                            Editar Datos
-                        </Button>
                     </div>
-                </Link>
+                }
+
+                <div>
+                    <Link to="/profile/edit">
+                        <div className="button">
+                            <Button variant="dark" type="submit">
+                                Editar Datos
+                            </Button>
+                        </div>
+                    </Link>
+                </div>
+
+
+
+
             </div>
-
-
-
-
         </div>
-    </div>
-);
+    );
 };
 
 export default Profile;
