@@ -30,7 +30,7 @@ const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
     }
 
     const fetchDeleteCourse = async () => {
-        const res = await fetch(`api/courses/${menuId}`, {
+        const res = await fetch('https://colesroomapp.herokuapp.com/api/courses/${menuId}', {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -43,7 +43,7 @@ const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
     }
 
     const fetchDeleteAllPublicationsFiles = async (filesIds) => {
-        const response = await fetch(`file/deleteAll`, {
+        const response = await fetch(`https://colesroomapp.herokuapp.com/file/deleteAll`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

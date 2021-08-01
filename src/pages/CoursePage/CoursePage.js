@@ -53,7 +53,7 @@ const CoursePage = () => {
   const handleSubmit = (value) => {
     value.course_id = topic
 
-    fetch('/api/publications', {
+    fetch('https://colesroomapp.herokuapp.com/api/publications', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -74,20 +74,20 @@ const CoursePage = () => {
   }
 
   const fetchPublications = async () => {
-    const res = await fetch(`api/publications/${topic}`)
+    const res = await fetch(`https://colesroomapp.herokuapp.com/api/publications/${topic}`)
     const data = await res.json()
 
     return data
   }
 
   const fetchCourse = async (topic) => {
-    const res = await fetch(`api/courses/${topic}`)
+    const res = await fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`)
     const data = await res.json()
     return data
   }
 
   const fetchTeacher = async (topic) => {
-    const res = await fetch(`teacher/${topic}`)
+    const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${topic}`)
     const data = await res.json()
 
     return data

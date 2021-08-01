@@ -137,7 +137,7 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
     const saveChanges = () => {
         if (newTitle !== '' && newContent !== '') {
             setediting(false)     
-            fetch(`/api/courses/${topic}`, {
+            fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',

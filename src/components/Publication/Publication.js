@@ -35,7 +35,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
 
     const handleEdit = (newValue) => {
         console.log(newValue)
-        fetch(`/api/publications/${publication._id}`, {
+        fetch(`https://colesroomapp.herokuapp.com/api/publications/${publication._id}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -60,7 +60,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
     };
 
     const handleDelete = () => {
-        fetch(`/api/publications/${publication._id}`, {
+        fetch(`https://colesroomapp.herokuapp.com/api/publications/${publication._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -73,7 +73,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
                 console.log(err);
             });        
 
-        fetch(`/file/deleteAll`, {
+        fetch(`https://colesroomapp.herokuapp.com/file/deleteAll`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -105,7 +105,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
     useEffect(() => {
         // Fetch a publicacion. routes para coger los valores de esos ids.
         setPublication(p);
-        fetch('/file', {
+        fetch('https://colesroomapp.herokuapp.com/file', {
             method: 'POST',
             body: JSON.stringify({
                 files: p.route,
@@ -129,7 +129,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
 
     const handleDeleteFile = (fileID) => {
         setpublicationFiles(publicationfiles.filter(file => file._id !== fileID))
-        fetch(`/file/${fileID}/delete`, {
+        fetch(`https://colesroomapp.herokuapp.com/file/${fileID}/delete`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const fetchMyUser = async () => {
-  const res = await fetch(`/teacher/${sessionStorage.getItem("user")}`);
+  const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${sessionStorage.getItem("user")}`);
   const data = await res.json();
   return data;
 };

@@ -52,7 +52,7 @@ export default function SimpleModal() {
     }
     console.log(course_id)
     console.log(data.Email);
-    fetch('/api/add', {
+    fetch('https://colesroomapp.herokuapp.com/api/add', {
 
         method: 'POST',
         body: JSON.stringify(data),
