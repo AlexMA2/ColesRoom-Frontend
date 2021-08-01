@@ -2,6 +2,7 @@ import "./Profile.css"
 import React from "react";
 import { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap'
+import { Link } from "react-router-dom";
 
 const Profile = () => {
     const [users, setUsers] = useState([])
@@ -35,13 +36,13 @@ const Profile = () => {
                 }
 
                 <div>
-                    <a href="/editprofile">
+                    <Link to="/profile/edit">
                         <div className="button">
                             <Button variant="dark" type="submit">
                                 Editar Datos
                             </Button>
                         </div>
-                    </a>
+                    </Link>
                 </div>
 
 

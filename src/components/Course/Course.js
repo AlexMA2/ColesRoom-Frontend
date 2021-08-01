@@ -85,7 +85,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
 
     const seeCoursesJoin = async () => {
-        const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
+        const res = await fetch(`api/course/join/${sessionStorage.getItem("user")}`)
         const data = await res.json()
         for (const cursoID of data) {
             if (cursoID === curso_id) {

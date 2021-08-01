@@ -41,11 +41,11 @@ const App = () => {
         !render
           ?
           < Switch >
-            <Route exact path="/profile">
-              <Profile />
-            </Route>
             <Route exact path="/profile/edit">
               <EditProfile />
+            </Route>
+            <Route exact path="/profile">
+              <Profile />
             </Route>
             <Route exact path="/mycourses">
               <MyCourses />

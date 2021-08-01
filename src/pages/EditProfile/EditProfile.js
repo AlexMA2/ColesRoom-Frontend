@@ -40,7 +40,7 @@ const EditProfile = () => {
     getUser();
   }, []);
 
-  console.log(user, "sí estoy vivo");
+  console.log(user);
 
   const classes = useStyles();
   const nameChangeHandler = (e) => {

@@ -106,13 +106,10 @@ const CoursePage = () => {
   return (
 
     <div className="container3" >
-      <SimpleModal />
       {
         click &&
         <Redirect to={irTopic} />
       }
-      
-
       <CourseTitle name={course.name}
         description={course.description}
         date={course.datecreate}
@@ -124,10 +121,11 @@ const CoursePage = () => {
       
       {
         activeAddPublication &&
-        <div style={{ "marginBottom": "15px" }}>
-          <Button variant="contained" color="primary" onClick={handleClick}>
+        <div style={{ "marginBottom": "15px", display:"flex", alignItems:"center"}}>
+          <Button variant="contained" color="primary" onClick={handleClick} style={{marginRight:"15px"}}>
             Crear Tarea
           </Button>
+          <SimpleModal/>
         </div>
       }
       {
