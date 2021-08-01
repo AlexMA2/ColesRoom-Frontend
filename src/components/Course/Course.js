@@ -10,15 +10,16 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import imageUrl from '../../imgs/CourseBackground1.jpg';
 import Button from '@material-ui/core/Button'
 import { Redirect, useHistory } from 'react-router-dom';
 import MenuCourse from './MenuCourse';
-
+import image1 from '../../imgs/CourseBackground1.jpg'
+import image2 from '../../imgs/CourseBackground2.jpg'
+import image3 from '../../imgs/CourseBackground3.jpg'
 import './Course.css'
 
-const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, onDelete, viewDelete }) => {
-    
+const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, viewDelete }) => {
+    var imageUrl =""
     const [dateformat, setdateformat] = useState('')
     const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
     const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
@@ -105,9 +106,6 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
     const closeMenuCourse = (isDeleted) => {
         setAnchorMenuCourse(null);
-        if (isDeleted) {
-            //onDelete(curso_id)
-        }
     }
 
     useEffect(() => {
@@ -124,15 +122,17 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setdateformat(df.format(dateTransform))
 
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
-        
-        seeCoursesJoin()
-        console.log(desicion)
-      
-      
+        seeCoursesJoin()      
 
     }, [datecreate, teacher_id])
 
-
+    if(image==='f2'){
+        imageUrl=image2
+    }else if (image==='f3'){
+        imageUrl=image3
+    }else{
+        imageUrl=image1
+    }
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
@@ -177,7 +177,6 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                             onClick={seeCourse}>
                             Ver
                         </Button>
-
                         :
                         <div>
                             {
@@ -189,36 +188,22 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                                         size="small"
                                         className={classes.sizeSmall}
                                         onClick={seeCourse}>
-                                        Ver
+                                        Entrar
                                     </Button>
                                     :
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        size="small"
+                                        size='small'
                                         className={classes.sizeSmall}
                                         onClick={joinCourse}>
-                                        Unirse
+                                        Unirse                                                
                                     </Button>
+
                             }
                         </div>
 
                 }
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size='small'
-                    className={classes.sizeSmall}
-                    onClick={seeCourse}
-                >
-                    {
-                        viewDeleteCourse
-                        ? 'Ver'
-                        : 'Unirse'
-                    }
-                    
-                </Button>
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>

@@ -5,7 +5,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefault, sendFiles }) => {
-
+    
     const [files, setFiles] = useState([]);
     const [value, setValue] = useState('');
     const [disabledBtn, setDisabledBtn] = useState(true)

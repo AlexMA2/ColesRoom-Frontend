@@ -99,6 +99,7 @@ const CoursePage = () => {
 
   const handleClick = (ev) => {
     history.push(irTopic)
+    sessionStorage.setItem("IDCourse",topic)
     setClick(true)
   }
 

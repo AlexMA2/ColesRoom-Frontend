@@ -26,7 +26,7 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
     const [newContent, setnewContent] = useState(description)    
 
     const [visibility, setvisibility] = useState(category)
-    const [visibilityText, setvisibilityText] = useState(category ? 'Público' : 'Privado')
+    
 
     const [fondo, setfondo] = useState(backgroundImage)
     const [background, setbackground] = useState(DefaultBackground1)
@@ -89,8 +89,8 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
     const handleOpenEditCourse = (ev) => {
         setheightTitle(titleRef.current.offsetHeight)
-        setnewTitle(name)        
-        setnewContent(description)
+        setnewTitle(newTitle)        
+        setnewContent(newContent)
         titleRef.current.focus()
         setediting(true)
     }
@@ -110,7 +110,6 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
     const handleChangeSwitch = () => {
         setvisibility(!visibility)
-        setvisibilityText(visibility ? 'Público' : 'Privado')
     }
 
     const handleChooseBackground = (ev) => {
@@ -163,13 +162,13 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
                 })
                 .catch(error => {
                     console.log(error)
-                })              
+                })  
+                            
         }
     }
 
     useEffect(() => {
         setvisibility(category)
-        setvisibilityText(visibility ? 'Público' : 'Privado')     
         setfondo(backgroundImage)               
         setnewContent(description)
         setnewTitle(name)   
@@ -211,14 +210,13 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
                         ?
                         <div className="course-title--edit">
                             <div className="course-title--edit__category"> 
-                                <p> Categor&iacute;a:</p>
+                                <p> P&uacute;blico</p>
                                 <Switch
                                     checked={visibility}
                                     onChange={handleChangeSwitch}
                                     name="checked"
-                                    color="primary"
-                                />
-                                <p className="course-title--edit__visibility"> {visibilityText} </p>
+                                    color="primary"/>
+                                <p> Privado</p>
                             </div>
                             <div className="course-title--edit__background">
                                 <FormControl component="fieldset">
