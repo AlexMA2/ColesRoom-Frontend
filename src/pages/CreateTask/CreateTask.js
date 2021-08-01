@@ -1,71 +1,101 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import '../../utils.css'
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, FormControl } from 'react-bootstrap';
 import "./CreateTask.css"
+import PublicationInput from "../../components/Publication/PublicationInput";
+import { useHistory } from "react-router-dom";
+
 
 const CreateTask = () => {
 
+    const[date,setTime]=useState("")
+    const [files, setFiles] = useState([]);
+    const [value, setValue] = useState('');
+    const [disabledBtn, setDisabledBtn] = useState(true)
+    const [filesID, setFilesID] = useState([]);
+
+    let history = useHistory();
     const CrearTarea = (e) => {
         e.preventDefault();
         const form = e.target;
         const data = {
-            
-            user_id: "",
-            curso_id: form.curso_id.value,
-            nombre: form.nombre.value,
-            categoria: form.categoria.value,
-          };
-
-          fetch('/taskcreate', {
+            nombre: form.title.value,
+            description: form.description.value,
+            file:form.File.value,
+            date:form.date.value
+        };
+        fetch('/api/publications', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
-          })
-            .then(res => res.json())
-            .then(d => {        
-              console.log(d)
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                else {
+                    console.log('Error: ' + response.status + ' ' + response.statusText)
+                }
             })
-            .catch(err => seterrorRegister(errores[err.error] || 'Hubo un problema'));
+            .then(json => {
+                if (json) {                       
+                    setFiles([...files, json.file])
+                    setFilesID([...filesID, json.fileID])
+                }
+            })
+            .catch(error => {
+                console.log('Error: ' + error)
+            })
+            history.push("/");
     }
 
+    useEffect(() => {
+        var dateTime = require('node-datetime');
+        var dt = dateTime.create();
+        var formatted = dt.format('Y-m-dTH:M:S');
+        setTime(formatted)
+    })
 
 
     return (
-        <div style={{ "padding": "15px" }}>
-            <h1>CREAR TAREA</h1>
-            <br></br>
-            <Form className="Form">
-                <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Nombre de la Tarea</Form.Label>
-                    <Form.Control size="lg" type="text" placeholder="Nombre de la Tarea" />
-                </Form.Group>
-                <br></br>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Descripcion de la tarea</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
-                </Form.Group>
-                <br></br>
-                <Form.Group>
-                    <Form.Label>Subir Archivo (Opcional)</Form.Label>
-                    <Form.File id="exampleFormControlFile1" />
-                </Form.Group>
-                <br></br>
-                <Form.Group>
-                    <p>Seleccione Fecha Limite</p>
-                    <div className="contenedor">
-                        <div className="center">
-                            <input type="datetime-local" />
+        <div className="form-group-content">
+            <div className="content-form">
+                <h1>CREAR TAREA</h1>
+                <Form className="Form" onSubmit={CrearTarea}>
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Label>Nombre de la Tarea</Form.Label>
+                        <Form.Control size="lg" name="title" type="text" placeholder="Nombre de la Tarea" />
+                    </Form.Group>
+                    <br></br>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Descripcion de la tarea</Form.Label>
+                        <FormControl type="text" name="description" as="textarea" rows="3" style={{ resize: "none" }} />
+                    </Form.Group>
+                    <br></br>
+                    <Form.Group>
+                        <Form.Label>Subir Archivo (Opcional)</Form.Label>
+                        <Form.File id="exampleFormControlFile1" name="File" />
+                    </Form.Group>
+                    <br></br>
+                    <Form.Group>
+                        <p>Seleccione Fecha Limite</p>
+                        <div className="contenedor">
+                            <div className="center">
+                                <input type="datetime-local" defaultValue={date}
+                                    min={date} name="date"/>
+                            </div>
                         </div>
-                    </div>
-                </Form.Group>
-            </Form>
-            <br></br>
-            <Button onClick={CrearTarea} className>
-                Crear Tarea
-            </Button>
+                    </Form.Group>
+                <Button variant="success" type="submit">
+                    Crear Tarea
+                </Button>
+                </Form>
+                <br></br>
+                
+            </div>
         </div>
     );
 }

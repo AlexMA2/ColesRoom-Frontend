@@ -68,16 +68,13 @@ class CourseContainer extends Component {
         <div className="grid-courses">
           {this.state.coursesList.map(co => (
             <Course
-              key={co._id}
               curso_id={co._id}
               name={co.name}
               category={co.category}
               teacher_id={co.user_id}
               description={co.description}
-              imagen={co.description}
               image={co.image}
               datecreate={co.datecreate}
-
               viewDelete={true}
             />
           ))
