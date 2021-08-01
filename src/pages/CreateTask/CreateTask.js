@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 const CreateTask = () => {
 
-    const[date,setTime]=useState("")
+    const [date, setTime] = useState("")
     const [files, setFiles] = useState([]);
     const [value, setValue] = useState('');
     const [disabledBtn, setDisabledBtn] = useState(true)
@@ -18,13 +18,18 @@ const CreateTask = () => {
     const CrearTarea = (e) => {
         e.preventDefault();
         const form = e.target;
+
         const data = {
-            nombre: form.title.value,
-            description: form.description.value,
-            file:form.File.value,
-            date:form.date.value
+            // nombre: form.title.value,
+            content: form.description.value,
+            type:0,
+            course_id: sessionStorage.getItem("IDCourse"),
+            route:[]
+            //date: form.date.value,
+            //file: form.File.value,
         };
-        fetch('/api/publications', {
+
+        fetch('/api/tasks', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -41,7 +46,7 @@ const CreateTask = () => {
                 }
             })
             .then(json => {
-                if (json) {                       
+                if (json) {
                     setFiles([...files, json.file])
                     setFilesID([...filesID, json.fileID])
                 }
@@ -49,7 +54,9 @@ const CreateTask = () => {
             .catch(error => {
                 console.log('Error: ' + error)
             })
-            history.push("/");
+        let topic =sessionStorage.getItem("IDCourse")            
+        sessionStorage.removeItem("IDCourse")
+        history.push(`/mycourses/${topic}`);
     }
 
     useEffect(() => {
@@ -85,16 +92,16 @@ const CreateTask = () => {
                         <div className="contenedor">
                             <div className="center">
                                 <input type="datetime-local" defaultValue={date}
-                                    min={date} name="date"/>
+                                    min={date} name="date" />
                             </div>
                         </div>
                     </Form.Group>
-                <Button variant="success" type="submit">
-                    Crear Tarea
-                </Button>
+                    <Button variant="success" type="submit">
+                        Crear Tarea
+                    </Button>
                 </Form>
                 <br></br>
-                
+
             </div>
         </div>
     );
