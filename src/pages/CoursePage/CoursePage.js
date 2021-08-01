@@ -10,6 +10,7 @@ import AddPublication from "../../components/Publication/AddPublication.js"
 import { Button } from "@material-ui/core"
 import imgFakePerfil from '../../imgs/fakePerfil.png'
 import "../../utils.css"
+import SimpleModal from './SimpleModal.js';
 
 
 const CoursePage = () => {
@@ -105,10 +106,12 @@ const CoursePage = () => {
   return (
 
     <div className="container3" >
+      <SimpleModal />
       {
         click &&
         <Redirect to={irTopic} />
       }
+      
 
       <CourseTitle name={course.name}
         description={course.description}
@@ -118,7 +121,7 @@ const CoursePage = () => {
         category={course.category}
         topic={topic}
       />
-
+      
       {
         activeAddPublication &&
         <div style={{ "marginBottom": "15px" }}>

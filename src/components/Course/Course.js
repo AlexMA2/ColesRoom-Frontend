@@ -96,6 +96,8 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
     const seeCourse = (ev) => {
         history.push(`mycourses/${curso_id}`);
+        setClick(true);
+        
     };
 
     const openMenuCourse = (ev) => {
@@ -202,7 +204,6 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                         </div>
 
                 }
-
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>
