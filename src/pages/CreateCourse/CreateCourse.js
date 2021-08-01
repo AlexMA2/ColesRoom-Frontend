@@ -37,7 +37,7 @@ const CreateCourse = (props) => {
       }
     })
       .then(res => res.json())
-      .then()
+      .then(alert("LOGUEO CORRECTO"))
       .catch(err => alert("Fallo al Registrar"));
 
     history.push("/");
