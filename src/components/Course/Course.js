@@ -18,7 +18,7 @@ import MenuCourse from './MenuCourse';
 import './Course.css'
 
 const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, onDelete, viewDelete }) => {
-
+    
     const [dateformat, setdateformat] = useState('')
     const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
     const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
