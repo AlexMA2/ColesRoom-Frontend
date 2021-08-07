@@ -3,7 +3,7 @@ import CourseContainer from "../../components/CourseContainer/CourseContainer"
 import './Home.css'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Typography, Button, Divider, makeStyles } from '@material-ui/core'
+import { Typography, Button, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 
 import Banner from "../../components/Banner/Banner.js"
@@ -32,17 +32,16 @@ const Home = () => {
   }
 
   const fetchCourses = async () => {
-    const res = await fetch('/api/courses')
-    const data = await res.json()
-    return data
+    const res = await fetch('https://colesroomapp.herokuapp.com/api/courses')    
+    return res.json()  
   }
 
   useEffect(() => {
 
     const getCourses = async () => {
-      const courses = await fetchCourses()
-      setCourses(courses)
-      setcoursesToShow(courses.slice(0, limitCourses))
+      const coursesFromDB = await fetchCourses()
+      setCourses(coursesFromDB)
+      setcoursesToShow(coursesFromDB.slice(0, limitCourses))
       setLoading(false)
     }
 

@@ -21,17 +21,17 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
     const [dateFormat, setdateFormat] = useState('')
     const [editing, setediting] = useState(false)
     const [heightTitle, setheightTitle] = useState(0)
-    
+
     const [newTitle, setnewTitle] = useState(name)
-    const [newContent, setnewContent] = useState(description)    
+    const [newContent, setnewContent] = useState(description)
 
     const [visibility, setvisibility] = useState(category)
-    
+
 
     const [fondo, setfondo] = useState(backgroundImage)
     const [background, setbackground] = useState(DefaultBackground1)
 
-    const titleRef = useRef();  
+    const titleRef = useRef();
 
     const backgroundCourse = {
         backgroundImage: `url(${background})`,
@@ -89,7 +89,7 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
     const handleOpenEditCourse = (ev) => {
         setheightTitle(titleRef.current.offsetHeight)
-        setnewTitle(newTitle)        
+        setnewTitle(newTitle)
         setnewContent(newContent)
         titleRef.current.focus()
         setediting(true)
@@ -114,7 +114,7 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
     const handleChooseBackground = (ev) => {
         setfondo(ev.target.value)
-        selectBackground(ev.target.value)        
+        selectBackground(ev.target.value)
     }
 
     const selectBackground = (value) => {
@@ -136,42 +136,42 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
     const saveChanges = () => {
         if (newTitle !== '' && newContent !== '') {
-            setediting(false)     
-            fetch(`/api/courses/${topic}`, {
+            setediting(false)
+            fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: newTitle,         
-                    description: newContent,           
-                    image: fondo,                    
-                    category: visibility,                   
-                }),            
+                    name: newTitle,
+                    description: newContent,
+                    image: fondo,
+                    category: visibility,
+                }),
 
-            })       
+            })
                 .then(response => {
                     return response.json()
                 })
                 .then(data => {
-                    if (data) {                                                                               
-                       
+                    if (data) {
+
                         setediting(false)
                     }
                 })
                 .catch(error => {
                     console.log(error)
-                })  
-                            
+                })
+
         }
     }
 
     useEffect(() => {
         setvisibility(category)
-        setfondo(backgroundImage)               
+        setfondo(backgroundImage)
         setnewContent(description)
-        setnewTitle(name)   
+        setnewTitle(name)
     }, [category, backgroundImage, description, name])
 
     useEffect(() => {
@@ -181,21 +181,24 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
     return (
         <div className="course-title" style={backgroundCourse}>
             <div className="course-title__info">
-                <div className="course__subinfo">
-                    {
-                        editing
-                            ? <input type="text" value={newTitle} style={setStylesInputTitle(heightTitle)} onChange={handleChangeTitle} />
-                            : <h2 ref={titleRef}> {newTitle} </h2>
-                    }
-                    <div>
-                        {
-                            editing
-                                ? <HighlightOffIcon onClick={handleCloseEditCourse} />
-                                : <CreateIcon onClick={handleOpenEditCourse} />
-                        }
+                {
+                    editing 
+                    ?
+                        <div className="course__subinfo">                                  
+                            <input type="text" value={newTitle} style={setStylesInputTitle(heightTitle)} onChange={handleChangeTitle} />
+                            <div>
+                                <HighlightOffIcon onClick={handleCloseEditCourse} />                               
+                            </div>
+                        </div>
+                    :
+                        <div className="course__subinfo">                            
+                            <h2 ref={titleRef}> {newTitle} </h2>
+                            <div>
+                                <CreateIcon onClick={handleOpenEditCourse} />
+                            </div>
+                        </div>
+                }
 
-                    </div>
-                </div>
                 <div className="course__description">
 
                     <p> Creado el {dateFormat} </p>
@@ -209,26 +212,26 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
                     editing
                         ?
                         <div className="course-title--edit">
-                            <div className="course-title--edit__category"> 
+                            <div className="course-title--edit__category">
                                 <p> P&uacute;blico</p>
                                 <Switch
                                     checked={visibility}
                                     onChange={handleChangeSwitch}
                                     name="checked"
-                                    color="primary"/>
+                                    color="primary" />
                                 <p> Privado</p>
                             </div>
                             <div className="course-title--edit__background">
                                 <FormControl component="fieldset">
-                                    <FormLabel component="legend" style={{color: '#ffffff', fontSize:'1rem'}}> Elije el fondo: </FormLabel>
-                                    <RadioGroup aria-label="fondo" name="fondo" value={fondo} onChange={handleChooseBackground} style={{display: 'flex', flexDirection: 'row'}}>
+                                    <FormLabel component="legend" style={{ color: '#ffffff', fontSize: '1rem' }}> Elije el fondo: </FormLabel>
+                                    <RadioGroup aria-label="fondo" name="fondo" value={fondo} onChange={handleChooseBackground} style={{ display: 'flex', flexDirection: 'row' }}>
                                         <FormControlLabel value="f1" control={<Radio />} label="Fondo 1" />
                                         <FormControlLabel value="f2" control={<Radio />} label="Fondo 2" />
-                                        <FormControlLabel value="f3" control={<Radio />} label="Fondo 3" />                                       
+                                        <FormControlLabel value="f3" control={<Radio />} label="Fondo 3" />
                                     </RadioGroup>
                                 </FormControl>
                             </div>
-                            <div style={{textAlign: 'center'}}>
+                            <div style={{ textAlign: 'center' }}>
                                 <Button variant="contained" color="primary" onClick={saveChanges}> Guardar Cambios </Button>
                             </div>
                         </div>

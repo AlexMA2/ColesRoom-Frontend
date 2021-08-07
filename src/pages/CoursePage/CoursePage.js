@@ -1,8 +1,7 @@
-import React from "react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useHistory } from "react-router"
-import { Redirect } from "react-router"
+import { useHistory, Redirect  } from "react-router"
+
 import CourseTitle from "../../components/CourseTitle/CourseTitle.js"
 
 import PublicationContainer from "../../components/Publication/PublicationContainer.js"
@@ -23,6 +22,22 @@ const CoursePage = () => {
 
   useEffect(() => {
 
+    const fetchPublications = async () => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/api/publications/${topic}`)
+      return res.json()
+    }
+  
+    const fetchCourse = async () => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`)
+      return res.json()
+    }
+  
+    const fetchTeacher = async (teacher_id) => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${teacher_id}`)
+      return res.json()     
+    }
+
+
     const getPublications = async () => {
       const p = await fetchPublications()
       setPublicaciones(p)
@@ -32,18 +47,20 @@ const CoursePage = () => {
     const getTeacher = async (teacher_id) => {
       const t = await fetchTeacher(teacher_id)
       setTeacher(t)
+      console.log(teacher)
     }
 
     const getCourse = async () => {
-      const c = await fetchCourse(topic)
+      const c = await fetchCourse()
       getTeacher(c.user_id)
       setCourse(c)
     }
 
     getPublications()
+    getTeacher()
     getCourse()
 
-  }, [topic])
+  }, [teacher, topic])
 
 
   useEffect(() => {
@@ -53,7 +70,7 @@ const CoursePage = () => {
   const handleSubmit = (value) => {
     value.course_id = topic
 
-    fetch('/api/publications', {
+    fetch('https://colesroomapp.herokuapp.com/api/publications', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -71,27 +88,7 @@ const CoursePage = () => {
         console.log(error)
       })
 
-  }
-
-  const fetchPublications = async () => {
-    const res = await fetch(`api/publications/${topic}`)
-    const data = await res.json()
-
-    return data
-  }
-
-  const fetchCourse = async (topic) => {
-    const res = await fetch(`api/courses/${topic}`)
-    const data = await res.json()
-    return data
-  }
-
-  const fetchTeacher = async (topic) => {
-    const res = await fetch(`teacher/${topic}`)
-    const data = await res.json()
-
-    return data
-  }
+  }  
 
   const [click, setClick] = useState(false)
   const history = useHistory()
@@ -106,13 +103,10 @@ const CoursePage = () => {
   return (
 
     <div className="container3" >
-      <SimpleModal />
       {
         click &&
         <Redirect to={irTopic} />
       }
-      
-
       <CourseTitle name={course.name}
         description={course.description}
         date={course.datecreate}
@@ -124,10 +118,11 @@ const CoursePage = () => {
       
       {
         activeAddPublication &&
-        <div style={{ "marginBottom": "15px" }}>
-          <Button variant="contained" color="primary" onClick={handleClick}>
+        <div style={{ "marginBottom": "15px", display:"flex", alignItems:"center"}}>
+          <Button variant="contained" color="primary" onClick={handleClick} style={{marginRight:"15px"}}>
             Crear Tarea
           </Button>
+          <SimpleModal/>
         </div>
       }
       {

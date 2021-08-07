@@ -1,8 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import '../../utils.css'
 import { Form, Button, FormControl } from 'react-bootstrap';
 import "./CreateTask.css"
-import PublicationInput from "../../components/Publication/PublicationInput";
 import { useHistory } from "react-router-dom";
 
 
@@ -10,8 +9,6 @@ const CreateTask = () => {
 
     const [date, setTime] = useState("")
     const [files, setFiles] = useState([]);
-    const [value, setValue] = useState('');
-    const [disabledBtn, setDisabledBtn] = useState(true)
     const [filesID, setFilesID] = useState([]);
 
     let history = useHistory();
@@ -29,7 +26,7 @@ const CreateTask = () => {
             //file: form.File.value,
         };
 
-        fetch('/api/tasks', {
+        fetch('https://colesroomapp.herokuapp.com/api/tasks', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -64,7 +61,7 @@ const CreateTask = () => {
         var dt = dateTime.create();
         var formatted = dt.format('Y-m-dTH:M:S');
         setTime(formatted)
-    })
+    }, [])
 
 
     return (

@@ -10,7 +10,7 @@ const CreateCourse = (props) => {
 
   let history = useHistory()
 
-  const registrarCurso = (e) => {
+  const registrarCurso = async (e) => {
     e.preventDefault();
     const form = e.target;
     const data = {
@@ -28,7 +28,7 @@ const CreateCourse = (props) => {
 
     data.user_id = sessionStorage.getItem("user")
   
-    fetch('/api/CreateCourse', {
+    await fetch('https://colesroomapp.herokuapp.com/api/CreateCourse', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -37,7 +37,7 @@ const CreateCourse = (props) => {
       }
     })
       .then(res => res.json())
-      .then()
+      .then(alert("LOGUEO CORRECTO"))
       .catch(err => alert("Fallo al Registrar"));
 
     history.push("/");

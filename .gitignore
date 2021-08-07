@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/.scannerwork
+/sonar-project.properties
 
 # production
 /build

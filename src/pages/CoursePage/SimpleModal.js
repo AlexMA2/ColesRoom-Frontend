@@ -29,30 +29,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleModal() {
-    var desicion=''
+    var course_id=''
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
+ 
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     
-    
-    //const [course, setCourse] = useState({})
     setOpen(true);
   };
   const addStudent = (ev) => {
     let Doc= document.getElementById("email").value;
     console.log(Doc)
     var URLactual = window.location.href;
-    desicion = URLactual.substring(34)
+    course_id = URLactual.substring(34)
     const data = {
         Email: Doc,
         courseID: desicion
     }
-    console.log(desicion)
+    console.log(course_id)
     console.log(data.Email);
-    fetch('/api/add', {
+    fetch('https://colesroomapp.herokuapp.com/api/add', {
 
         method: 'POST',
         body: JSON.stringify(data),
@@ -70,13 +68,9 @@ export default function SimpleModal() {
 
 
   const handleClose = (e) => {
-    addStudent();
-
-    
+    addStudent(e);
     setOpen(false);
     const id_curso=desicion
-    
-    ;
     console.log("este es el codigo de curso");
     console.log(id_curso);
     console.log("Registrar Alumno");
@@ -86,14 +80,13 @@ export default function SimpleModal() {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Inscribir Alumno</h2>
-      <form className="ax-form__form" id="form">
+      <form className="Form" id="form" onSubmit={handleClose}>
        
        <div className="ax-form__input">
          <p> Correo Electr&oacute;nico: </p>
-         <input name="email" id="email" type = "email" placeholder="Introduce tu correo electrónico aquí..." required 
-         />         
+         <input name="email" id="email" type ="email" placeholder="Introduce tu correo electrónico aquí..." required/>         
        </div>
-       
+       <button type="submit">Inscribir</button>
      </form>
       <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary" type="button" onClick={handleClose}>Inscribir</button>
     </div>

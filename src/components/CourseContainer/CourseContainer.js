@@ -1,10 +1,8 @@
 import Course from "../Course/Course.js"
 import './CourseContainer.css'
 import '../../utils.css'
-import React, { Component } from 'react'
+import React from 'react'
 
-import './CourseContainer.css'
-import '../../utils.css'
 
 import { useSelector } from 'react-redux'
 
