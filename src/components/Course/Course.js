@@ -10,18 +10,22 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import imageUrl from '../../imgs/CourseBackground1.jpg';
 import Button from '@material-ui/core/Button'
 import { Redirect, useHistory } from 'react-router-dom';
 import MenuCourse from './MenuCourse';
-
+import image1 from '../../imgs/CourseBackground1.jpg'
+import image2 from '../../imgs/CourseBackground2.jpg'
+import image3 from '../../imgs/CourseBackground3.jpg'
 import './Course.css'
 
-const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, onDelete, viewDelete }) => {
-
+const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, viewDelete }) => {
+    var imageUrl = ""
     const [dateformat, setdateformat] = useState('')
     const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
     const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
+
+    const [textButton, setTextButton] = useState('')
+    const [colorButton, setcolorButton] = useState('primary')
 
     const isMenuOpen = Boolean(anchorMenuCourse)
     const useStyles = makeStyles((theme) => ({
@@ -68,7 +72,7 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
             userID: sessionStorage.getItem("user"),
             courseID: curso_id
         }
-        fetch('/api/join', {
+        fetch('https://colesroomapp.herokuapp.com/api/join', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -82,21 +86,28 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setClick(true);
     };
 
-
-    const seeCoursesJoin = async () => {
-        const res = await fetch(`api/courses/join/${sessionStorage.getItem("user")}`)
-        const data = await res.json()
-        for (const cursoID of data) {
-            if (cursoID === curso_id) {
-                setDesicion(true)
-            }
+    const handleActionCourse = () => {
+        switch (textButton) {
+            case "Ver" :
+                seeCourse();
+                break;        
+            case "Entrar" :
+                seeCourse();
+                break;    
+            case "Unirse" :
+                joinCourse();
+                break;
+            default :
+                alert("Seleccione una acción");
+                break;                        
         }
     }
+
 
     const seeCourse = (ev) => {
         history.push(`mycourses/${curso_id}`);
         setClick(true);
-        
+
     };
 
     const openMenuCourse = (ev) => {
@@ -105,12 +116,19 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
 
     const closeMenuCourse = (isDeleted) => {
         setAnchorMenuCourse(null);
-        if (isDeleted) {
-            //onDelete(curso_id)
-        }
     }
 
     useEffect(() => {
+        const seeCoursesJoin = async () => {
+            const res = await fetch(`https://colesroomapp.herokuapp.com/api/course/join/${sessionStorage.getItem("user")}`)
+            const data = await res.json()
+            for (const cursoID of data) {
+                if (cursoID === curso_id) {
+                    setDesicion(true)
+                }
+            }
+        }
+
         const df = new Intl.DateTimeFormat('es', { dateStyle: 'full', timeStyle: 'long' })
         const dateToFormat = new Date(datecreate)
         const dateTransform = new Date(Date.UTC(
@@ -124,14 +142,36 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setdateformat(df.format(dateTransform))
 
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
-        
         seeCoursesJoin()
-        console.log(desicion)
-      
-      
 
-    }, [datecreate, teacher_id])
+    }, [curso_id, datecreate, teacher_id])
 
+    if (image === 'f2') {
+        imageUrl = image2
+    } else if (image === 'f3') {
+        imageUrl = image3
+    } else {
+        imageUrl = image1
+    }
+
+    useEffect(() => {
+        if (teacher_id === sessionStorage.getItem("user")) {
+            setTextButton('Ver')
+            setcolorButton('primary')
+        }
+        else {
+            if (desicion) {
+                setTextButton('Entrar')
+                setcolorButton('default')
+            }
+            else {
+                setTextButton('Unirse')
+                setcolorButton('secondary')
+            }
+        }
+
+
+    }, [teacher_id, desicion])
 
     return (
         <Card className={classes.root}>
@@ -166,59 +206,15 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                 </Typography>
             </CardContent>
             <CardActions disableSpacing className="separar">
-                {
-                    teacher_id === sessionStorage.getItem("user")
-                        ?
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            className={classes.sizeSmall}
-                            onClick={seeCourse}>
-                            Ver
-                        </Button>
-
-                        :
-                        <div>
-                            {
-                                desicion
-                                    ?
-                                    <Button
-                                        variant="contained"
-                                        color="default"
-                                        size="small"
-                                        className={classes.sizeSmall}
-                                        onClick={seeCourse}>
-                                        Ver
-                                    </Button>
-                                    :
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="small"
-                                        className={classes.sizeSmall}
-                                        onClick={joinCourse}>
-                                        Unirse
-                                    </Button>
-                            }
-                        </div>
-
-                }
-
                 <Button
                     variant="contained"
-                    color="primary"
-                    size='small'
+                    color={colorButton}
+                    size="small"
                     className={classes.sizeSmall}
-                    onClick={seeCourse}
-                >
-                    {
-                        viewDeleteCourse
-                        ? 'Ver'
-                        : 'Unirse'
-                    }
-                    
+                    onClick={handleActionCourse}>
+                    {textButton}
                 </Button>
+                
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>

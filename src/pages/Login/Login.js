@@ -1,9 +1,7 @@
-import React from 'react'
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
-import {
-  Redirect
-} from "react-router-dom";
+import React, { useState } from 'react'
+
+import { Link, Redirect } from 'react-router-dom'
+
 
 import "./Login.css"
 
@@ -14,16 +12,9 @@ import { actionCreators } from '../../redux/index.js'
 const Login = () => {
 
   const [logeado, setlogeado] = useState(false)
-  const [errorLogin, seterrorLogin] = useState('')
 
   const dispatch = useDispatch()
   const { setUser } = bindActionCreators(actionCreators, dispatch)
-
-  const errores = {
-    "auth/wrong-password": "La contraseña introducida es incorrecta",
-    "auth/internal-error": "El servidor de Authentication encontró un error inesperado cuando se intentaba procesar la solicitud. ",
-    "auth/user-not-found": "No existe ningún registro de usuario que corresponda al identificador proporcionado."
-  }
 
   const authentication = e => {
     e.preventDefault()
@@ -34,7 +25,7 @@ const Login = () => {
       "password": form.password.value
     }
 
-    fetch('/login', {
+    fetch('https://colesroomapp.herokuapp.com/login', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -44,15 +35,12 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(d => {
-        if(d.id){
+        if (d.id) {
           setlogeado(true);
           sessionStorage.setItem("user", d.id)
           setUser(d.id)
-        }else{
-          alert(errores[d.error])
         }
       })
-      // .catch(err => seterrorLogin(errores[err.error] || 'Hubo un problema'));
 
   }
 

@@ -5,7 +5,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefault, sendFiles }) => {
-
+    
     const [files, setFiles] = useState([]);
     const [value, setValue] = useState('');
     const [disabledBtn, setDisabledBtn] = useState(true)
@@ -35,7 +35,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                 size: input.files[0].size,
                 type: input.files[0].type,
             }
-            fetch('/upload', {
+            fetch('https://colesroomapp.herokuapp.com/upload', {
                 method: 'POST',
                 body: JSON.stringify(fileObj),
                 headers: {
@@ -44,12 +44,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                 }
             })
                 .then(response => {
-                    if (response.status === 200) {
-                        return response.json()
-                    }
-                    else {
-                        console.log('Error: ' + response.status + ' ' + response.statusText)
-                    }
+                    return response.json()
                 })
                 .then(json => {
                     if (json) {                       
@@ -79,7 +74,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
     const handleDeleteFile = (fileID) => {
         setFiles(files.filter(file => file._id !== fileID))
         setFilesID(filesID.filter(fileid => fileid !== fileID))
-        fetch(`/file/${fileID}/delete`, {
+        fetch(`https://colesroomapp.herokuapp.com/file/${fileID}/delete`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -87,22 +82,6 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
             },
             
         })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json()
-                }
-                else {
-                    console.log('Error: ' + response.status + ' ' + response.statusText)
-                }
-            })
-            .then(json => {
-                if (json) {
-                   
-                }
-            })
-            .catch(error => {
-                console.log('Error: ' + error)
-            })
     }
 
     const classes = useStyles();
@@ -199,7 +178,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 PublicationInput.defaultProps = {
     filesDefault: [],
     valueDefault: '',    
-    sendFiles: (f) => {},
+    sendFiles: () => {},
 }
 
 export default PublicationInput
