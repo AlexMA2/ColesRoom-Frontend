@@ -19,10 +19,13 @@ import image3 from '../../imgs/CourseBackground3.jpg'
 import './Course.css'
 
 const Course = ({ curso_id, name, category, teacher_id, description, image, datecreate, viewDelete }) => {
-    var imageUrl =""
+    var imageUrl = ""
     const [dateformat, setdateformat] = useState('')
     const [anchorMenuCourse, setAnchorMenuCourse] = useState(null)
     const [viewDeleteCourse, setViewDeleteCourse] = useState(viewDelete)
+
+    const [textButton, setTextButton] = useState('')
+    const [colorButton, setcolorButton] = useState('primary')
 
     const isMenuOpen = Boolean(anchorMenuCourse)
     const useStyles = makeStyles((theme) => ({
@@ -83,12 +86,28 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setClick(true);
     };
 
-    
+    const handleActionCourse = () => {
+        switch (textButton) {
+            case "Ver" :
+                seeCourse();
+                break;        
+            case "Entrar" :
+                seeCourse();
+                break;    
+            case "Unirse" :
+                joinCourse();
+                break;
+            default :
+                alert("Seleccione una acción");
+                break;                        
+        }
+    }
+
 
     const seeCourse = (ev) => {
         history.push(`mycourses/${curso_id}`);
         setClick(true);
-        
+
     };
 
     const openMenuCourse = (ev) => {
@@ -123,17 +142,37 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
         setdateformat(df.format(dateTransform))
 
         setViewDeleteCourse(teacher_id === sessionStorage.getItem('user'))
-        seeCoursesJoin()      
+        seeCoursesJoin()
 
     }, [curso_id, datecreate, teacher_id])
 
-    if(image==='f2'){
-        imageUrl=image2
-    }else if (image==='f3'){
-        imageUrl=image3
-    }else{
-        imageUrl=image1
+    if (image === 'f2') {
+        imageUrl = image2
+    } else if (image === 'f3') {
+        imageUrl = image3
+    } else {
+        imageUrl = image1
     }
+
+    useEffect(() => {
+        if (teacher_id === sessionStorage.getItem("user")) {
+            setTextButton('Ver')
+            setcolorButton('primary')
+        }
+        else {
+            if (desicion) {
+                setTextButton('Entrar')
+                setcolorButton('default')
+            }
+            else {
+                setTextButton('Unirse')
+                setcolorButton('secondary')
+            }
+        }
+
+
+    }, [teacher_id, desicion])
+
     return (
         <Card className={classes.root}>
             {click && <Redirect to={curso_id} />}
@@ -167,44 +206,15 @@ const Course = ({ curso_id, name, category, teacher_id, description, image, date
                 </Typography>
             </CardContent>
             <CardActions disableSpacing className="separar">
-                {
-                    teacher_id === sessionStorage.getItem("user")
-                        ?
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            className={classes.sizeSmall}
-                            onClick={seeCourse}>
-                            Ver
-                        </Button>
-                        :
-                        <div>
-                            {
-                                desicion
-                                    ?
-                                    <Button
-                                        variant="contained"
-                                        color="default"
-                                        size="small"
-                                        className={classes.sizeSmall}
-                                        onClick={seeCourse}>
-                                        Entrar
-                                    </Button>
-                                    :
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size='small'
-                                        className={classes.sizeSmall}
-                                        onClick={joinCourse}>
-                                        Unirse                                                
-                                    </Button>
-
-                            }
-                        </div>
-
-                }
+                <Button
+                    variant="contained"
+                    color={colorButton}
+                    size="small"
+                    className={classes.sizeSmall}
+                    onClick={handleActionCourse}>
+                    {textButton}
+                </Button>
+                
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>

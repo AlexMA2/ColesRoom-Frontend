@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import { Link, Redirect } from 'react-router-dom'
 
@@ -15,12 +15,6 @@ const Login = () => {
 
   const dispatch = useDispatch()
   const { setUser } = bindActionCreators(actionCreators, dispatch)
-
-  const errores = {
-    "auth/wrong-password": "La contrasena introducida es incorrecta",
-    "auth/internal-error": "El servidor de Authentication encontró un error inesperado cuando se intentaba procesar la solicitud. ",
-    "auth/user-not-found": "No existe ningún registro de usuario que corresponda al identificador proporcionado."
-  }
 
   const authentication = e => {
     e.preventDefault()
@@ -41,15 +35,12 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(d => {
-        if(d.id){
+        if (d.id) {
           setlogeado(true);
           sessionStorage.setItem("user", d.id)
           setUser(d.id)
-        }else{
-          alert(errores[d.error])
         }
       })
-      // .catch(err => seterrorLogin(errores[err.error] || 'Hubo un problema'));
 
   }
 
