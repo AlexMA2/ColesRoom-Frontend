@@ -5,7 +5,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefault, sendFiles }) => {
-    
+
     const [files, setFiles] = useState([]);
     const [value, setValue] = useState('');
     const [disabledBtn, setDisabledBtn] = useState(true)
@@ -29,32 +29,38 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
         let input = ev.target;
 
         if (input.files && input.files[0] && files.length <= 10) {
-            setDisabledBtn(false)
-            const fileObj = {
-                name: input.files[0].name,
-                size: input.files[0].size,
-                type: input.files[0].type,
-            }
-            fetch('https://colesroomapp.herokuapp.com/upload', {
-                method: 'POST',
-                body: JSON.stringify(fileObj),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+            let file = input.files[0];
+            if (file.size > 1048576) {
+                alert('El archivo es demasiado grande. El peso del archivo debe ser menor a 1 mb');
+            } else {
+                setDisabledBtn(false)
+                const fileObj = {
+                    name: input.files[0].name,
+                    size: input.files[0].size,
+                    type: input.files[0].type,
                 }
-            })
-                .then(response => {
-                    return response.json()
-                })
-                .then(json => {
-                    if (json) {                       
-                        setFiles([...files, json.file])
-                        setFilesID([...filesID, json.fileID])
+                fetch('https://colesroomapp.herokuapp.com/upload', {
+                    method: 'POST',
+                    body: JSON.stringify(fileObj),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     }
                 })
-                .catch(error => {
-                    console.log('Error: ' + error)
-                })
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(json => {
+                        if (json) {
+                            setFiles([...files, json.file])
+                            setFilesID([...filesID, json.fileID])
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error: ' + error)
+                    })
+            }
+
 
         }
     }
@@ -80,7 +86,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            
+
         })
     }
 
@@ -95,7 +101,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 
     return (
         <div className="addpubli_input">
-            
+
             <TextField
                 id="filled-multiline-flexible"
                 label="Haz una publicación"
@@ -168,7 +174,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                 >
                     Enviar
                 </Button>
-                
+
             </ButtonGroup>
 
         </div>
@@ -177,8 +183,8 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 
 PublicationInput.defaultProps = {
     filesDefault: [],
-    valueDefault: '',    
-    sendFiles: () => {},
+    valueDefault: '',
+    sendFiles: () => { },
 }
 
 export default PublicationInput
