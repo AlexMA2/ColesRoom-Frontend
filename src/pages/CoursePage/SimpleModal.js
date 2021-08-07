@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-
-
+import "../../utils.css"
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -40,15 +39,14 @@ export default function SimpleModal() {
     
     setOpen(true);
   };
-
-  const addStudent = (e) => {
-    e.preventDefault();
-    const form = e.target;
+  const addStudent = (ev) => {
+    let Doc= document.getElementById("email").value;
+    console.log(Doc)
     var URLactual = window.location.href;
     course_id = URLactual.substring(34)
     const data = {
-        Email: form.email.value,
-        courseID: course_id
+        Email: Doc,
+        courseID: desicion
     }
     console.log(course_id)
     console.log(data.Email);
@@ -72,7 +70,7 @@ export default function SimpleModal() {
   const handleClose = (e) => {
     addStudent(e);
     setOpen(false);
-    const id_curso=course_id
+    const id_curso=desicion
     console.log("este es el codigo de curso");
     console.log(id_curso);
     console.log("Registrar Alumno");
@@ -90,12 +88,13 @@ export default function SimpleModal() {
        </div>
        <button type="submit">Inscribir</button>
      </form>
+      <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary" type="button" onClick={handleClose}>Inscribir</button>
     </div>
   );
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary" type="button" onClick={handleOpen} >
         Inscribir alumno
       </button>
       <Modal
