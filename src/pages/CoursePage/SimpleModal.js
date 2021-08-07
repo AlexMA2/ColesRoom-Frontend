@@ -29,65 +29,72 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleModal() {
-    var course_id=''
+  var desicion = ''
   const classes = useStyles();
- 
+  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
-    
+
+
+    //const [course, setCourse] = useState({})
     setOpen(true);
   };
   const addStudent = (ev) => {
-    let Doc= document.getElementById("email").value;
+    let Doc = document.getElementById("email").value;
     console.log(Doc)
     var URLactual = window.location.href;
-    course_id = URLactual.substring(34)
+    desicion = URLactual.substring(34)
     const data = {
-        Email: Doc,
-        courseID: desicion
+      Email: Doc,
+      courseID: desicion
     }
-    console.log(course_id)
+    console.log(desicion)
     console.log(data.Email);
-    fetch('https://colesroomapp.herokuapp.com/api/add', {
+    fetch('/api/add', {
 
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     })
-        .then(res => console.log(res.status)
-        
-        )
-        .catch(err => 'Hubo un problema');
-    
-};
+      .then(res => console.log(res.status)
+
+      )
+      .catch(err => 'Hubo un problema');
+
+  };
 
 
   const handleClose = (e) => {
-    addStudent(e);
+    addStudent();
+
+
     setOpen(false);
-    const id_curso=desicion
+    const id_curso = desicion
+
+      ;
     console.log("este es el codigo de curso");
     console.log(id_curso);
     console.log("Registrar Alumno");
-    
+
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Inscribir Alumno</h2>
-      <form className="Form" id="form" onSubmit={handleClose}>
-       
-       <div className="ax-form__input">
-         <p> Correo Electr&oacute;nico: </p>
-         <input name="email" id="email" type ="email" placeholder="Introduce tu correo electrónico aquí..." required/>         
-       </div>
-       <button type="submit">Inscribir</button>
-     </form>
+      <form className="ax-form__form" id="form">
+
+        <div className="ax-form__input">
+          <p> Correo Electr&oacute;nico: </p>
+          <input name="email" id="email" type="email" placeholder="Introduce tu correo electrónico aquí..." required
+          />
+        </div>
+
+      </form>
       <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary" type="button" onClick={handleClose}>Inscribir</button>
     </div>
   );
