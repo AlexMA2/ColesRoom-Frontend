@@ -1,8 +1,7 @@
-import React from "react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useHistory } from "react-router"
-import { Redirect } from "react-router"
+import { useHistory, Redirect  } from "react-router"
+
 import CourseTitle from "../../components/CourseTitle/CourseTitle.js"
 
 import PublicationContainer from "../../components/Publication/PublicationContainer.js"
@@ -25,20 +24,17 @@ const CoursePage = () => {
 
     const fetchPublications = async () => {
       const res = await fetch(`https://colesroomapp.herokuapp.com/api/publications/${topic}`)
-      const data = await res.json()
-      return data
+      return res.json()
     }
   
-    const fetchCourse = async (topic) => {
+    const fetchCourse = async () => {
       const res = await fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`)
-      const data = await res.json()
-      return data
+      return res.json()
     }
   
-    const fetchTeacher = async (topic) => {
-      const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${topic}`)
-      const data = await res.json()
-      return data
+    const fetchTeacher = async (teacher_id) => {
+      const res = await fetch(`https://colesroomapp.herokuapp.com/teacher/${teacher_id}`)
+      return res.json()     
     }
 
 
@@ -55,7 +51,7 @@ const CoursePage = () => {
     }
 
     const getCourse = async () => {
-      const c = await fetchCourse(topic)
+      const c = await fetchCourse()
       getTeacher(c.user_id)
       setCourse(c)
     }
@@ -92,9 +88,7 @@ const CoursePage = () => {
         console.log(error)
       })
 
-  }
-
-  
+  }  
 
   const [click, setClick] = useState(false)
   const history = useHistory()

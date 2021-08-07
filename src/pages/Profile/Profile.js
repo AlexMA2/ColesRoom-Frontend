@@ -1,11 +1,9 @@
 import "./Profile.css"
 import React from "react";
-import {useEffect } from 'react';
 import { Button } from 'react-bootstrap'
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-
 
     const prueba = {
         Nombre: "Prueba",
@@ -13,11 +11,6 @@ const Profile = () => {
         Edad: "Prueba",
         Telefono: "Prueba"
     }
-
-    useEffect(() => {
-    })
-
-
 
     return (
         <div className="contenedor-principal fondo">

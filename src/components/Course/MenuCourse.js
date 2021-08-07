@@ -37,8 +37,7 @@ const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
             }
         })
 
-        const data = await res.json()
-        return data
+        return res.json()        
     }
 
     const fetchDeleteAllPublicationsFiles = async (filesIds) => {
@@ -53,8 +52,7 @@ const MenuCourse = ({ anchorEl, isMenuOpen, menuId, handleMenuClose }) => {
             })
 
         })
-        const data = await response.json()
-        return data
+        return response.json()        
     }
 
     const openDialogDelete = () => {

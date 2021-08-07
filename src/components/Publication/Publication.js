@@ -84,22 +84,6 @@ const Publication = ({ p, onDelete, viewControls }) => {
             })
 
         })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json()
-                }
-                else {
-                    console.log('Error: ' + response.status + ' ' + response.statusText)
-                }
-            })
-            .then(json => {
-                if (json) {
-                    console.log()
-                }
-            })
-            .catch(error => {
-                console.log('Error: ' + error)
-            })
     };
 
     useEffect(() => {
@@ -137,22 +121,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
             },
 
         })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json()
-                }
-                else {
-                    console.log('Error: ' + response.status + ' ' + response.statusText)
-                }
-            })
-            .then(json => {
-                if (json) {
-                    console.log()
-                }
-            })
-            .catch(error => {
-                console.log('Error: ' + error)
-            })
+            
     }
 
     const sendFiles = (f) => {       
@@ -203,10 +172,7 @@ const Publication = ({ p, onDelete, viewControls }) => {
                     </div>
                 </div>
             }
-            <div className="publication__date">
-                {/* {p.datePublished} */}
-                Creado hace 2 dias - 18/02/2019 07:00:05
-            </div>
+            
             <div className="publication__content">
                 {publicationContent}
             </div>

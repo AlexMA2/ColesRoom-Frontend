@@ -3,8 +3,6 @@ import './CourseContainer.css'
 import '../../utils.css'
 import React from 'react'
 
-import './CourseContainer.css'
-import '../../utils.css'
 
 import { useSelector } from 'react-redux'
 

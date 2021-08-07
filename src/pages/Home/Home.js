@@ -32,17 +32,16 @@ const Home = () => {
   }
 
   const fetchCourses = async () => {
-    const res = await fetch('https://colesroomapp.herokuapp.com/api/courses')
-    const data = await res.json()
-    return data
+    const res = await fetch('https://colesroomapp.herokuapp.com/api/courses')    
+    return res.json()  
   }
 
   useEffect(() => {
 
     const getCourses = async () => {
-      const courses = await fetchCourses()
-      setCourses(courses)
-      setcoursesToShow(courses.slice(0, limitCourses))
+      const coursesFromDB = await fetchCourses()
+      setCourses(coursesFromDB)
+      setcoursesToShow(coursesFromDB.slice(0, limitCourses))
       setLoading(false)
     }
 

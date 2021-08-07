@@ -44,12 +44,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                 }
             })
                 .then(response => {
-                    if (response.status === 200) {
-                        return response.json()
-                    }
-                    else {
-                        console.log('Error: ' + response.status + ' ' + response.statusText)
-                    }
+                    return response.json()
                 })
                 .then(json => {
                     if (json) {                       
@@ -87,22 +82,6 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
             },
             
         })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json()
-                }
-                else {
-                    console.log('Error: ' + response.status + ' ' + response.statusText)
-                }
-            })
-            .then(json => {
-                if (json) {
-                   
-                }
-            })
-            .catch(error => {
-                console.log('Error: ' + error)
-            })
     }
 
     const classes = useStyles();
@@ -199,7 +178,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 PublicationInput.defaultProps = {
     filesDefault: [],
     valueDefault: '',    
-    sendFiles: (f) => {},
+    sendFiles: () => {},
 }
 
 export default PublicationInput

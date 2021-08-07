@@ -1,9 +1,7 @@
-import React from 'react'
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
-import {
-  Redirect
-} from "react-router-dom";
+import React, {useState} from 'react'
+
+import { Link, Redirect } from 'react-router-dom'
+
 
 import "./Login.css"
 
@@ -19,7 +17,7 @@ const Login = () => {
   const { setUser } = bindActionCreators(actionCreators, dispatch)
 
   const errores = {
-    "auth/wrong-password": "La contraseña introducida es incorrecta",
+    "auth/wrong-password": "La contrasena introducida es incorrecta",
     "auth/internal-error": "El servidor de Authentication encontró un error inesperado cuando se intentaba procesar la solicitud. ",
     "auth/user-not-found": "No existe ningún registro de usuario que corresponda al identificador proporcionado."
   }
