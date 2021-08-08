@@ -137,7 +137,7 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
 
     const salirseCurso = async () => {
-        await fetch(`/user/deleteuser`, {
+        await fetch(`https://colesroomapp.herokuapp.com/user/deleteuser`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
