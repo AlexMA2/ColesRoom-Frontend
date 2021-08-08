@@ -47,7 +47,6 @@ const CoursePage = () => {
     const getTeacher = async (teacher_id) => {
       const t = await fetchTeacher(teacher_id)
       setTeacher(t)
-      console.log(teacher)
     }
 
     const getCourse = async () => {
@@ -60,7 +59,7 @@ const CoursePage = () => {
     getTeacher()
     getCourse()
 
-  }, [teacher, topic])
+  }, [topic])
 
 
   useEffect(() => {
@@ -114,6 +113,7 @@ const CoursePage = () => {
         onEdit={handleClick}
         category={course.category}
         topic={topic}
+        teacher_id={course.user_id }
       />
       
       {

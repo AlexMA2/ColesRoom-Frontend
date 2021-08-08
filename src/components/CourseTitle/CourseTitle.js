@@ -15,8 +15,9 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom'
 
-const CourseTitle = ({ name, description, date, backgroundImage, category, topic }) => {
+const CourseTitle = ({ name, description, date, backgroundImage, category, topic, teacher_id}) => {
 
     const [dateFormat, setdateFormat] = useState('')
     const [editing, setediting] = useState(false)
@@ -30,7 +31,7 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
 
     const [fondo, setfondo] = useState(backgroundImage)
     const [background, setbackground] = useState(DefaultBackground1)
-
+    const history = useHistory();
     const titleRef = useRef();
 
     const backgroundCourse = {
@@ -134,6 +135,24 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
         }
     }
 
+
+    const salirseCurso = async () => {
+        await fetch(`/user/deleteuser`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: sessionStorage.getItem("user"),
+                course_id: topic,
+            }),
+
+        })
+        history.push(`/`);
+    }
+
+
     const saveChanges = () => {
         if (newTitle !== '' && newContent !== '') {
             setediting(false)
@@ -193,9 +212,16 @@ const CourseTitle = ({ name, description, date, backgroundImage, category, topic
                     :
                         <div className="course__subinfo">                            
                             <h2 ref={titleRef}> {newTitle} </h2>
-                            <div>
-                                <CreateIcon onClick={handleOpenEditCourse} />
-                            </div>
+                            {
+                                teacher_id === sessionStorage.getItem("user") ?
+                                    <div>
+                                        <CreateIcon onClick={handleOpenEditCourse} />
+                                    </div>
+                                    :
+                                    <div>
+                                        <HighlightOffIcon onClick={salirseCurso} />
+                                    </div>
+                            }
                         </div>
                 }
 
