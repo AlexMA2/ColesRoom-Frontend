@@ -12,9 +12,11 @@ import Banner from "../../components/Banner/Banner.js"
 import imgBanner from '../../imgs/banner1.jpg'
 import imgEnsenar from '../../imgs/ensenar.jpg'
 
-const Main = ({}) => {
+const Main = () => {
   const [loading, setLoading] = useState(true)
   const [limitCourses, setLimitCourses] = useState(8)
+  const [courses, setCourses] = useState([])
+  const [coursesToShow, setcoursesToShow] = useState([])
 
   const container = (maxwidth) => {
     return {
@@ -30,8 +32,23 @@ const Main = ({}) => {
     setLimitCourses(limit + 8)
   }
 
-  useEffect(() => {
-    setLoading(false)
+  const fetchCourses = async () => {
+    const res = await fetch('https://colesroomapp.herokuapp.com/api/courses')   
+    
+    return res.json()
+  }
+
+  useEffect(() => {    
+    
+    const getCourses = async () => {
+      const coursesFromDB = await fetchCourses()
+      setCourses(coursesFromDB)
+      setcoursesToShow(coursesFromDB.slice(0, limitCourses))
+      setLoading(false)
+    }    
+
+    getCourses()
+
   }, [limitCourses])
 
   const useStyles = makeStyles((theme) => ({
@@ -61,11 +78,15 @@ const Main = ({}) => {
       {
         loading
         ? <CircularProgress size={100} className="center-block"/>                   
-        : <CourseContainer></CourseContainer>
+        : <CourseContainer coursesList={coursesToShow}></CourseContainer>
       }
-      <Button variant="contained" size="medium" color="secondary" onClick={showMore} className={classes.margin} endIcon={<AddIcon/> }>
-          Ver más cursos 
-      </Button>    
+      {
+        courses.length > limitCourses &&
+        <Button variant="contained" size="medium" color="secondary" onClick={showMore} className={classes.margin} endIcon={<AddIcon />}>
+          Ver más cursos
+        </Button>
+      }
+ 
       <hr></hr>
       <Typography variant="h3" gutterBottom>
         Enseña lo que sabes 

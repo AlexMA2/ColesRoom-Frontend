@@ -1,30 +1,47 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './CourseTitle.css'
 
-import DefaultBackground from '../../imgs/CourseBackgroundDefault.jpg'
+import DefaultBackground1 from '../../imgs/CourseBackground1.jpg'
+import DefaultBackground2 from '../../imgs/CourseBackground2.jpg'
+import DefaultBackground3 from '../../imgs/CourseBackground3.jpg'
+
 import CreateIcon from '@material-ui/icons/Create';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Switch from '@material-ui/core/Switch';
 
-const CourseTitle = ({ name, description, date, backgroundImage }) => {
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom'
+
+const CourseTitle = ({ name, description, date, backgroundImage, category, topic, teacher_id}) => {
 
     const [dateFormat, setdateFormat] = useState('')
     const [editing, setediting] = useState(false)
     const [heightTitle, setheightTitle] = useState(0)
-    const [heightContent, setheighContent] = useState(0)
 
-    const [newTitle, setnewTitle] = useState('')
-    const [newContent, setnewContent] = useState('')
+    const [newTitle, setnewTitle] = useState(name)
+    const [newContent, setnewContent] = useState(description)
 
+    const [visibility, setvisibility] = useState(category)
+
+
+    const [fondo, setfondo] = useState(backgroundImage)
+    const [background, setbackground] = useState(DefaultBackground1)
+    const history = useHistory();
     const titleRef = useRef();
-    const contentRef = useRef();
 
     const backgroundCourse = {
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : `url(${DefaultBackground})`,
+        backgroundImage: `url(${background})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         left: 0,
         top: 0,
-        borderRadius: '1rem'
+        borderRadius: '1rem',
+        height: editing ? '30rem' : 'auto',
     }
 
     useEffect(() => {
@@ -58,11 +75,11 @@ const CourseTitle = ({ name, description, date, backgroundImage }) => {
         }
     }
 
-    const setStylesInputContent = (newHeight) => {
+    const setStylesInputContent = () => {
         return {
-            height: (newHeight + 10) + 'px',
+            height: '99%',
             width: '100%',
-            fontSize: '1rem',                        
+            fontSize: '1rem',
             background: 'none',
             color: '#fff',
             border: 'none',
@@ -71,11 +88,10 @@ const CourseTitle = ({ name, description, date, backgroundImage }) => {
         }
     }
 
-    const handleOpenEditCourse = (ev) => {       
-        setheightTitle(titleRef.current.offsetHeight)   
-        setnewTitle(name)  
-        setheighContent(contentRef.current.offsetHeight)   
-        setnewContent(description)
+    const handleOpenEditCourse = (ev) => {
+        setheightTitle(titleRef.current.offsetHeight)
+        setnewTitle(newTitle)
+        setnewContent(newContent)
         titleRef.current.focus()
         setediting(true)
     }
@@ -89,37 +105,165 @@ const CourseTitle = ({ name, description, date, backgroundImage }) => {
     }
 
     const handleChangeContent = (ev) => {
-        setnewContent(ev.target.value)     
-           
+        setnewContent(ev.target.value)
+
     }
+
+    const handleChangeSwitch = () => {
+        setvisibility(!visibility)
+    }
+
+    const handleChooseBackground = (ev) => {
+        setfondo(ev.target.value)
+        selectBackground(ev.target.value)
+    }
+
+    const selectBackground = (value) => {
+        switch (value) {
+            case 'f1':
+                setbackground(DefaultBackground1)
+                break
+            case 'f2':
+                setbackground(DefaultBackground2)
+                break
+            case 'f3':
+                setbackground(DefaultBackground3)
+                break
+            default:
+                setbackground(DefaultBackground1)
+                break
+        }
+    }
+
+
+    const salirseCurso = async () => {
+        await fetch(`/user/deleteuser`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: sessionStorage.getItem("user"),
+                course_id: topic,
+            }),
+
+        })
+        history.push(`/`);
+    }
+
+
+    const saveChanges = () => {
+        if (newTitle !== '' && newContent !== '') {
+            setediting(false)
+            fetch(`https://colesroomapp.herokuapp.com/api/courses/${topic}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: newTitle,
+                    description: newContent,
+                    image: fondo,
+                    category: visibility,
+                }),
+
+            })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    if (data) {
+
+                        setediting(false)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        }
+    }
+
+    useEffect(() => {
+        setvisibility(category)
+        setfondo(backgroundImage)
+        setnewContent(description)
+        setnewTitle(name)
+    }, [category, backgroundImage, description, name])
+
+    useEffect(() => {
+        selectBackground(fondo)
+    }, [fondo])
 
     return (
         <div className="course-title" style={backgroundCourse}>
             <div className="course-title__info">
-                <div className="course__subinfo">
-                    {
-                        editing 
-                        ? <input type="text" value={newTitle} style={setStylesInputTitle(heightTitle)} onChange={handleChangeTitle}/>
-                        : <h2 ref={titleRef}> {name} </h2>
-                    }
-                    <div>
-                        {
-                            editing 
-                            ? <HighlightOffIcon onClick={handleCloseEditCourse} />
-                            : <CreateIcon onClick={handleOpenEditCourse}/>
-                        }
-                       
-                    </div>
-                </div>
+                {
+                    editing 
+                    ?
+                        <div className="course__subinfo">                                  
+                            <input type="text" value={newTitle} style={setStylesInputTitle(heightTitle)} onChange={handleChangeTitle} />
+                            <div>
+                                <HighlightOffIcon onClick={handleCloseEditCourse} />                               
+                            </div>
+                        </div>
+                    :
+                        <div className="course__subinfo">                            
+                            <h2 ref={titleRef}> {newTitle} </h2>
+                            {
+                                teacher_id === sessionStorage.getItem("user") ?
+                                    <div>
+                                        <CreateIcon onClick={handleOpenEditCourse} />
+                                    </div>
+                                    :
+                                    <div>
+                                        <HighlightOffIcon onClick={salirseCurso} />
+                                    </div>
+                            }
+                        </div>
+                }
+
                 <div className="course__description">
-                    
+
                     <p> Creado el {dateFormat} </p>
                     {
-                        editing 
-                        ? <textarea style={setStylesInputContent(heightContent)} onChange={handleChangeContent}>{newContent}</textarea>
-                        : <span ref={contentRef}>{description}</span>
+                        editing
+                            ? <textarea style={setStylesInputContent()} onChange={handleChangeContent}>{newContent}</textarea>
+                            : <span >{newContent}</span>
                     }
                 </div>
+                {
+                    editing
+                        ?
+                        <div className="course-title--edit">
+                            <div className="course-title--edit__category">
+                                <p> P&uacute;blico</p>
+                                <Switch
+                                    checked={visibility}
+                                    onChange={handleChangeSwitch}
+                                    name="checked"
+                                    color="primary" />
+                                <p> Privado</p>
+                            </div>
+                            <div className="course-title--edit__background">
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend" style={{ color: '#ffffff', fontSize: '1rem' }}> Elije el fondo: </FormLabel>
+                                    <RadioGroup aria-label="fondo" name="fondo" value={fondo} onChange={handleChooseBackground} style={{ display: 'flex', flexDirection: 'row' }}>
+                                        <FormControlLabel value="f1" control={<Radio />} label="Fondo 1" />
+                                        <FormControlLabel value="f2" control={<Radio />} label="Fondo 2" />
+                                        <FormControlLabel value="f3" control={<Radio />} label="Fondo 3" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </div>
+                            <div style={{ textAlign: 'center' }}>
+                                <Button variant="contained" color="primary" onClick={saveChanges}> Guardar Cambios </Button>
+                            </div>
+                        </div>
+
+                        : null
+                }
             </div>
 
         </div>

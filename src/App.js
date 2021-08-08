@@ -12,66 +12,27 @@ import CoursePage from "./pages/CoursePage/CoursePage.js"
 import Profile from "./pages/Profile/Profile.js"
 import EditProfile from "./pages/EditProfile/EditProfile.js"
 import MyCourses from "./pages/MyCourses/MyCourses.js"
-import CoursesCreated from "./pages/CoursesCreated/CoursesCreated.js"
 import CreateTask from "./pages/CreateTask/CreateTask.js"
 
 import { useSelector } from 'react-redux'
 
 const App = () => {
   const [user, setuser] = useState(sessionStorage.getItem("user"));
-  const userredux = useSelector(state => state.user)
-  const [render, setrender] = useState(false)
+  const userredux = useSelector(state => state.user)  
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== null) {
-      setuser(sessionStorage.getItem("user"))
-      setrender(true)
+      setuser(sessionStorage.getItem("user"))      
     }
     else {
-      setuser('')
-      setrender(true)
+      setuser('')      
     }
   }, [userredux]);
 
   return (
-    <Router>
+    <Router>     
       <Header user={user} />
-      {
-        !render
-          ?
-          < Switch >
-            <Route exact path="/profile">
-              <Profile />
-            </Route>
-            <Route exact path="/profile/edit">
-              <EditProfile />
-            </Route>
-            <Route exact path="/mycourses">
-              <MyCourses />
-            </Route>
-            <Route exact path="/mycourses/crear">
-              <CreateCourse user={user} />
-            </Route>
-            <Route exact path="/mycourses/:topic">
-              <CoursePage />
-            </Route>
-            <Route exact path="/mycourses/:topic/taskcreate">
-              <CreateTask />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route exact path="/">
-              {user === '' ? <Home /> : <Main user={user} />}
-            </Route>
-            <Route path="/">
-              <Redirect to="/" />
-            </Route>
-          </Switch>
-          :
+      {        
           user === ''
             ?
             <Switch>

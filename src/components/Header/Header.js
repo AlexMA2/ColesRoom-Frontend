@@ -41,7 +41,7 @@ const Header = ({ user }) => {
         }
     }
 
-    const registrar = (e)=>{
+    const registrar = (e) => {
         history.push("/mycourses/crear")
     }
 
@@ -91,7 +91,7 @@ const Header = ({ user }) => {
         },
         inputRoot: {
             color: 'inherit',
-            display:"flex"
+            display: "flex"
         },
         inputInput: {
             padding: theme.spacing(1, 1, 1, 0),
@@ -172,17 +172,16 @@ const Header = ({ user }) => {
                             ? (
                                 <div className="div-divertido">
                                     <div className="div-divertido2">
-                                        <Button variant="contained" color="secundary" className="ButtonP" onClick={registrar}>
+                                        <Button variant="contained" color="default" className="ButtonP" onClick={registrar}>
                                             Crear Curso
                                         </Button>
                                     </div>
-                                    {<MobileMenuPrivate mobileMoreAnchorEl={mobileMoreAnchorEl} i
-                                        sMobileMenuOpen={isMobileMenuOpen}
+                                    {<MobileMenuPrivate mobileMoreAnchorEl={mobileMoreAnchorEl}
+                                        isMobileMenuOpen={isMobileMenuOpen}
                                         mobileMenuId={mobileMenuId}
                                         handleMobileMenuClose={handleMobileMenuClose}
                                         handleProfileMenuOpen={handleProfileMenuOpen} />}
                                     <div className={classes.sectionDesktop}>
-
                                         <IconButton aria-label="show 4 new mails" color="inherit">
                                             <Badge badgeContent={0} color="secondary">
                                                 <MailIcon />

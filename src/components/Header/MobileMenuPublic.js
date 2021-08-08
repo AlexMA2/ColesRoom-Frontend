@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { Link, useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const MobileMenuPublic = ({mobileMoreAnchorEl, isMobileMenuOpen, mobileMenuId, handleMobileMenuClose}) => {   
    

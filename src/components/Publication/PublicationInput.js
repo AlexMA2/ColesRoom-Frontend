@@ -29,37 +29,38 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
         let input = ev.target;
 
         if (input.files && input.files[0] && files.length <= 10) {
-            setDisabledBtn(false)
-            const fileObj = {
-                name: input.files[0].name,
-                size: input.files[0].size,
-                type: input.files[0].type,
-            }
-            fetch('/upload', {
-                method: 'POST',
-                body: JSON.stringify(fileObj),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+            let file = input.files[0];
+            if (file.size > 1048576) {
+                alert('El archivo es demasiado grande. El peso del archivo debe ser menor a 1 mb');
+            } else {
+                setDisabledBtn(false)
+                const fileObj = {
+                    name: input.files[0].name,
+                    size: input.files[0].size,
+                    type: input.files[0].type,
                 }
-            })
-                .then(response => {
-                    if (response.status === 200) {
+                fetch('https://colesroomapp.herokuapp.com/upload', {
+                    method: 'POST',
+                    body: JSON.stringify(fileObj),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
                         return response.json()
-                    }
-                    else {
-                        console.log('Error: ' + response.status + ' ' + response.statusText)
-                    }
-                })
-                .then(json => {
-                    if (json) {                       
-                        setFiles([...files, json.file])
-                        setFilesID([...filesID, json.fileID])
-                    }
-                })
-                .catch(error => {
-                    console.log('Error: ' + error)
-                })
+                    })
+                    .then(json => {
+                        if (json) {
+                            setFiles([...files, json.file])
+                            setFilesID([...filesID, json.fileID])
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error: ' + error)
+                    })
+            }
+
 
         }
     }
@@ -79,30 +80,14 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
     const handleDeleteFile = (fileID) => {
         setFiles(files.filter(file => file._id !== fileID))
         setFilesID(filesID.filter(fileid => fileid !== fileID))
-        fetch(`/file/${fileID}/delete`, {
+        fetch(`https://colesroomapp.herokuapp.com/file/${fileID}/delete`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            
+
         })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json()
-                }
-                else {
-                    console.log('Error: ' + response.status + ' ' + response.statusText)
-                }
-            })
-            .then(json => {
-                if (json) {
-                   
-                }
-            })
-            .catch(error => {
-                console.log('Error: ' + error)
-            })
     }
 
     const classes = useStyles();
@@ -116,7 +101,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 
     return (
         <div className="addpubli_input">
-            
+
             <TextField
                 id="filled-multiline-flexible"
                 label="Haz una publicación"
@@ -189,7 +174,7 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
                 >
                     Enviar
                 </Button>
-                
+
             </ButtonGroup>
 
         </div>
@@ -198,8 +183,8 @@ const PublicationInput = ({ handleCancel, handleSubmit, filesDefault, valueDefau
 
 PublicationInput.defaultProps = {
     filesDefault: [],
-    valueDefault: '',    
-    sendFiles: (f) => {},
+    valueDefault: '',
+    sendFiles: () => { },
 }
 
 export default PublicationInput
